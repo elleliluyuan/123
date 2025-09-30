@@ -2,60 +2,25 @@
 .container {
   min-height: 100vh;
   background-color: #FFF8F3;
-  padding: 20rpx;
 }
 
 .page-header {
-  padding: 20rpx 30rpx;
-  text-align: left;
+  padding: 60rpx 40rpx 40rpx;
+  text-align: center;
 }
 
 .page-title {
-  font-size: 36rpx;
-  font-weight: 600;
-  color: #2C3E50;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
 }
 
-.stats-content {
-  padding: 20rpx;
-}
-
-.stats-card {
-  background-color: #FFFFFF;
-  border-radius: 16rpx;
-  padding: 30rpx;
-  margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
-}
-
-.stats-title {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #2C3E50;
-  margin-bottom: 20rpx;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20rpx;
-}
-
-.stat-item {
+.content {
+  padding: 100rpx 40rpx;
   text-align: center;
-  padding: 20rpx;
-  background-color: #F8F9FA;
-  border-radius: 12rpx;
 }
 
-.stat-value {
+.placeholder-text {
   font-size: 32rpx;
-  font-weight: 600;
-  color: #FF8C42;
-  margin-bottom: 8rpx;
-}
-
-.stat-label {
-  font-size: 24rpx;
-  color: #999999;
+  color: #666;
 }

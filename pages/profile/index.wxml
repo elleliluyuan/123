@@ -1,34 +1,10 @@
 <!--pages/profile/index.wxml-->
 <view class="container">
-  <!-- 页面标题 -->
   <view class="page-header">
     <text class="page-title">个人中心</text>
   </view>
-
-  <!-- 个人资料内容 -->
-  <view class="profile-content">
-    <view class="profile-card">
-      <view class="profile-avatar">👤</view>
-      <text class="profile-name">用户</text>
-      
-      <view class="profile-info">
-        <view class="info-item">
-          <text class="info-label">注册时间</text>
-          <text class="info-value">2025年9月</text>
-        </view>
-        <view class="info-item">
-          <text class="info-label">总记录数</text>
-          <text class="info-value">{{totalRecords}}</text>
-        </view>
-        <view class="info-item">
-          <text class="info-label">平均评分</text>
-          <text class="info-value">{{avgScore}}分</text>
-        </view>
-        <view class="info-item">
-          <text class="info-label">使用天数</text>
-          <text class="info-value">{{usageDays}}天</text>
-        </view>
-      </view>
-    </view>
+  
+  <view class="content">
+    <text class="placeholder-text">个人中心功能开发中...</text>
   </view>
 </view>

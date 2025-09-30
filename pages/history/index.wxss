@@ -2,58 +2,25 @@
 .container {
   min-height: 100vh;
   background-color: #FFF8F3;
-  padding: 20rpx;
 }
 
 .page-header {
-  padding: 20rpx 30rpx;
-  text-align: left;
+  padding: 60rpx 40rpx 40rpx;
+  text-align: center;
 }
 
 .page-title {
-  font-size: 36rpx;
-  font-weight: 600;
-  color: #2C3E50;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
 }
 
-.history-list {
-  padding: 20rpx;
+.content {
+  padding: 100rpx 40rpx;
+  text-align: center;
 }
 
-.history-item {
-  background-color: #FFFFFF;
-  border-radius: 16rpx;
-  padding: 30rpx;
-  margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
-}
-
-.history-date {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #2C3E50;
-  margin-bottom: 16rpx;
-}
-
-.history-details {
-  display: flex;
-  flex-direction: column;
-  gap: 12rpx;
-}
-
-.detail-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.detail-label {
-  font-size: 24rpx;
-  color: #999999;
-}
-
-.detail-value {
-  font-size: 24rpx;
-  color: #2C3E50;
-  font-weight: 500;
+.placeholder-text {
+  font-size: 32rpx;
+  color: #666;
 }

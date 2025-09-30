@@ -1,21 +1,6 @@
 // pages/record/index.js
 Page({
   data: {
-    // 宠物选择
-    selectedPetId: 'pet1',
-    pets: [
-      { 
-        id: 'pet1', 
-        name: '腿腿', 
-        emoji: '🐕'
-      },
-      { 
-        id: 'pet2', 
-        name: '大包', 
-        emoji: '🐶'
-      }
-    ],
-    
     // 日期时间相关
     datetimeRange: [[], []], // 日期和时间选项
     datetimeIndex: [0, 0],   // 当前选中的索引
@@ -75,24 +60,6 @@ Page({
   },
 
   onLoad() {
-    console.log('记录页面加载开始');
-    
-    this.setData({
-      pets: [
-        { 
-          id: 'pet1', 
-          name: '腿腿', 
-          emoji: '🐕'
-        },
-        { 
-          id: 'pet2', 
-          name: '大包', 
-          emoji: '🐶'
-        }
-      ],
-      selectedPetId: 'pet1'
-    });
-    
     this.initDateTime();
   },
 
@@ -226,36 +193,9 @@ Page({
     });
   },
 
-  // 切换频道
-  switchChannel(e) {
-    const channel = e.currentTarget.dataset.channel;
-
-    if (channel === 'home') {
-      const selectedPetId = this.data.selectedPetId;
-      getApp().globalData = getApp().globalData || {};
-      getApp().globalData.selectedPetId = selectedPetId;
-      
-      wx.switchTab({
-        url: `/pages/index/index?selectedPetId=${selectedPetId}`
-      });
-    } else if (channel === 'record') {
-      console.log('已在记录页面');
-    } else if (channel === 'ai') {
-      wx.showToast({
-        title: 'AI功能开发中',
-        icon: 'none'
-      });
-    }
-  },
-
-  // 选择宠物
-  selectPet(e) {
-    const petId = e.currentTarget.dataset.petId;
-    if (petId) {
-      this.setData({
-        selectedPetId: petId
-      });
-    }
+  // 跳转到首页
+  goToHome() {
+    wx.navigateBack();
   },
 
   // 取消记录
@@ -265,23 +205,8 @@ Page({
       content: '确定要放弃本次记录吗？',
       success: (res) => {
         if (res.confirm) {
-          this.goBack();
+          this.goToHome();
         }
-      }
-    });
-  },
-
-  // 返回
-  goBack() {
-    const selectedPetId = this.data.selectedPetId;
-    getApp().globalData = getApp().globalData || {};
-    getApp().globalData.selectedPetId = selectedPetId;
-    
-    wx.navigateBack({
-      fail: () => {
-        wx.switchTab({
-          url: `/pages/index/index?selectedPetId=${selectedPetId}`
-        });
       }
     });
   },
@@ -305,7 +230,6 @@ Page({
       timestamp: new Date().toISOString(),
       date: recordDate,
       time: recordTime,
-      petId: this.data.selectedPetId || 'pet1',
       shape: selectedShape,
       color: selectedColor,
       amount: this.data.amountValue,
@@ -317,18 +241,21 @@ Page({
       healthScore: this.calculateHealthScore()
     };
     
-    console.log('保存记录，宠物ID:', this.data.selectedPetId, '记录数据:', record);
+    console.log('保存记录:', record);
 
     // 保存到本地存储
     this.saveRecordToStorage(record);
 
-    // 根据健康评分显示不同结果
-    const healthScore = record.healthScore;
-    if (healthScore >= 80) {
-      this.showCongratulationsDialog();
-    } else {
-      this.showAIAnalysisDialog(record);
-    }
+    // 显示成功提示
+    wx.showToast({
+      title: '记录保存成功',
+      icon: 'success',
+      success: () => {
+        setTimeout(() => {
+          this.goToHome();
+        }, 1500);
+      }
+    });
   },
 
   // 保存记录到本地存储
@@ -337,17 +264,8 @@ Page({
       const records = wx.getStorageSync('poopRecords') || [];
       records.unshift(newRecord);
       wx.setStorageSync('poopRecords', records);
-      
-      wx.showToast({
-        title: '记录保存成功',
-        icon: 'success'
-      });
     } catch (error) {
       console.error('保存记录失败:', error);
-      wx.showToast({
-        title: '保存失败',
-        icon: 'error'
-      });
     }
   },
 
@@ -394,63 +312,5 @@ Page({
     }
     
     return Math.max(0, Math.min(100, score));
-  },
-
-  // 显示恭喜对话框
-  showCongratulationsDialog() {
-    wx.showModal({
-      title: '🎉 太棒了！',
-      content: '您的狗狗便便状况很好！继续保持良好的饮食和运动习惯，您的狗狗会越来越健康的！',
-      showCancel: false,
-      confirmText: '继续记录',
-      success: () => {
-        this.goBack();
-      }
-    });
-  },
-
-  // 显示AI分析对话框
-  showAIAnalysisDialog(record) {
-    const analysis = this.generateAnalysis(record);
-    wx.showModal({
-      title: '🔍 健康分析',
-      content: analysis,
-      confirmText: '继续沟通',
-      cancelText: '知道了',
-      success: (res) => {
-        if (res.confirm) {
-          wx.showToast({
-            title: 'AI功能开发中',
-            icon: 'none'
-          });
-          setTimeout(() => {
-            this.goBack();
-          }, 1500);
-        } else {
-          this.goBack();
-        }
-      }
-    });
-  },
-
-  // 生成健康分析
-  generateAnalysis(record) {
-    let analysis = '根据记录分析：\n\n';
-    
-    analysis += `便便形态：${this.data.poopShapes.find(s => s.value === record.shape)?.label || record.shape}\n`;
-    analysis += `便便颜色：${this.data.colorOptions.find(c => c.value === record.color)?.label || record.color}\n`;
-    analysis += `便便量：${record.amountLabel}\n`;
-    analysis += `便便环境：${this.data.environmentOptions.find(e => e.value === record.environment)?.label || record.environment}\n`;
-    
-    if (record.symptoms.length > 0) {
-      analysis += `异常症状：${record.symptoms.join('，')}\n`;
-    }
-    if (record.factors.length > 0) {
-      analysis += `影响因素：${record.factors.join('，')}\n`;
-    }
-    if (record.notes) {
-      analysis += `备注：${record.notes}\n`;
-    }
-    return analysis;
   }
 });

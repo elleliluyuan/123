@@ -1,265 +1,83 @@
-/* pages/index/index.wxss */
+/* index.wxss */
 .container {
   min-height: 100vh;
   background-color: #FFF8F3;
-  /* 精确计算底部间距，消除多余空白 */
-  padding-bottom: calc(100rpx + max(env(safe-area-inset-bottom), 0rpx));
-  padding-top: 80rpx; /* Adjusted for title alignment */
-  /* 确保页面可以滚动 */
-  overflow-y: auto;
-  /* 确保内容区域充分利用屏幕空间 */
-  box-sizing: border-box;
+  padding-bottom: 120rpx;
 }
 
-/* 页面标题 */
 .page-header {
-  padding: 20rpx 30rpx 20rpx;
-  text-align: left;
+  padding: 60rpx 40rpx 40rpx;
+  text-align: center;
 }
 
 .page-title {
-  font-size: 36rpx;
-  font-weight: 600;
-  color: #2C3E50;
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
 }
 
-/* 宠物切换标签 */
-.pet-tabs {
-  padding: 0 20rpx 20rpx;
-}
-
-.pet-tabs-scroll {
-  white-space: nowrap;
-}
-
-.pet-tabs-container {
-  display: flex;
-  gap: 20rpx;
-  padding: 0 10rpx;
-  align-items: center; /* 居中对齐，让+按钮与名字对齐 */
-}
-
-.pet-tab {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start; /* 顶部对齐，让名字在同一水平线 */
-  padding: 16rpx 20rpx;
-  border-radius: 25rpx;
-  background-color: transparent;
-  border: none;
-  transition: all 0.3s ease;
-  min-width: 80rpx;
-  position: relative;
-  white-space: nowrap;
-}
-
-.pet-tab.active {
-  background-color: transparent;
-  transform: none;
-}
-
-.pet-tab-name {
-  font-size: 28rpx; /* 普通字体大小 */
-  color: #2C3E50;
-  font-weight: 400; /* 普通字重 */
-  line-height: 1;
-  display: inline-block;
-}
-
-.pet-tab.active .pet-tab-name {
-  font-size: 32rpx; /* 选中时加大 */
-  font-weight: 600; /* 选中时加粗 */
-  color: #2C3E50;
-}
-
-.pet-tab-underline {
-  width: 40rpx; /* 加长下划线 */
-  height: 4rpx;
-  background-color: #FF8C42;
-  border-radius: 2rpx;
-  margin-top: 8rpx; /* 向下移动，增加间距 */
-}
-
-.add-pet-tab {
-  background-color: transparent;
-  border: 1rpx solid #4ECDC4;
-  width: 30rpx; /* 与字体高度相当 */
-  height: 30rpx; /* 与字体高度相当 */
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  flex-grow: 0;
-  flex-basis: 30rpx;
-  box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
-  /* 强制保持正方形，避免被压缩 */
-  min-width: 30rpx;
-  min-height: 30rpx;
-  max-width: 30rpx;
-  max-height: 30rpx;
-  /* 使用!important强制应用样式 */
-  width: 30rpx !important;
-  height: 30rpx !important;
-}
-
-.add-pet-icon {
-  font-size: 24rpx; /* 与按钮尺寸匹配 */
-  color:rgb(77, 98, 233); /* Blue color */
-  font-weight: 800;
-}
-
-/* 宠物信息卡片 */
 .pet-info-card {
-  margin: 0 20rpx 30rpx;
-  background: linear-gradient(135deg, #FFF8F3, #FFF0E6);
+  margin: 0 40rpx 40rpx;
+  background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
   border-radius: 24rpx;
-  padding: 30rpx;
-  box-shadow: 0 8rpx 32rpx rgba(255, 140, 66, 0.15);
-  position: relative;
-  overflow: hidden;
-}
-
-.pet-info-card::before {
-  content: '';
-  position: absolute;
-  top: -30rpx;
-  right: -30rpx;
-  width: 120rpx;
-  height: 120rpx;
-  background: linear-gradient(45deg, #FF8C42, #FF6B6B);
-  border-radius: 50%;
-  opacity: 0.1;
-}
-
-.pet-info-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 30rpx;
-}
-
-.pet-info-title {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #2C3E50;
-}
-
-.manage-pets-btn {
-  background-color: rgba(255, 140, 66, 0.1);
-  color: #FF8C42;
-  border: 2rpx solid rgba(255, 140, 66, 0.3);
-  border-radius: 12rpx;
-  padding: 6rpx 8rpx;
-  font-size: 18rpx;
-  font-weight: 500;
-  width: auto;
-  height: auto;
-  line-height: 1;
-}
-
-.pet-info-content {
+  padding: 40rpx;
   display: flex;
   align-items: center;
   gap: 30rpx;
 }
 
-.pet-avatar-section {
-  flex-shrink: 0;
-}
-
-.pet-avatar-large {
+.pet-avatar {
   width: 120rpx;
   height: 120rpx;
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  overflow: hidden;
-  border: 4rpx solid #FFFFFF;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
-}
-
-.pet-emoji {
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.pet-emoji {
   font-size: 60rpx;
 }
 
 .pet-details {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20rpx;
+  color: white;
 }
 
-.pet-basic-info {
-  display: flex;
-  gap: 30rpx;
+.pet-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 16rpx;
 }
 
-.info-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8rpx;
-}
-
-.info-label {
-  font-size: 22rpx;
-  color: #999999;
-  font-weight: 500;
-}
-
-.info-value {
-  font-size: 26rpx;
-  color: #2C3E50;
-  font-weight: 600;
-}
-
-.pet-cute-phrase {
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 16rpx;
-  padding: 16rpx 20rpx;
-  border-left: 4rpx solid #FF8C42;
-}
-
-.phrase-text {
-  font-size: 24rpx;
-  color: #2C3E50;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-/* 首页内容 */
-.home-content {
-  padding: 20rpx;
-}
-
-/* 日历卡片 */
-.calendar-card {
-  padding: 30rpx;
-}
-
-.calendar-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20rpx;
-}
-
-.calendar-title {
+.pet-info {
   font-size: 28rpx;
-  font-weight: 600;
-  color: #2C3E50;
+  opacity: 0.8;
+  margin-bottom: 16rpx;
 }
 
-.current-month {
-  font-size: 24rpx;
-  color: #999999;
+.pet-phrase {
+  font-size: 26rpx;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 16rpx 24rpx;
+  border-radius: 20rpx;
+}
+
+.calendar-card,
+.summary-card {
+  margin: 0 40rpx 40rpx;
+  background: white;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
 }
 
 .calendar-grid {
@@ -271,289 +89,57 @@
 .calendar-day {
   aspect-ratio: 1;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   border-radius: 12rpx;
-  background-color: #F8F9FA;
-  transition: all 0.3s ease;
-  position: relative;
+  background: #F8F8F8;
 }
-
-.calendar-day.today {
-  background-color: #FFF0E6;
-  border: 3rpx solid #FF8C42;
-  box-shadow: 0 2rpx 8rpx rgba(255, 140, 66, 0.3);
-}
-
-.calendar-day.has-record {
-  background-color: #E6F7FF;
-  border: 2rpx solid #4ECDC4;
-}
-
-.calendar-day.abnormal {
-  background-color: #FFEBEE;
-  border: 3rpx solid #FF6B6B;
-  box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.3);
-}
-
 
 .day-number {
-  font-size: 20rpx;
-  color: #2C3E50;
-  font-weight: 500;
-}
-
-.poop-icon {
-  font-size: 16rpx;
-  margin-top: 4rpx;
-  line-height: 1.2;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 100%;
-}
-
-/* 本周总结 */
-.weekly-summary {
-  padding: 30rpx;
-}
-
-.summary-header {
-  margin-bottom: 20rpx;
-}
-
-.summary-title {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #2C3E50;
-}
-
-.summary-content {
-  background-color: #F8F9FA;
-  border-radius: 12rpx;
-  padding: 20rpx;
+  font-size: 24rpx;
+  color: #666;
 }
 
 .summary-text {
-  font-size: 24rpx;
-  color: #2C3E50;
+  font-size: 28rpx;
+  color: #666;
   line-height: 1.5;
 }
 
-/* 底部三频道入口 */
-.bottom-channels {
+.bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   height: 100rpx;
-  background-color: #FFFFFF;
+  background: white;
   border-top: 1rpx solid #E8E8E8;
   display: flex;
-  z-index: 9999;
-  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
-  /* 精确控制底部间距，消除多余空白 */
-  padding-bottom: max(env(safe-area-inset-bottom), 0rpx);
-  /* 确保内容不被隐藏，但不增加额外高度 */
-  min-height: 100rpx;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.channel-entry {
-  flex: 1;
+.nav-item {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 8rpx 10rpx;
-  transition: all 0.3s ease;
-  position: relative;
-  /* 精确控制底部边距，消除多余空白 */
-  margin-bottom: max(env(safe-area-inset-bottom), 0rpx);
-  /* 确保内容垂直居中 */
-  height: 100%;
-}
-
-.channel-entry.active {
-  background-color: #FFF8F3;
-}
-
-.channel-entry.active::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60rpx;
-  height: 4rpx;
-  background-color: #FF8C42;
-  border-radius: 2rpx;
-}
-
-.channel-icon {
-  font-size: 32rpx;
-  margin-bottom: 2rpx;
-  transition: all 0.3s ease;
-  line-height: 1;
-}
-
-.channel-entry.active .channel-icon {
-  transform: scale(1.1);
-}
-
-.channel-text {
-  font-size: 20rpx;
-  color: #999999;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  line-height: 1;
-}
-
-.channel-entry.active .channel-text {
-  color: #FF8C42;
-  font-weight: 600;
-}
-
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 30rpx;
-}
-
-.section-title {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #2C3E50;
-}
-
-.section-more {
-  font-size: 28rpx;
-  color: #FF8C42;
-}
-
-.records-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20rpx;
-}
-
-.record-item {
-  background-color: #F8F9FA;
-  border-radius: 16rpx;
-  padding: 30rpx;
-  border-left: 6rpx solid #4ECDC4;
-}
-
-.record-time {
-  font-size: 24rpx;
-  color: #999999;
-  margin-bottom: 16rpx;
-}
-
-.record-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16rpx;
-}
-
-.record-details {
-  display: flex;
-  gap: 20rpx;
-}
-
-.record-hardness,
-.record-color,
-.record-shape {
-  font-size: 24rpx;
-  color: #2C3E50;
-  background-color: #FFFFFF;
-  padding: 8rpx 16rpx;
-  border-radius: 16rpx;
-}
-
-.record-score {
-  display: flex;
   align-items: center;
   gap: 8rpx;
 }
 
-.score-text {
-  font-size: 28rpx;
-  font-weight: 600;
-  color: #2C3E50;
+.nav-item.active {
+  color: #FF8C42;
 }
 
-.score-dot {
-  width: 12rpx;
-  height: 12rpx;
-  border-radius: 50%;
+.nav-icon {
+  font-size: 40rpx;
 }
 
-.score-healthy {
-  background-color: #4ECDC4;
-}
-
-.score-warning {
-  background-color: #FFD93D;
-}
-
-.score-danger {
-  background-color: #FF6B6B;
-}
-
-.record-factors {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12rpx;
-}
-
-.factor-tag {
+.nav-text {
   font-size: 20rpx;
-  color: #4ECDC4;
-  background-color: #F0F8FF;
-  padding: 6rpx 12rpx;
-  border-radius: 12rpx;
-  border: 1rpx solid #4ECDC4;
+  color: #666;
 }
 
-/* 健康建议卡片 */
-.advice-card {
-  margin: 20rpx;
-  padding: 40rpx;
-  background: linear-gradient(135deg, #4ECDC4, #44A08D);
-  color: #FFFFFF;
-}
-
-.advice-header {
-  margin-bottom: 20rpx;
-}
-
-.advice-title {
-  font-size: 32rpx;
-  font-weight: 600;
-}
-
-.advice-content {
-  font-size: 28rpx;
-  line-height: 1.6;
-}
-
-/* 空状态 */
-.empty-state {
-  text-align: center;
-  padding: 80rpx 40rpx;
-}
-
-.empty-icon {
-  font-size: 80rpx;
-  display: block;
-  margin-bottom: 20rpx;
-  opacity: 0.5;
-}
-
-.empty-text {
-  font-size: 28rpx;
-  color: #999999;
+.nav-item.active .nav-text {
+  color: #FF8C42;
+  font-weight: bold;
 }
