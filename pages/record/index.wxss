@@ -31,6 +31,40 @@
   margin-bottom: 30rpx;
 }
 
+/* 宠物选择器 */
+.pet-selector {
+  display: flex;
+  gap: 20rpx;
+}
+
+.pet-option {
+  flex: 1;
+  padding: 30rpx 20rpx;
+  background: #F8F9FA;
+  border-radius: 16rpx;
+  border: 2rpx solid #E8E8E8;
+  text-align: center;
+}
+
+.pet-option.selected {
+  background: #FFF8F3;
+  border-color: #FF8C42;
+}
+
+.pet-avatar {
+  margin-bottom: 16rpx;
+}
+
+.pet-emoji {
+  font-size: 48rpx;
+}
+
+.pet-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: bold;
+}
+
 .datetime-selector {
   width: 100%;
 }

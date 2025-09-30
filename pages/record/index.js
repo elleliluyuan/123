@@ -1,6 +1,21 @@
 // pages/record/index.js
 Page({
   data: {
+    // 宠物选择
+    selectedPetId: 'pet1',
+    pets: [
+      { 
+        id: 'pet1', 
+        name: '腿腿', 
+        emoji: '🐕'
+      },
+      { 
+        id: 'pet2', 
+        name: '大包', 
+        emoji: '🐶'
+      }
+    ],
+    
     // 日期时间相关
     datetimeRange: [[], []], // 日期和时间选项
     datetimeIndex: [0, 0],   // 当前选中的索引
@@ -59,7 +74,16 @@ Page({
     ]
   },
 
-  onLoad() {
+  onLoad(options) {
+    console.log('记录页面加载开始');
+    
+    // 检查是否有从首页传来的宠物ID
+    const selectedPetId = getApp().globalData?.selectedPetId || options.selectedPetId || 'pet1';
+    
+    this.setData({
+      selectedPetId: selectedPetId
+    });
+    
     this.initDateTime();
   },
 
@@ -193,6 +217,16 @@ Page({
     });
   },
 
+  // 选择宠物
+  selectPet(e) {
+    const petId = e.currentTarget.dataset.petId;
+    if (petId) {
+      this.setData({
+        selectedPetId: petId
+      });
+    }
+  },
+
   // 跳转到首页
   goToHome() {
     wx.navigateBack();
@@ -230,6 +264,7 @@ Page({
       timestamp: new Date().toISOString(),
       date: recordDate,
       time: recordTime,
+      petId: this.data.selectedPetId || 'pet1',
       shape: selectedShape,
       color: selectedColor,
       amount: this.data.amountValue,
@@ -241,7 +276,7 @@ Page({
       healthScore: this.calculateHealthScore()
     };
     
-    console.log('保存记录:', record);
+    console.log('保存记录，宠物ID:', this.data.selectedPetId, '记录数据:', record);
 
     // 保存到本地存储
     this.saveRecordToStorage(record);

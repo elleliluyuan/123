@@ -4,6 +4,32 @@
     <text class="page-title">便便记录</text>
   </view>
 
+  <!-- 宠物选择 -->
+  <view class="form-section">
+    <view class="pet-selector">
+      <view 
+        class="pet-option {{selectedPetId === 'pet1' ? 'selected' : ''}}"
+        bindtap="selectPet"
+        data-pet-id="pet1"
+      >
+        <view class="pet-avatar">
+          <text class="pet-emoji">🐕</text>
+        </view>
+        <text class="pet-name">腿腿</text>
+      </view>
+      <view 
+        class="pet-option {{selectedPetId === 'pet2' ? 'selected' : ''}}"
+        bindtap="selectPet"
+        data-pet-id="pet2"
+      >
+        <view class="pet-avatar">
+          <text class="pet-emoji">🐶</text>
+        </view>
+        <text class="pet-name">大包</text>
+      </view>
+    </view>
+  </view>
+
   <view class="form-section">
     <view class="section-title">日期时间</view>
     <view class="datetime-selector">

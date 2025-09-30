@@ -4,29 +4,62 @@
     <text class="page-title">完美💩记</text>
   </view>
 
+  <!-- 宠物切换标签 -->
+  <view class="pet-tabs">
+    <view 
+      class="pet-tab {{currentPetId === 'pet1' ? 'active' : ''}}"
+      bindtap="selectPet"
+      data-pet-id="pet1"
+    >
+      <view class="pet-tab-content">
+        <text class="pet-tab-name">腿腿</text>
+        <view class="add-button" bindtap="goToRecord" catchtap="true">+</view>
+      </view>
+    </view>
+    <view 
+      class="pet-tab {{currentPetId === 'pet2' ? 'active' : ''}}"
+      bindtap="selectPet"
+      data-pet-id="pet2"
+    >
+      <view class="pet-tab-content">
+        <text class="pet-tab-name">大包</text>
+        <view class="add-button" bindtap="goToRecord" catchtap="true">+</view>
+      </view>
+    </view>
+  </view>
+
   <view class="pet-info-card">
     <view class="pet-avatar">
-      <text class="pet-emoji">🐕</text>
+      <text class="pet-emoji">{{currentPet.emoji}}</text>
     </view>
     <view class="pet-details">
-      <text class="pet-name">腿腿</text>
-      <text class="pet-info">2岁 · 公 · 4.5kg</text>
-      <text class="pet-phrase">热爱自然的拉屎大王</text>
+      <text class="pet-name">{{currentPet.name}}</text>
+      <text class="pet-info">{{currentPet.age}} · {{currentPet.gender}} · {{currentPet.weight}}</text>
+      <text class="pet-phrase">{{currentPet.phrase}}</text>
     </view>
   </view>
 
   <view class="calendar-card">
     <text class="card-title">📅 便便日历</text>
     <view class="calendar-grid">
-      <view class="calendar-day" wx:for="{{calendarDays}}" wx:key="*this">
-        <text class="day-number">{{item}}</text>
+      <view 
+        class="calendar-day {{item.isToday ? 'today' : ''}} {{item.hasRecord ? 'has-record' : ''}}"
+        wx:for="{{calendarDays}}" 
+        wx:key="date"
+        bindtap="viewDayRecord"
+        data-date="{{item.date}}"
+      >
+        <text class="day-number">{{item.day}}</text>
+        <view class="record-indicator" wx:if="{{item.hasRecord}}">
+          <text class="record-icon">{{item.recordIcon}}</text>
+        </view>
       </view>
     </view>
   </view>
 
   <view class="summary-card">
     <text class="card-title">📊 本周总结</text>
-    <text class="summary-text">本周记录正常，继续保持！</text>
+    <text class="summary-text">{{weeklySummary}}</text>
   </view>
 
   <view class="bottom-nav">
