@@ -1,0 +1,194 @@
+<!--pages/record/index.wxml-->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">💩🚧ing</text>
+  </view>
+
+  <!-- 宠物选择 -->
+  <view class="form-section">
+    <view class="section-title"></view>
+    <view class="pet-selector">
+      <view 
+        class="pet-option {{selectedPetId === 'pet1' ? 'selected' : ''}}"
+        bindtap="selectPet"
+        data-pet-id="pet1"
+      >
+        <view class="pet-avatar">
+          <text class="pet-emoji">🐕</text>
+        </view>
+        <text class="pet-name">腿腿</text>
+      </view>
+      <view 
+        class="pet-option {{selectedPetId === 'pet2' ? 'selected' : ''}}"
+        bindtap="selectPet"
+        data-pet-id="pet2"
+      >
+        <view class="pet-avatar">
+          <text class="pet-emoji">🐶</text>
+        </view>
+        <text class="pet-name">大包</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 日期时间选择 -->
+  <view class="form-section">
+    <view class="section-title">日期时间</view>
+    <view class="datetime-selector">
+      <picker mode="multiSelector" range="{{datetimeRange}}" value="{{datetimeIndex}}" bindchange="onDateTimeChange">
+        <view class="picker-item">
+          <text class="picker-value">{{displayDateTime}}</text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 便便形态选择 -->
+  <view class="form-section">
+    <view class="section-title">形态</view>
+    <view class="shape-selector">
+      <view 
+        class="poop-item {{selectedShape === item.value ? 'selected' : ''}}"
+        wx:for="{{poopShapes}}" 
+        wx:key="value"
+        bindtap="selectShape"
+        data-value="{{item.value}}"
+      >
+        <view class="shape-icon">{{item.icon}}</view>
+        <text class="shape-text">{{item.label}}</text>
+        <text class="shape-desc">{{item.description}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 颜色选择 -->
+  <view class="form-section">
+    <view class="section-title">颜色</view>
+    <view class="color-selector">
+      <view 
+        class="color-item {{selectedColor === item.value ? 'selected' : ''}}"
+        wx:for="{{colorOptions}}" 
+        wx:key="value"
+        bindtap="selectColor"
+        data-value="{{item.value}}"
+      >
+        <view class="color-circle" style="background-color: {{item.color}}"></view>
+        <text class="color-label">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 便便量选择 -->
+  <view class="form-section">
+    <view class="section-title">便便量</view>
+    <view class="amount-selector">
+      <view class="amount-display">
+        <text class="amount-label">{{amountLabel}}</text>
+      </view>
+      <slider 
+        class="amount-slider"
+        min="0" 
+        max="100" 
+        value="{{amountValue}}" 
+        bindchange="onAmountChange"
+        activeColor="#FF8C42"
+        backgroundColor="#E8E8E8"
+        block-size="20"
+      />
+      <view class="amount-labels">
+        <text class="amount-label-item">偏少</text>
+        <text class="amount-label-item">正常</text>
+        <text class="amount-label-item">偏多</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 便便环境 -->
+  <view class="form-section">
+    <view class="section-title">环境</view>
+    <view class="environment-selector">
+      <view 
+        class="environment-item {{selectedEnvironment === item.value ? 'selected' : ''}}"
+        wx:for="{{environmentOptions}}" 
+        wx:key="value"
+        bindtap="selectEnvironment"
+        data-value="{{item.value}}"
+      >
+        <view class="environment-icon">{{item.icon}}</view>
+        <text class="environment-text">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 异常症状 -->
+  <view class="form-section">
+    <view class="section-title">异常症状（可选）</view>
+    <view class="symptoms-container">
+      <view 
+        class="symptom-tag {{selectedSymptom === item ? 'selected' : ''}}"
+        wx:for="{{symptomOptions}}" 
+        wx:key="*this"
+        bindtap="selectSymptom"
+        data-symptom="{{item}}"
+      >
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 影响因素 -->
+  <view class="form-section">
+    <view class="section-title">影响因素（可选）</view>
+    <view class="factors-container">
+      <view 
+        class="factor-tag {{selectedFactor === item ? 'selected' : ''}}"
+        wx:for="{{factorOptions}}" 
+        wx:key="*this"
+        bindtap="selectFactor"
+        data-factor="{{item}}"
+      >
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 备注 -->
+  <view class="form-section">
+    <view class="section-title">备注（选填）</view>
+    <textarea 
+      class="notes-input" 
+      placeholder="记录其他重要信息..."
+      value="{{notes}}"
+      bindinput="onNotesInput"
+      maxlength="200"
+    ></textarea>
+  </view>
+
+  <!-- 按钮区域 -->
+  <view class="button-section">
+    <button class="cancel-btn" bindtap="cancelRecord">取消</button>
+    <button class="save-btn" bindtap="saveRecord">保存记录</button>
+  </view>
+
+  <!-- 底部三频道入口 -->
+  <view class="bottom-channels">
+    <!-- 左频道：首页 -->
+    <view class="channel-entry" bindtap="switchChannel" data-channel="home">
+      <view class="channel-icon">🏠</view>
+      <text class="channel-text">首页</text>
+    </view>
+    
+    <!-- 中频道：记录 -->
+    <view class="channel-entry active" bindtap="switchChannel" data-channel="record">
+      <view class="channel-icon">📝</view>
+      <text class="channel-text">记录</text>
+    </view>
+    
+    <!-- 右频道：AI -->
+    <view class="channel-entry" bindtap="switchChannel" data-channel="ai">
+      <view class="channel-icon">🤖</view>
+      <text class="channel-text">问AI</text>
+    </view>
+  </view>
+</view>

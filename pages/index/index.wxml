@@ -1,0 +1,118 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <text class="page-title">完美💩记</text>
+  </view>
+
+  <!-- 宠物切换标签 -->
+  <view class="pet-tabs">
+    <scroll-view class="pet-tabs-scroll" scroll-x="true" show-scrollbar="false">
+      <view class="pet-tabs-container">
+        <view 
+          class="pet-tab {{currentPetId === 'pet1' ? 'active' : ''}}"
+          bindtap="selectPet"
+          data-pet-id="pet1"
+        >
+          <text class="pet-tab-name">腿腿</text>
+          <view class="pet-tab-underline" wx:if="{{currentPetId === 'pet1'}}"></view>
+        </view>
+        <view 
+          class="pet-tab {{currentPetId === 'pet2' ? 'active' : ''}}"
+          bindtap="selectPet"
+          data-pet-id="pet2"
+        >
+          <text class="pet-tab-name">大包</text>
+          <view class="pet-tab-underline" wx:if="{{currentPetId === 'pet2'}}"></view>
+        </view>
+        <view class="pet-tab add-pet-tab" bindtap="addPet">
+          <text class="add-pet-icon">➕</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 宠物信息卡片 -->
+  <view class="pet-info-card">
+    <view class="pet-info-content">
+      <view class="pet-avatar-section">
+        <view class="pet-avatar-large">
+          <view class="pet-emoji">{{currentPet.emoji || '🐕'}}</view>
+        </view>
+      </view>
+      
+      <view class="pet-details">
+        <view class="pet-basic-info">
+          <view class="info-item">
+            <text class="info-label">年龄</text>
+            <text class="info-value">{{currentPet.age || '未知'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">性别</text>
+            <text class="info-value">{{currentPet.gender || '未知'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">体重</text>
+            <text class="info-value">{{currentPet.weight || '未知'}}</text>
+          </view>
+        </view>
+        
+        <view class="pet-cute-phrase">
+          <text class="phrase-text">{{currentPet.cutePhrase || '健康快乐的小宝贝'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 首页内容：日历和总结 -->
+  <view class="home-content">
+    <view class="calendar-card card">
+      <view class="calendar-header">
+        <text class="calendar-title">📅 便便日历</text>
+        <text class="current-month">{{currentMonth}}</text>
+      </view>
+      <view class="calendar-grid">
+        <view 
+          class="calendar-day {{item.isToday ? 'today' : ''}} {{item.hasRecord ? 'has-record' : ''}} {{item.isAbnormal ? 'abnormal' : ''}}"
+          wx:for="{{calendarDays}}" 
+          wx:key="date"
+          bindtap="viewDayRecord"
+          data-date="{{item.date}}"
+        >
+          <text class="day-number">{{item.day}}</text>
+          <view class="poop-icon">{{item.poopIcon}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="weekly-summary card">
+      <view class="summary-header">
+        <text class="summary-title">📊 本周总结</text>
+      </view>
+      <view class="summary-content">
+        <text class="summary-text">{{weeklySummary}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部三频道入口 -->
+  <view class="bottom-channels">
+    <!-- 左频道：首页 -->
+    <view class="channel-entry active" bindtap="switchChannel" data-channel="home">
+      <view class="channel-icon">🏠</view>
+      <text class="channel-text">首页</text>
+    </view>
+    
+    <!-- 中频道：记录 -->
+    <view class="channel-entry" bindtap="switchChannel" data-channel="record">
+      <view class="channel-icon">📝</view>
+      <text class="channel-text">记录</text>
+    </view>
+    
+    <!-- 右频道：AI -->
+    <view class="channel-entry" bindtap="switchChannel" data-channel="ai">
+      <view class="channel-icon">🤖</view>
+      <text class="channel-text">问AI</text>
+    </view>
+  </view>
+</view>

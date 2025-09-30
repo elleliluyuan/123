@@ -1,0 +1,388 @@
+/* pages/record/index.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #FFF8F3;
+  padding: 20rpx;
+}
+
+/* 页面头部 */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  margin-bottom: 30rpx;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  padding: 10rpx;
+}
+
+.back-icon {
+  font-size: 32rpx;
+  color: #FF8C42;
+  margin-right: 8rpx;
+}
+
+.back-text {
+  font-size: 28rpx;
+  color: #FF8C42;
+}
+
+.page-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2C3E50;
+}
+
+.header-right {
+  width: 80rpx;
+}
+
+/* 表单区域 */
+.form-section {
+  margin-bottom: 40rpx;
+}
+
+/* 宠物选择器 */
+.pet-selector {
+  display: flex;
+  gap: 20rpx;
+  padding: 20rpx 0;
+  background-color: #F8F9FA;
+  border-radius: 12rpx;
+  margin: 0 20rpx;
+}
+
+.pet-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+  border: 3rpx solid #E0E0E0;
+  border-radius: 16rpx;
+  background-color: #FFFFFF;
+  transition: all 0.3s ease;
+  min-width: 120rpx;
+  cursor: pointer;
+}
+
+.pet-option.selected {
+  border-color: #FF8C42;
+  background-color: #FFF8F3;
+  transform: scale(1.05);
+  box-shadow: 0 4rpx 12rpx rgba(255, 140, 66, 0.3);
+}
+
+.pet-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background-color: #F5F5F5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12rpx;
+  border: 3rpx solid #E0E0E0;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.pet-option.selected .pet-avatar {
+  border-color: #FF8C42;
+  background-color: #FFFFFF;
+  box-shadow: 0 4rpx 12rpx rgba(255, 140, 66, 0.3);
+}
+
+.pet-emoji {
+  font-size: 40rpx;
+  line-height: 1;
+}
+
+.pet-name {
+  font-size: 28rpx;
+  color: #2C3E50;
+  font-weight: 600;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2C3E50;
+  margin-bottom: 20rpx;
+}
+
+/* 日期时间选择器 */
+.datetime-selector {
+  display: flex;
+  gap: 0;
+  justify-content: flex-start;
+}
+
+.picker-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx;
+  background-color: #FFFFFF;
+  border: 2rpx solid #E8E8E8;
+  border-radius: 16rpx;
+  width: 280%; /* 拉长到280% */
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.picker-label {
+  font-size: 28rpx;
+  color: #2C3E50;
+}
+
+.picker-value {
+  font-size: 28rpx;
+  color: #FF8C42;
+  font-weight: 500;
+}
+
+/* 便便形态选择器 */
+.shape-selector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.poop-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30rpx 20rpx;
+  border: 2rpx solid #E8E8E8;
+  border-radius: 20rpx;
+  background-color: #FFFFFF;
+  transition: all 0.3s ease;
+}
+
+.poop-item.selected {
+  border-color: #FF8C42;
+  background-color: #FFF8F3;
+}
+
+.shape-icon {
+  font-size: 48rpx;
+  margin-bottom: 12rpx;
+}
+
+.shape-text {
+  font-size: 24rpx;
+  color: #2C3E50;
+  text-align: center;
+}
+
+.shape-desc {
+  font-size: 20rpx;
+  color: #999999;
+  text-align: center;
+  margin-top: 8rpx;
+}
+
+/* 颜色选择器 */
+.color-selector {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+
+.color-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+  border: 2rpx solid #E8E8E8;
+  border-radius: 16rpx;
+  background-color: #FFFFFF;
+  transition: all 0.3s ease;
+}
+
+.color-item.selected {
+  border-color: #FF8C42;
+  background-color: #FFF8F3;
+}
+
+.color-circle {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  margin-bottom: 12rpx;
+  border: 2rpx solid #E8E8E8;
+}
+
+.color-label {
+  font-size: 22rpx;
+  color: #2C3E50;
+  text-align: center;
+}
+
+/* 便便量选择器 */
+.amount-selector {
+  padding: 20rpx;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+}
+
+.amount-display {
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.amount-label {
+  font-size: 32rpx;
+  color: #FF8C42;
+  font-weight: 600;
+}
+
+.amount-slider {
+  margin: 20rpx 0;
+}
+
+.amount-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20rpx;
+}
+
+.amount-label-item {
+  font-size: 24rpx;
+  color: #999999;
+}
+
+/* 便便环境选择器 */
+.environment-selector {
+  display: flex;
+  gap: 20rpx;
+}
+
+.environment-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30rpx 20rpx;
+  border: 2rpx solid #E8E8E8;
+  border-radius: 16rpx;
+  background-color: #FFFFFF;
+  transition: all 0.3s ease;
+}
+
+.environment-item.selected {
+  border-color: #FF8C42;
+  background-color: #FFF8F3;
+}
+
+.environment-icon {
+  font-size: 48rpx;
+  margin-bottom: 12rpx;
+}
+
+.environment-text {
+  font-size: 24rpx;
+  color: #2C3E50;
+  text-align: center;
+}
+
+/* 异常症状 */
+.symptoms-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.symptom-tag {
+  padding: 16rpx 32rpx;
+  border: 2rpx solid #E8E8E8;
+  border-radius: 32rpx;
+  background-color: #FFFFFF;
+  color: #2C3E50;
+  font-size: 28rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.symptom-tag.selected {
+  border-color: #FF6B6B;
+  background-color: #FFF5F5;
+}
+
+/* 影响因素 */
+.factors-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.factor-tag {
+  padding: 16rpx 32rpx;
+  border: 2rpx solid #E8E8E8;
+  border-radius: 32rpx;
+  background-color: #FFFFFF;
+  color: #2C3E50;
+  font-size: 28rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.factor-tag.selected {
+  border-color: #4ECDC4;
+  background-color: #F0F8FF;
+}
+
+/* 备注输入 */
+.notes-input {
+  width: 100%;
+  min-height: 120rpx;
+  padding: 24rpx;
+  border: 2rpx solid #E8E8E8;
+  border-radius: 16rpx;
+  background-color: #FFFFFF;
+  font-size: 28rpx;
+  color: #2C3E50;
+  line-height: 1.5;
+}
+
+.notes-input::placeholder {
+  color: #999999;
+}
+
+/* 按钮区域 */
+.button-section {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 60rpx;
+  padding-bottom: 40rpx;
+}
+
+.cancel-btn {
+  flex: 1;
+  padding: 24rpx;
+  background-color: #F8F9FA;
+  color: #6C757D;
+  border: 2rpx solid #E8E8E8;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.save-btn {
+  flex: 2;
+  padding: 24rpx;
+  background-color: #FF8C42;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+}
