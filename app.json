@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/record/index",
+    "pages/add-pet/index",
     "pages/history/index",
     "pages/profile/index",
     "pages/statistics/index"
@@ -10,6 +11,19 @@
     "navigationBarTextStyle": "black",
     "navigationStyle": "custom",
     "backgroundColor": "#FFF8F3"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#FF8C42",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/record/index", "text": "记录" },
+      { "pagePath": "pages/statistics/index", "text": "统计" },
+      { "pagePath": "pages/history/index", "text": "历史" },
+      { "pagePath": "pages/profile/index", "text": "我的" }
+    ]
   },
   "style": "v2",
   "renderer": "skyline",

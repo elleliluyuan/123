@@ -1,11 +1,13 @@
 <!--pages/record/index.wxml-->
-<view class="container">
+<scroll-view class="container" scroll-y="true" enhanced="true" show-scrollbar="false">
+  <!-- 页面标题 -->
   <view class="page-header">
-    <text class="page-title">便便记录</text>
+    <text class="page-title">💩🚧ing</text>
   </view>
 
   <!-- 宠物选择 -->
   <view class="form-section">
+    <view class="section-title"></view>
     <view class="pet-selector">
       <view 
         class="pet-option {{selectedPetId === 'pet1' ? 'selected' : ''}}"
@@ -30,8 +32,9 @@
     </view>
   </view>
 
+  <!-- 日期时间选择 -->
   <view class="form-section">
-    <view class="section-title">日期时间</view>
+    <view class="section-title"></view>
     <view class="datetime-selector">
       <picker mode="multiSelector" range="{{datetimeRange}}" value="{{datetimeIndex}}" bindchange="onDateTimeChange">
         <view class="picker-item">
@@ -41,8 +44,9 @@
     </view>
   </view>
 
+  <!-- 便便形态选择 -->
   <view class="form-section">
-    <view class="section-title">便便形态</view>
+    <view class="section-title">形态</view>
     <view class="shape-selector">
       <view 
         class="poop-item {{selectedShape === item.value ? 'selected' : ''}}"
@@ -58,6 +62,7 @@
     </view>
   </view>
 
+  <!-- 颜色选择 -->
   <view class="form-section">
     <view class="section-title">颜色</view>
     <view class="color-selector">
@@ -74,6 +79,7 @@
     </view>
   </view>
 
+  <!-- 便便量选择 -->
   <view class="form-section">
     <view class="section-title">便便量</view>
     <view class="amount-selector">
@@ -98,8 +104,9 @@
     </view>
   </view>
 
+  <!-- 便便环境 -->
   <view class="form-section">
-    <view class="section-title">便便环境</view>
+    <view class="section-title">环境</view>
     <view class="environment-selector">
       <view 
         class="environment-item {{selectedEnvironment === item.value ? 'selected' : ''}}"
@@ -114,6 +121,7 @@
     </view>
   </view>
 
+  <!-- 异常症状 -->
   <view class="form-section">
     <view class="section-title">异常症状（可选）</view>
     <view class="symptoms-container">
@@ -129,6 +137,7 @@
     </view>
   </view>
 
+  <!-- 影响因素 -->
   <view class="form-section">
     <view class="section-title">影响因素（可选）</view>
     <view class="factors-container">
@@ -144,6 +153,7 @@
     </view>
   </view>
 
+  <!-- 备注 -->
   <view class="form-section">
     <view class="section-title">备注（选填）</view>
     <textarea 
@@ -155,25 +165,30 @@
     ></textarea>
   </view>
 
+  <!-- 按钮区域 -->
   <view class="button-section">
     <button class="cancel-btn" bindtap="cancelRecord">取消</button>
     <button class="save-btn" bindtap="saveRecord">保存记录</button>
   </view>
 
-  <view class="bottom-nav">
-    <view class="nav-item" bindtap="goToHome">
-      <text class="nav-icon">🏠</text>
-      <text class="nav-text">首页</text>
+  <!-- 底部三频道入口 -->
+  <view class="bottom-channels">
+    <!-- 左频道：首页 -->
+    <view class="channel-entry" bindtap="switchChannel" data-channel="home">
+      <view class="channel-icon">🏠</view>
+      <text class="channel-text">首页</text>
     </view>
     
-    <view class="nav-item active">
-      <text class="nav-icon">📝</text>
-      <text class="nav-text">记录</text>
+    <!-- 中频道：记录 -->
+    <view class="channel-entry active" bindtap="switchChannel" data-channel="record">
+      <view class="channel-icon">📝</view>
+      <text class="channel-text">记录</text>
     </view>
     
-    <view class="nav-item">
-      <text class="nav-icon">🤖</text>
-      <text class="nav-text">问AI</text>
+    <!-- 右频道：AI -->
+    <view class="channel-entry" bindtap="switchChannel" data-channel="ai">
+      <view class="channel-icon">🤖</view>
+      <text class="channel-text">问AI</text>
     </view>
   </view>
-</view>
+</scroll-view>

@@ -1,0 +1,141 @@
+<!--pages/add-pet/index.wxml-->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="header-left" bindtap="goBack">
+      <text class="back-arrow">&lt;</text>
+    </view>
+    <text class="page-title">添加宠物</text>
+  </view>
+
+  <!-- 表单内容 -->
+  <view class="form-content">
+    <!-- 宠物头像选择 -->
+    <view class="form-card">
+      <view class="form-row">
+        <text class="form-label">宠物头像</text>
+        <view class="avatar-upload" bindtap="uploadAvatar">
+          <image wx:if="{{petAvatar}}" class="avatar-image" src="{{petAvatar}}" mode="aspectFill"></image>
+          <view wx:else class="avatar-placeholder">
+            <text class="upload-icon">📷</text>
+            <text class="upload-text">点击上传</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 宠物名称 -->
+    <view class="form-card">
+      <view class="form-row" bindtap="editName">
+        <text class="form-label">宠物名字</text>
+        <view class="form-value">
+          <text class="value-text" wx:if="{{petName}}">{{petName}}</text>
+          <text class="placeholder-text" wx:else>请输入宠物名字</text>
+          <text class="arrow">></text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 宠物品种 -->
+    <view class="form-card">
+      <view class="form-row" bindtap="selectBreed">
+        <text class="form-label">宠物品种</text>
+        <view class="form-value">
+          <text class="value-text" wx:if="{{petBreed}}">{{petBreed}}</text>
+          <text class="placeholder-text" wx:else>如：金毛、泰迪、英短</text>
+          <text class="arrow">></text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 宠物性别 -->
+    <view class="form-card">
+      <view class="form-row">
+        <text class="form-label">宠物性别</text>
+        <view class="gender-selector">
+          <view 
+            class="gender-option {{petGender === '公' ? 'selected' : ''}}"
+            bindtap="selectGender"
+            data-gender="公"
+          >
+            男生
+          </view>
+          <view 
+            class="gender-option {{petGender === '母' ? 'selected' : ''}}"
+            bindtap="selectGender"
+            data-gender="母"
+          >
+            女生
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 宠物体重 -->
+    <view class="form-card">
+      <view class="form-row" bindtap="selectWeight">
+        <text class="form-label">宠物体重</text>
+        <view class="form-value">
+          <text class="value-text" wx:if="{{petWeight}}">{{petWeight}}</text>
+          <text class="placeholder-text" wx:else>选择宠物体重</text>
+          <text class="arrow">></text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 出生日期 -->
+    <view class="form-card">
+      <view class="form-row" bindtap="selectBirthDate">
+        <text class="form-label">出生日期</text>
+        <view class="form-value">
+          <text class="value-text" wx:if="{{birthDate}}">{{birthDate}}</text>
+          <text class="placeholder-text" wx:else>如不确定可写预估年龄</text>
+          <text class="arrow">></text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 可爱短语 -->
+    <view class="form-card">
+      <view class="form-row" bindtap="editCutePhrase">
+        <text class="form-label">一句话介绍</text>
+        <view class="form-value">
+          <text class="value-text" wx:if="{{petCutePhrase}}">{{petCutePhrase}}</text>
+          <text class="placeholder-text" wx:else>在你眼里,Ta的样子</text>
+          <text class="arrow">></text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="tip-text">
+    出生日期/到家日期不记得可估算一个值,后续可以修改哦~
+  </view>
+
+  <!-- 保存按钮 -->
+  <view class="save-button-section">
+    <button class="save-button" bindtap="savePet">保存编辑</button>
+  </view>
+
+  <!-- 底部三频道入口 -->
+  <view class="bottom-channels">
+    <!-- 左频道：首页 -->
+    <view class="channel-entry" bindtap="switchChannel" data-channel="home">
+      <view class="channel-icon">🏠</view>
+      <text class="channel-text">首页</text>
+    </view>
+
+    <!-- 中频道：记录 -->
+    <view class="channel-entry" bindtap="switchChannel" data-channel="record">
+      <view class="channel-icon">📝</view>
+      <text class="channel-text">记录</text>
+    </view>
+
+    <!-- 右频道：AI -->
+    <view class="channel-entry" bindtap="switchChannel" data-channel="ai">
+      <view class="channel-icon">🤖</view>
+      <text class="channel-text">问AI</text>
+    </view>
+  </view>
+</view>

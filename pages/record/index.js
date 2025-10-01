@@ -7,12 +7,22 @@ Page({
       { 
         id: 'pet1', 
         name: '腿腿', 
-        emoji: '🐕'
+        emoji: '🐕',
+        avatar: '/images/tuitui.jpg',
+        age: '2岁',
+        gender: '公',
+        weight: '4.5kg',
+        cutePhrase: '热爱自然的拉屎大王'
       },
       { 
         id: 'pet2', 
         name: '大包', 
-        emoji: '🐶'
+        emoji: '🐶',
+        avatar: '/images/dabao.jpg',
+        age: '1岁',
+        gender: '母',
+        weight: '3.2kg',
+        cutePhrase: '优雅的便便小公主'
       }
     ],
     
@@ -227,9 +237,44 @@ Page({
     }
   },
 
+  // 切换频道
+  switchChannel(e) {
+    const channel = e.currentTarget.dataset.channel;
+
+    if (channel === 'home') {
+      // 首页频道，传递当前选中的宠物ID
+      const selectedPetId = this.data.selectedPetId;
+      console.log('切换频道到首页，当前选中的宠物ID:', selectedPetId);
+      
+      // 使用全局数据存储选中的宠物ID
+      getApp().globalData = getApp().globalData || {};
+      getApp().globalData.selectedPetId = selectedPetId;
+      
+      wx.switchTab({
+        url: `/pages/index/index?selectedPetId=${selectedPetId}`
+      });
+    } else if (channel === 'record') {
+      // 记录频道，已经在当前页面
+      console.log('已在记录页面');
+    } else if (channel === 'ai') {
+      // AI频道，跳转到AI对话页面
+      wx.showToast({
+        title: 'AI功能开发中',
+        icon: 'none'
+      });
+    }
+  },
+
   // 跳转到首页
   goToHome() {
-    wx.navigateBack();
+    // 保存当前选中的宠物ID到全局数据
+    getApp().globalData = getApp().globalData || {};
+    getApp().globalData.selectedPetId = this.data.selectedPetId;
+    
+    // 使用 switchTab 跳转到首页
+    wx.switchTab({
+      url: '/pages/index/index'
+    });
   },
 
   // 取消记录
@@ -281,16 +326,13 @@ Page({
     // 保存到本地存储
     this.saveRecordToStorage(record);
 
-    // 显示成功提示
-    wx.showToast({
-      title: '记录保存成功',
-      icon: 'success',
-      success: () => {
-        setTimeout(() => {
-          this.goToHome();
-        }, 1500);
-      }
-    });
+    // 根据健康评分显示不同结果
+    const healthScore = record.healthScore;
+    if (healthScore >= 80) {
+      this.showCongratulationsDialog();
+    } else {
+      this.showAIAnalysisDialog(record);
+    }
   },
 
   // 保存记录到本地存储
@@ -347,5 +389,64 @@ Page({
     }
     
     return Math.max(0, Math.min(100, score));
+  },
+
+  // 显示恭喜对话框
+  showCongratulationsDialog() {
+    wx.showModal({
+      title: '🎉 太棒了！',
+      content: '您的狗狗便便状况很好！继续保持良好的饮食和运动习惯，您的狗狗会越来越健康的！',
+      showCancel: false,
+      confirmText: '继续记录',
+      success: () => {
+        this.goToHome();
+      }
+    });
+  },
+
+  // 显示AI分析对话框
+  showAIAnalysisDialog(record) {
+    const analysis = this.generateAnalysis(record);
+    wx.showModal({
+      title: '🔍 健康分析',
+      content: analysis,
+      confirmText: '继续沟通',
+      cancelText: '知道了',
+      success: (res) => {
+        if (res.confirm) {
+          wx.showToast({
+            title: 'AI功能开发中',
+            icon: 'none'
+          });
+          setTimeout(() => {
+            this.goToHome();
+          }, 1500);
+        } else {
+          this.goToHome();
+        }
+      }
+    });
+  },
+
+  // 生成健康分析
+  generateAnalysis(record) {
+    let analysis = '根据记录分析：\n\n';
+    
+    analysis += `便便形态：${this.data.poopShapes.find(s => s.value === record.shape)?.label || record.shape}\n`;
+    analysis += `便便颜色：${this.data.colorOptions.find(c => c.value === record.color)?.label || record.color}\n`;
+    analysis += `便便量：${record.amountLabel}\n`;
+    analysis += `便便环境：${this.data.environmentOptions.find(e => e.value === record.environment)?.label || record.environment}\n`;
+    
+    if (record.symptoms.length > 0) {
+      analysis += `异常症状：${record.symptoms.join('，')}\n`;
+    }
+    if (record.factors.length > 0) {
+      analysis += `影响因素：${record.factors.join('，')}\n`;
+    }
+    if (record.notes) {
+      analysis += `备注：${record.notes}\n`;
+    }
+    
+    return analysis;
   }
 });

@@ -1,127 +1,168 @@
 /* pages/record/index.wxss */
 .container {
-  min-height: 100vh;
+  height: 100vh;
   background-color: #FFF8F3;
-  padding-bottom: 120rpx;
+  padding: 20rpx;
+  /* 精确计算底部间距，消除多余空白 */
+  padding-bottom: calc(100rpx + max(env(safe-area-inset-bottom), 0rpx));
+  /* 调整顶部间距，让标题与小程序按钮居中对齐 */
+  padding-top: 80rpx;
+  /* 确保内容区域充分利用屏幕空间 */
+  box-sizing: border-box;
 }
 
+/* 页面头部 */
 .page-header {
-  padding: 60rpx 40rpx 40rpx;
-  text-align: center;
+  padding: 20rpx 30rpx 20rpx;
+  text-align: left;
 }
 
 .page-title {
-  font-size: 48rpx;
-  font-weight: bold;
-  color: #333;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #2C3E50;
 }
 
+/* 表单区域 */
 .form-section {
-  margin: 0 40rpx 40rpx;
-  background: white;
-  border-radius: 20rpx;
-  padding: 40rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
-}
-
-.section-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 30rpx;
+  margin-bottom: 40rpx;
+  padding: 0 30rpx; /* 与标题左对齐 */
 }
 
 /* 宠物选择器 */
 .pet-selector {
   display: flex;
   gap: 20rpx;
+  padding: 20rpx 0;
+  background-color: transparent;
+  border-radius: 12rpx;
+  margin: 0; /* 移除额外边距，与标题对齐 */
 }
 
 .pet-option {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 30rpx 20rpx;
-  background: #F8F9FA;
-  border-radius: 16rpx;
   border: 2rpx solid #E8E8E8;
-  text-align: center;
+  border-radius: 16rpx;
+  background-color: #FFFFFF;
+  transition: all 0.3s ease;
 }
 
 .pet-option.selected {
-  background: #FFF8F3;
   border-color: #FF8C42;
+  background-color: #FFF8F3;
+  box-shadow: 0 4rpx 16rpx rgba(255, 140, 66, 0.2);
+  transform: translateY(-4rpx);
 }
 
 .pet-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background-color: #F0F0F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 16rpx;
+  font-size: 40rpx;
 }
 
 .pet-emoji {
-  font-size: 48rpx;
+  font-size: 40rpx;
 }
 
 .pet-name {
   font-size: 28rpx;
-  color: #333;
-  font-weight: bold;
+  color: #2C3E50;
+  font-weight: 500;
 }
 
+/* 标题 */
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2C3E50;
+  margin-bottom: 20rpx;
+}
+
+/* 日期时间选择器 */
 .datetime-selector {
-  width: 100%;
+  display: flex;
+  gap: 0;
+  justify-content: flex-start;
 }
 
 .picker-item {
-  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 24rpx;
-  background: #F8F9FA;
-  border-radius: 16rpx;
+  background-color: #FFFFFF;
   border: 2rpx solid #E8E8E8;
-  text-align: center;
+  border-radius: 16rpx;
+  width: 100%;
   box-sizing: border-box;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.picker-label {
+  font-size: 28rpx;
+  color: #2C3E50;
 }
 
 .picker-value {
   font-size: 28rpx;
-  color: #333;
+  color: #FF8C42; /* 橙色，与图片中的颜色一致 */
+  font-weight: 600; /* 稍微加粗，更突出 */
 }
 
+/* 便便形态选择器 */
 .shape-selector {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20rpx;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15rpx;
 }
 
 .poop-item {
-  padding: 30rpx 20rpx;
-  background: #F8F9FA;
-  border-radius: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx 16rpx;
+  background-color: #FFFFFF;
   border: 2rpx solid #E8E8E8;
+  border-radius: 16rpx;
+  transition: all 0.3s ease;
   text-align: center;
 }
 
 .poop-item.selected {
-  background: #FFF8F3;
   border-color: #FF8C42;
+  background-color: #FFF8F3;
+  box-shadow: 0 4rpx 16rpx rgba(255, 140, 66, 0.2);
 }
 
 .shape-icon {
-  font-size: 48rpx;
-  margin-bottom: 16rpx;
-}
-
-.shape-text {
-  display: block;
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #333;
+  font-size: 60rpx;
   margin-bottom: 8rpx;
 }
 
-.shape-desc {
-  display: block;
-  font-size: 24rpx;
-  color: #666;
+.shape-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2C3E50;
 }
 
+.shape-desc {
+  font-size: 22rpx;
+  color: #999999;
+  margin-top: 4rpx;
+}
+
+/* 颜色选择器 */
 .color-selector {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -129,33 +170,44 @@
 }
 
 .color-item {
-  padding: 20rpx;
-  background: #F8F9FA;
-  border-radius: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 8rpx;
+  background-color: #FFFFFF;
   border: 2rpx solid #E8E8E8;
-  text-align: center;
+  border-radius: 16rpx;
+  transition: all 0.3s ease;
 }
 
 .color-item.selected {
-  background: #FFF8F3;
   border-color: #FF8C42;
+  background-color: #FFF8F3;
+  box-shadow: 0 4rpx 16rpx rgba(255, 140, 66, 0.2);
 }
 
 .color-circle {
-  width: 60rpx;
-  height: 60rpx;
+  width: 48rpx;
+  height: 48rpx;
   border-radius: 50%;
-  margin: 0 auto 12rpx;
-  border: 2rpx solid #E8E8E8;
+  margin-bottom: 8rpx;
+  border: 2rpx solid rgba(0, 0, 0, 0.1);
 }
 
 .color-label {
   font-size: 24rpx;
-  color: #333;
+  color: #2C3E50;
+  font-weight: 500;
 }
 
+/* 便便量选择器 */
 .amount-selector {
-  padding: 20rpx 0;
+  padding: 24rpx;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  border: 2rpx solid #E8E8E8;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
 }
 
 .amount-display {
@@ -165,25 +217,28 @@
 
 .amount-label {
   font-size: 32rpx;
-  font-weight: bold;
   color: #FF8C42;
+  font-weight: 600;
 }
 
 .amount-slider {
-  margin: 30rpx 0;
+  margin: 0 20rpx;
 }
 
 .amount-labels {
   display: flex;
   justify-content: space-between;
-  margin-top: 20rpx;
+  margin: 10rpx 20rpx 0;
+  font-size: 24rpx;
+  color: #999999;
 }
 
 .amount-label-item {
   font-size: 24rpx;
-  color: #666;
+  color: #999999;
 }
 
+/* 便便环境 */
 .environment-selector {
   display: flex;
   gap: 20rpx;
@@ -191,126 +246,204 @@
 
 .environment-item {
   flex: 1;
-  padding: 30rpx 20rpx;
-  background: #F8F9FA;
-  border-radius: 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx 16rpx;
+  background-color: #FFFFFF;
   border: 2rpx solid #E8E8E8;
-  text-align: center;
+  border-radius: 16rpx;
+  transition: all 0.3s ease;
 }
 
 .environment-item.selected {
-  background: #FFF8F3;
-  border-color: #FF8C42;
+  border-color: #4ECDC4;
+  background-color: #E6F7FF;
+  box-shadow: 0 4rpx 16rpx rgba(78, 205, 196, 0.2);
 }
 
 .environment-icon {
   font-size: 48rpx;
-  margin-bottom: 16rpx;
+  margin-bottom: 8rpx;
 }
 
 .environment-text {
   font-size: 28rpx;
-  color: #333;
+  font-weight: 600;
+  color: #2C3E50;
 }
 
-.symptoms-container,
-.factors-container {
+/* 异常症状 */
+.symptoms-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 12rpx;
 }
 
-.symptom-tag,
-.factor-tag {
-  padding: 16rpx 12rpx;
-  background: #F8F9FA;
-  border-radius: 12rpx;
+.symptom-tag {
+  padding: 12rpx 8rpx;
   border: 2rpx solid #E8E8E8;
-  text-align: center;
+  border-radius: 16rpx;
+  background-color: #FFFFFF;
+  color: #2C3E50;
   font-size: 24rpx;
-  color: #333;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
 }
 
-.symptom-tag.selected,
+.symptom-tag.selected {
+  border-color: #FF6B6B;
+  background-color: #FFF5F5;
+}
+
+/* 影响因素 */
+.factors-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12rpx;
+}
+
+.factor-tag {
+  padding: 12rpx 8rpx;
+  border: 2rpx solid #E8E8E8;
+  border-radius: 16rpx;
+  background-color: #FFFFFF;
+  color: #2C3E50;
+  font-size: 24rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+}
+
 .factor-tag.selected {
-  background: #FFF8F3;
-  border-color: #FF8C42;
-  color: #FF8C42;
-  font-weight: bold;
+  border-color: #4ECDC4;
+  background-color: #F0F8FF;
 }
 
+/* 备注输入 */
 .notes-input {
   width: 100%;
   min-height: 120rpx;
-  padding: 20rpx;
-  background: #F8F9FA;
-  border-radius: 16rpx;
+  padding: 24rpx;
   border: 2rpx solid #E8E8E8;
+  border-radius: 16rpx;
+  background-color: #FFFFFF;
   font-size: 28rpx;
-  color: #333;
-  box-sizing: border-box;
+  color: #2C3E50;
+  line-height: 1.5;
+  box-sizing: border-box; /* 确保padding不会增加总宽度 */
 }
 
+.notes-input::placeholder {
+  color: #999999;
+}
+
+/* 按钮区域 */
 .button-section {
-  margin: 0 40rpx 40rpx;
   display: flex;
   gap: 20rpx;
-}
-
-.cancel-btn,
-.save-btn {
-  flex: 1;
-  height: 88rpx;
-  border-radius: 16rpx;
-  font-size: 32rpx;
-  font-weight: bold;
-  border: none;
+  margin-top: 60rpx;
+  padding-bottom: 40rpx;
 }
 
 .cancel-btn {
-  background: #F8F9FA;
-  color: #666;
+  flex: 1;
+  padding: 24rpx;
+  background-color: #E8E8E8;
+  color: #2C3E50;
+  border-radius: 24rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1;
 }
 
 .save-btn {
-  background: #FF8C42;
-  color: white;
+  flex: 1;
+  padding: 24rpx;
+  background-color: #FF8C42;
+  color: #FFFFFF;
+  border-radius: 24rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1;
 }
 
-.bottom-nav {
+/* 底部三频道导航 */
+.bottom-channels {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   height: 100rpx;
-  background: white;
+  background-color: #FFFFFF;
   border-top: 1rpx solid #E8E8E8;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  z-index: 9999;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
+  /* 精确控制底部间距，消除多余空白 */
+  padding-bottom: max(env(safe-area-inset-bottom), 0rpx);
+  /* 确保内容不被隐藏，但不增加额外高度 */
+  min-height: 100rpx;
 }
 
-.nav-item {
+.channel-entry {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8rpx;
+  justify-content: center;
+  padding: 8rpx 10rpx;
+  transition: all 0.3s ease;
+  position: relative;
+  /* 精确控制底部边距，消除多余空白 */
+  margin-bottom: max(env(safe-area-inset-bottom), 0rpx);
+  /* 确保内容垂直居中 */
+  height: 100%;
 }
 
-.nav-item.active {
-  color: #FF8C42;
+.channel-entry.active {
+  background-color: #FFF8F3;
 }
 
-.nav-icon {
-  font-size: 40rpx;
+.channel-entry.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rpx;
+  height: 4rpx;
+  background-color: #FF8C42;
+  border-radius: 2rpx;
 }
 
-.nav-text {
+.channel-icon {
+  font-size: 32rpx;
+  margin-bottom: 2rpx;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+.channel-text {
   font-size: 20rpx;
-  color: #666;
+  color: #999999;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  line-height: 1;
+  transform: translateY(10rpx);
 }
 
-.nav-item.active .nav-text {
+.channel-entry.active .channel-text {
   color: #FF8C42;
-  font-weight: bold;
+  font-weight: 600;
 }

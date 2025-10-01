@@ -1,231 +1,404 @@
-/* index.wxss */
+/* pages/index/index.wxss */
 .container {
   min-height: 100vh;
   background-color: #FFF8F3;
-  padding-bottom: 120rpx;
+  /* 精确计算底部间距，消除多余空白 */
+  padding-bottom: calc(100rpx + max(env(safe-area-inset-bottom), 0rpx));
+  padding-top: 80rpx; /* Adjusted for title alignment */
+  /* 确保页面可以滚动 */
+  overflow-y: auto;
+  /* 确保内容区域充分利用屏幕空间 */
+  box-sizing: border-box;
+  /* 覆盖全局样式，确保左对齐 */
+  display: block !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  flex-direction: column !important;
 }
 
+/* 页面标题 */
 .page-header {
-  padding: 60rpx 40rpx 40rpx;
-  text-align: center;
+  padding: 20rpx 30rpx 0;
+  text-align: left !important;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .page-title {
-  font-size: 48rpx;
-  font-weight: bold;
-  color: #333;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #2C3E50;
+  text-align: left !important;
+  display: block;
+  width: auto;
 }
 
 /* 宠物切换标签 */
 .pet-tabs {
-  margin: 0 40rpx 40rpx;
+  padding: 0 30rpx 20rpx;
+}
+
+.pet-tabs-scroll {
+  white-space: nowrap;
+}
+
+.pet-tabs-container {
   display: flex;
   gap: 20rpx;
+  padding: 0;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .pet-tab {
-  flex: 1;
-  background: white;
-  border-radius: 20rpx;
-  padding: 30rpx 20rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 2rpx solid transparent;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 16rpx 20rpx;
+  border-radius: 25rpx;
+  background-color: transparent;
+  border: none;
+  transition: all 0.3s ease;
+  min-width: 80rpx;
+  position: relative;
+  white-space: nowrap;
 }
 
 .pet-tab.active {
-  background: #FFF8F3;
-  border-color: #FF8C42;
-}
-
-.pet-tab-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+  background-color: transparent;
+  transform: none;
 }
 
 .pet-tab-name {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
+  font-size: 28rpx;
+  color: #2C3E50;
+  font-weight: 400;
+  line-height: 1;
+  display: inline-block;
 }
 
 .pet-tab.active .pet-tab-name {
-  color: #FF8C42;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2C3E50;
 }
 
-.add-button {
+.pet-tab-underline {
+  width: 40rpx;
+  height: 4rpx;
+  background-color: #FF8C42;
+  border-radius: 2rpx;
+  margin-top: 8rpx;
+  align-self: flex-start;
+}
+
+.add-pet-tab {
+  background-color: transparent;
+  border: 2rpx solid #4ECDC4;
   width: 60rpx;
   height: 60rpx;
-  background: #FF8C42;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: 36rpx;
-  font-weight: bold;
+  flex-shrink: 0;
+  flex-grow: 0;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
+.add-pet-tab:active {
+  background-color: rgba(78, 205, 196, 0.1);
+  transform: scale(0.95);
+}
+
+.add-pet-icon {
+  font-size: 32rpx;
+  color: #4ECDC4;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* 宠物信息卡片 */
 .pet-info-card {
-  margin: 0 40rpx 40rpx;
-  background: linear-gradient(135deg, #FF8C42 0%, #FF6B35 100%);
+  margin: 0 30rpx 30rpx;
+  background: linear-gradient(135deg, #FFF8F3, #FFF0E6);
   border-radius: 24rpx;
-  padding: 40rpx;
+  padding: 30rpx;
+  box-shadow: 0 8rpx 32rpx rgba(255, 140, 66, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.pet-info-card::before {
+  content: '';
+  position: absolute;
+  top: -30rpx;
+  right: -30rpx;
+  width: 120rpx;
+  height: 120rpx;
+  background: linear-gradient(45deg, #FF8C42, #FF6B6B);
+  border-radius: 50%;
+  opacity: 0.1;
+}
+
+.pet-info-content {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 30rpx;
 }
 
-.pet-avatar {
+.pet-avatar-section {
+  flex-shrink: 0;
+}
+
+.pet-avatar-large {
   width: 120rpx;
   height: 120rpx;
-  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
+  border: 4rpx solid #FFFFFF;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
 }
 
 .pet-emoji {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 60rpx;
 }
 
 .pet-details {
   flex: 1;
-  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
 }
 
-.pet-name {
-  font-size: 36rpx;
-  font-weight: bold;
-  margin-bottom: 16rpx;
+.pet-basic-info {
+  display: flex;
+  gap: 30rpx; /* Restored original gap */
+  justify-content: flex-start; /* 左对齐 */
 }
 
-.pet-info {
-  font-size: 28rpx;
-  opacity: 0.8;
-  margin-bottom: 16rpx;
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8rpx;
 }
 
-.pet-phrase {
+.info-label {
+  font-size: 22rpx;
+  color: #999999;
+  font-weight: 500;
+  text-align: left;
+}
+
+.info-value {
   font-size: 26rpx;
-  background: rgba(255, 255, 255, 0.15);
-  padding: 16rpx 24rpx;
-  border-radius: 20rpx;
+  color: #2C3E50;
+  font-weight: 600;
+  text-align: left;
 }
 
-.calendar-card,
-.summary-card {
-  margin: 0 40rpx 40rpx;
-  background: white;
-  border-radius: 20rpx;
-  padding: 40rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+.pet-cute-phrase {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 16rpx;
+  padding: 16rpx 20rpx;
+  border-left: 4rpx solid #FF8C42;
 }
 
-.card-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
+.phrase-text {
+  font-size: 24rpx;
+  color: #2C3E50;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: left;
+}
+
+/* 首页内容 */
+.home-content {
+  padding: 0 30rpx 20rpx;
+}
+
+/* 日历卡片 */
+.calendar-card {
   margin-bottom: 30rpx;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.calendar-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2C3E50;
+  text-align: left;
+}
+
+.current-month {
+  font-size: 28rpx;
+  color: #FF8C42;
+  font-weight: 500;
+  text-align: left;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8rpx;
+  gap: 10rpx;
 }
 
 .calendar-day {
-  aspect-ratio: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 12rpx;
-  background: #F8F8F8;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 16rpx;
+  background-color: #FDFDFD;
+  border: 1rpx solid #E8E8E8;
+  font-size: 24rpx;
+  color: #2C3E50;
   position: relative;
 }
 
 .calendar-day.today {
-  background: #FF8C42;
-}
-
-.calendar-day.today .day-number {
-  color: white;
-  font-weight: bold;
+  background-color: #FFF0E6;
+  border: 3rpx solid #FF8C42;
+  box-shadow: 0 2rpx 8rpx rgba(255, 140, 66, 0.3);
 }
 
 .calendar-day.has-record {
-  background: #FFF8F3;
-  border: 2rpx solid #FF8C42;
+  background-color: #E6F7FF;
+  border: 2rpx solid #4ECDC4;
 }
 
-.calendar-day.has-record .day-number {
-  color: #FF8C42;
-  font-weight: bold;
+.calendar-day.abnormal {
+  background-color: #FFEBEE;
+  border: 3rpx solid #FF6B6B;
+  box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.3);
 }
+
 
 .day-number {
   font-size: 24rpx;
-  color: #666;
-  margin-bottom: 4rpx;
 }
 
-.record-indicator {
-  position: absolute;
-  top: 4rpx;
-  right: 4rpx;
+.poop-icon {
+  font-size: 28rpx;
+  margin-top: 4rpx;
 }
 
-.record-icon {
-  font-size: 16rpx;
+/* 周总结卡片 */
+.weekly-summary {
+  background-color: #E0F7FA;
+  border-left: 8rpx solid #00BCD4;
+  padding: 30rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 188, 212, 0.15);
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.summary-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #00BCD4;
+  margin-right: 16rpx;
+  text-align: left;
 }
 
 .summary-text {
   font-size: 28rpx;
-  color: #666;
-  line-height: 1.5;
+  color: #3F51B5;
+  line-height: 1.6;
+  text-align: left;
 }
 
-.bottom-nav {
+/* 底部三频道导航 */
+.bottom-channels {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   height: 100rpx;
-  background: white;
+  background-color: #FFFFFF;
   border-top: 1rpx solid #E8E8E8;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  z-index: 9999;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
+  /* 精确控制底部间距，消除多余空白 */
+  padding-bottom: max(env(safe-area-inset-bottom), 0rpx);
+  /* 确保内容不被隐藏，但不增加额外高度 */
+  min-height: 100rpx;
 }
 
-.nav-item {
+.channel-entry {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8rpx;
+  justify-content: center;
+  padding: 8rpx 10rpx;
+  transition: all 0.3s ease;
+  position: relative;
+  /* 精确控制底部边距，消除多余空白 */
+  margin-bottom: max(env(safe-area-inset-bottom), 0rpx);
+  /* 确保内容垂直居中 */
+  height: 100%;
 }
 
-.nav-item.active {
-  color: #FF8C42;
+.channel-entry.active {
+  background-color: #FFF8F3;
 }
 
-.nav-icon {
-  font-size: 40rpx;
+.channel-entry.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rpx;
+  height: 4rpx;
+  background-color: #FF8C42;
+  border-radius: 2rpx;
 }
 
-.nav-text {
+.channel-icon {
+  font-size: 32rpx;
+  margin-bottom: 2rpx;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+.channel-text {
   font-size: 20rpx;
-  color: #666;
+  color: #999999;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  line-height: 1;
+  transform: translateY(10rpx);
 }
 
-.nav-item.active .nav-text {
+.channel-entry.active .channel-text {
   color: #FF8C42;
-  font-weight: bold;
+  font-weight: 600;
 }
