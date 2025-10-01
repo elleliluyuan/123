@@ -10,7 +10,7 @@
   /* 确保内容区域充分利用屏幕空间 */
   box-sizing: border-box;
   /* 覆盖全局样式，确保左对齐 */
-  display: block !important;
+  display: flex !important;
   align-items: flex-start !important;
   justify-content: flex-start !important;
   flex-direction: column !important;

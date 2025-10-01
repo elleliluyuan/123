@@ -4,6 +4,7 @@ Page({
     // 表单数据
     petName: '',
     petGender: '公',
+    sterilizationStatus: '未绝育',
     petWeight: '',
     petBreed: '',
     petCutePhrase: '',
@@ -59,6 +60,14 @@ Page({
     const gender = e.currentTarget.dataset.gender;
     this.setData({
       petGender: gender
+    });
+  },
+
+  // 选择绝育状态
+  selectSterilization(e) {
+    const status = e.currentTarget.dataset.status;
+    this.setData({
+      sterilizationStatus: status
     });
   },
 
@@ -120,43 +129,49 @@ Page({
 
   // 选择宠物品种
   selectBreed() {
+    console.log('selectBreed 被调用');
+    console.log('品种选项:', this.data.breedOptions);
     wx.showActionSheet({
       itemList: this.data.breedOptions,
       success: (res) => {
+        console.log('选择的品种索引:', res.tapIndex);
         const selectedBreed = this.data.breedOptions[res.tapIndex];
+        console.log('选择的品种:', selectedBreed);
         this.setData({
           petBreed: selectedBreed
         });
+      },
+      fail: (error) => {
+        console.error('选择品种失败:', error);
       }
     });
   },
 
   // 选择宠物体重
   selectWeight() {
+    console.log('selectWeight 被调用');
+    console.log('体重选项:', this.data.weightOptions);
     wx.showActionSheet({
       itemList: this.data.weightOptions,
       success: (res) => {
+        console.log('选择的体重索引:', res.tapIndex);
         const selectedWeight = this.data.weightOptions[res.tapIndex];
+        console.log('选择的体重:', selectedWeight);
         this.setData({
           petWeight: selectedWeight
         });
+      },
+      fail: (error) => {
+        console.error('选择体重失败:', error);
       }
     });
   },
 
-  // 选择出生日期
-  selectBirthDate() {
-    wx.showModal({
-      title: '选择出生日期',
-      editable: true,
-      placeholderText: '如：2020-01-01 或 2岁',
-      success: (res) => {
-        if (res.confirm && res.content) {
-          this.setData({
-            birthDate: res.content.trim()
-          });
-        }
-      }
+  // 出生日期选择器改变
+  onBirthDateChange(e) {
+    console.log('选择的出生日期:', e.detail.value);
+    this.setData({
+      birthDate: e.detail.value
     });
   },
 
@@ -218,7 +233,7 @@ Page({
 
   // 保存宠物
   savePet() {
-    const { petName, petGender, petWeight, petBreed, petCutePhrase, petAvatar, birthDate } = this.data;
+    const { petName, petGender, sterilizationStatus, petWeight, petBreed, petCutePhrase, petAvatar, birthDate } = this.data;
 
     // 验证必填项
     if (!petName.trim()) {
@@ -247,6 +262,7 @@ Page({
       emoji: '🐕', // 默认表情
       avatar: petAvatar,
       gender: petGender,
+      sterilizationStatus: sterilizationStatus,
       weight: petWeight.trim(),
       breed: petBreed.trim(),
       birthDate: birthDate.trim(),

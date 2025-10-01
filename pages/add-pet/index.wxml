@@ -3,7 +3,7 @@
   <!-- 页面标题 -->
   <view class="page-header">
     <view class="header-left" bindtap="goBack">
-      <text class="back-arrow">&lt;</text>
+      <text class="back-arrow">←</text>
     </view>
     <text class="page-title">添加宠物</text>
   </view>
@@ -38,7 +38,7 @@
 
     <!-- 宠物品种 -->
     <view class="form-card">
-      <view class="form-row" bindtap="selectBreed">
+      <view class="form-row" catchtap="selectBreed">
         <text class="form-label">宠物品种</text>
         <view class="form-value">
           <text class="value-text" wx:if="{{petBreed}}">{{petBreed}}</text>
@@ -71,9 +71,32 @@
       </view>
     </view>
 
+    <!-- 绝育状态 -->
+    <view class="form-card">
+      <view class="form-row">
+        <text class="form-label">绝育状态</text>
+        <view class="gender-selector">
+          <view 
+            class="gender-option {{sterilizationStatus === '未绝育' ? 'selected' : ''}}"
+            bindtap="selectSterilization"
+            data-status="未绝育"
+          >
+            未绝育
+          </view>
+          <view 
+            class="gender-option {{sterilizationStatus === '已绝育' ? 'selected' : ''}}"
+            bindtap="selectSterilization"
+            data-status="已绝育"
+          >
+            已绝育
+          </view>
+        </view>
+      </view>
+    </view>
+
     <!-- 宠物体重 -->
     <view class="form-card">
-      <view class="form-row" bindtap="selectWeight">
+      <view class="form-row" catchtap="selectWeight">
         <text class="form-label">宠物体重</text>
         <view class="form-value">
           <text class="value-text" wx:if="{{petWeight}}">{{petWeight}}</text>
@@ -85,13 +108,15 @@
 
     <!-- 出生日期 -->
     <view class="form-card">
-      <view class="form-row" bindtap="selectBirthDate">
+      <view class="form-row">
         <text class="form-label">出生日期</text>
-        <view class="form-value">
-          <text class="value-text" wx:if="{{birthDate}}">{{birthDate}}</text>
-          <text class="placeholder-text" wx:else>如不确定可写预估年龄</text>
-          <text class="arrow">></text>
-        </view>
+        <picker mode="date" value="{{birthDate}}" bindchange="onBirthDateChange">
+          <view class="form-value">
+            <text class="value-text" wx:if="{{birthDate}}">{{birthDate}}</text>
+            <text class="placeholder-text" wx:else>选择出生日期</text>
+            <text class="arrow">></text>
+          </view>
+        </picker>
       </view>
     </view>
 

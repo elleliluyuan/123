@@ -79,7 +79,10 @@ Page({
 
   // 选择宠物
   selectPet(e) {
+    console.log('selectPet 被调用', e);
     const petId = e.currentTarget.dataset.petId;
+    console.log('选择的宠物ID:', petId);
+    
     if (petId && petId !== this.data.currentPetId) {
       console.log('切换宠物到:', petId);
       
@@ -95,6 +98,7 @@ Page({
 
   // 添加宠物
   addPet() {
+    console.log('addPet 被调用');
     console.log('点击添加宠物按钮');
     
     // 先显示一个测试提示
@@ -367,7 +371,9 @@ Page({
 
   // 切换频道
   switchChannel(e) {
+    console.log('switchChannel 被调用', e);
     const channel = e.currentTarget.dataset.channel;
+    console.log('选择的频道:', channel);
 
     if (channel === 'home') {
       // 首页频道，已经在当前页面
