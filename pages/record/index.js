@@ -84,8 +84,11 @@ Page({
     ]
   },
 
-  onLoad(options) {
+    onLoad(options) {
     console.log('记录页面加载开始');
+    
+    // 加载宠物数据
+    this.loadPetsFromStorage();
     
     // 检查是否有从首页传来的宠物ID
     const selectedPetId = getApp().globalData?.selectedPetId || options.selectedPetId || 'pet1';
@@ -95,6 +98,110 @@ Page({
     });
     
     this.initDateTime();
+  },
+
+  onShow() {
+    console.log('记录页面显示');
+    
+    // 重新加载宠物数据（可能有新添加的宠物）
+    this.loadPetsFromStorage();
+    
+    // 检查全局数据中的宠物ID
+    const app = getApp();
+    const globalPetId = app.globalData?.selectedPetId;
+    
+    if (globalPetId && globalPetId !== this.data.selectedPetId) {
+      this.setData({
+        selectedPetId: globalPetId
+      });
+      
+      // 清除全局数据，避免重复使用
+      app.globalData.selectedPetId = null;
+    }
+  },
+
+  // 从本地存储加载宠物数据
+  loadPetsFromStorage() {
+    try {
+      const storedPets = wx.getStorageSync('pets') || [];
+      if (storedPets.length > 0) {
+        // 合并默认宠物和存储的宠物
+        const defaultPets = [
+          { 
+            id: 'pet1', 
+            name: '腿腿', 
+            emoji: '🐕',
+            avatar: '/images/tuitui.jpg',
+            age: '2岁',
+            gender: '公',
+            weight: '4.5kg',
+            cutePhrase: '热爱自然的拉屎大王'
+          },
+          { 
+            id: 'pet2', 
+            name: '大包', 
+            emoji: '🐶',
+            avatar: '/images/dabao.jpg',
+            age: '1岁',
+            gender: '母',
+            weight: '3.2kg',
+            cutePhrase: '优雅的便便小公主'
+          }
+        ];
+        
+        // 过滤掉重复的宠物（基于ID）
+        const allPets = [...defaultPets];
+        storedPets.forEach(pet => {
+          if (!allPets.find(p => p.id === pet.id)) {
+            // 转换新宠物的数据格式以匹配记录页需要的格式
+            const recordPagePet = {
+              id: pet.id,
+              name: pet.name,
+              emoji: pet.emoji || '🐕',
+              avatar: pet.avatar || '',
+              age: pet.birthDate ? this.calculateAge(pet.birthDate) : '未知',
+              gender: pet.gender || '未知',
+              weight: pet.weight || '未知',
+              cutePhrase: pet.phrase || '可爱的小宝贝'
+            };
+            allPets.push(recordPagePet);
+          }
+        });
+        
+        this.setData({
+          pets: allPets
+        });
+        
+        console.log('记录页加载宠物数据:', allPets);
+      }
+    } catch (error) {
+      console.error('记录页加载宠物数据失败:', error);
+    }
+  },
+
+  // 计算年龄
+  calculateAge(birthDate) {
+    if (!birthDate) return '未知';
+    
+    const birth = new Date(birthDate);
+    const now = new Date();
+    const diffTime = Math.abs(now - birth);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays < 30) {
+      return `${diffDays}天`;
+    } else if (diffDays < 365) {
+      const months = Math.floor(diffDays / 30);
+      return `${months}个月`;
+    } else {
+      const years = Math.floor(diffDays / 365);
+      const remainingMonths = Math.floor((diffDays % 365) / 30);
+      if (remainingMonths > 0) {
+        return `${years}岁${remainingMonths}个月`;
+      } else {
+        return `${years}岁`;
+      }
+    }
   },
 
   // 初始化日期时间选择器
@@ -410,7 +517,7 @@ Page({
     wx.showModal({
       title: '🔍 健康分析',
       content: analysis,
-      confirmText: '继续沟通',
+      confirmText: '问AI',
       cancelText: '知道了',
       success: (res) => {
         if (res.confirm) {
@@ -430,23 +537,151 @@ Page({
 
   // 生成健康分析
   generateAnalysis(record) {
-    let analysis = '根据记录分析：\n\n';
+    const shapeLabel = this.data.poopShapes.find(s => s.value === record.shape)?.label || record.shape;
+    const colorLabel = this.data.colorOptions.find(c => c.value === record.color)?.label || record.color;
+    const environmentLabel = this.data.environmentOptions.find(e => e.value === record.environment)?.label || record.environment;
     
-    analysis += `便便形态：${this.data.poopShapes.find(s => s.value === record.shape)?.label || record.shape}\n`;
-    analysis += `便便颜色：${this.data.colorOptions.find(c => c.value === record.color)?.label || record.color}\n`;
-    analysis += `便便量：${record.amountLabel}\n`;
-    analysis += `便便环境：${this.data.environmentOptions.find(e => e.value === record.environment)?.label || record.environment}\n`;
+    // 一句话总结
+    let summary = this.generateSummary(record, shapeLabel, colorLabel);
     
-    if (record.symptoms.length > 0) {
-      analysis += `异常症状：${record.symptoms.join('，')}\n`;
-    }
-    if (record.factors.length > 0) {
-      analysis += `影响因素：${record.factors.join('，')}\n`;
-    }
-    if (record.notes) {
-      analysis += `备注：${record.notes}\n`;
+    // 生成完整的记录分析描述
+    let recordDescription = this.generateRecordDescription(record, shapeLabel, colorLabel, environmentLabel);
+    
+    // 详细分析
+    let analysis = summary + '\n\n';
+    analysis += '📋 记录分析：\n' + recordDescription + '\n\n';
+    
+    // 原因分析和建议
+    const suggestions = this.generateSuggestions(record, shapeLabel, colorLabel);
+    if (suggestions) {
+      analysis += '💡 专业建议：\n' + suggestions;
     }
     
     return analysis;
+  },
+
+  // 生成记录描述
+  generateRecordDescription(record, shapeLabel, colorLabel, environmentLabel) {
+    let descriptions = [];
+    
+    // 基本信息
+    descriptions.push(`便便形态：${shapeLabel}`);
+    descriptions.push(`便便颜色：${colorLabel}`);
+    descriptions.push(`便便量：${record.amountLabel}`);
+    descriptions.push(`排便环境：${environmentLabel}`);
+    
+    // 添加异常症状
+    if (record.symptoms.length > 0) {
+      descriptions.push(`异常症状：${record.symptoms.join('、')}`);
+    }
+    
+    // 添加影响因素
+    if (record.factors.length > 0) {
+      descriptions.push(`影响因素：${record.factors.join('、')}`);
+    }
+    
+    return descriptions.join('\n');
+  },
+
+  // 生成一句话总结
+  generateSummary(record, shapeLabel, colorLabel) {
+    const healthScore = record.healthScore;
+    
+    if (healthScore >= 90) {
+      return '🎉 宝贝的便便状况非常健康！';
+    } else if (healthScore >= 80) {
+      return '😊 宝贝的便便状况良好，继续保持！';
+    } else if (healthScore >= 70) {
+      return '⚠️ 宝贝的便便有轻微异常，需要关注。';
+    } else if (healthScore >= 60) {
+      return '🚨 宝贝的便便状况不太理想，建议调整。';
+    } else {
+      return '❗ 宝贝的便便异常明显，建议及时就医。';
+    }
+  },
+
+  // 生成建议
+  generateSuggestions(record, shapeLabel, colorLabel) {
+    let causes = [];  // 可能原因
+    let suggestions = [];  // 护理建议
+    let warnings = [];  // 重要提醒
+    
+    // 根据形态给建议
+    if (record.shape === 'watery') {
+      causes.push('消化不良');
+      causes.push('食物过敏');
+      causes.push('肠胃炎');
+      suggestions.push('减少食量');
+      suggestions.push('提供清淡易消化食物');
+      suggestions.push('多补充水分');
+    } else if (record.shape === 'hard') {
+      causes.push('缺水');
+      causes.push('纤维不足');
+      causes.push('运动量不够');
+      suggestions.push('增加饮水量');
+      suggestions.push('适当增加运动');
+      suggestions.push('可添加少量南瓜或红薯');
+    } else if (record.shape === 'mucous') {
+      causes.push('肠道炎症');
+      causes.push('寄生虫感染');
+      warnings.push('建议就医检查');
+      warnings.push('暂时给予清淡饮食');
+    }
+    
+    // 根据颜色给建议
+    if (record.color === 'red') {
+      causes.push('可能含血');
+      warnings.push('建议立即就医检查');
+    } else if (record.color === 'black') {
+      causes.push('可能是上消化道出血');
+      warnings.push('建议尽快就医');
+    } else if (record.color === 'green') {
+      causes.push('食物消化过快');
+      causes.push('胆汁分泌异常');
+    } else if (record.color === 'gray-white') {
+      causes.push('可能是胆道问题');
+      warnings.push('建议就医检查');
+    }
+    
+    // 根据症状给建议
+    if (record.symptoms.includes('腹泻')) {
+      suggestions.push('注意补充电解质');
+      suggestions.push('避免脱水');
+    } else if (record.symptoms.includes('便秘')) {
+      suggestions.push('可适当按摩腹部');
+      suggestions.push('增加运动量');
+    } else if (record.symptoms.includes('呕吐')) {
+      suggestions.push('建议禁食12小时');
+      suggestions.push('之后少量多餐');
+    }
+    
+    // 根据影响因素给建议
+    if (record.factors.includes('新食物')) {
+      suggestions.push('暂停新食物');
+      suggestions.push('逐步重新引入');
+    } else if (record.factors.includes('压力')) {
+      suggestions.push('创造安静舒适的环境');
+    }
+    
+    // 组装建议内容
+    let result = [];
+    
+    if (causes.length > 0) {
+      result.push('🔍 可能原因：\n• ' + causes.join('\n• '));
+    }
+    
+    if (suggestions.length > 0) {
+      result.push('🏥 护理建议：\n• ' + suggestions.join('\n• '));
+    }
+    
+    if (warnings.length > 0) {
+      result.push('⚠️ 重要提醒：\n• ' + warnings.join('\n• '));
+    }
+    
+    if (result.length === 0) {
+      return null;
+    }
+    
+    return result.join('\n\n');
   }
 });

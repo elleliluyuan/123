@@ -19,17 +19,17 @@
 /* 页面标题 */
 .page-header {
   padding: 20rpx 30rpx 0;
-  text-align: left !important;
+  text-align: center !important;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 }
 
 .page-title {
   font-size: 36rpx;
   font-weight: 600;
   color: #2C3E50;
-  text-align: left !important;
+  text-align: center !important;
   display: block;
   width: auto;
 }
@@ -37,6 +37,7 @@
 /* 宠物切换标签 */
 .pet-tabs {
   padding: 0 30rpx 20rpx;
+  transform: translateY(10rpx); /* 整体下移5rpx */
 }
 
 .pet-tabs-scroll {
@@ -48,7 +49,7 @@
   gap: 20rpx;
   padding: 0;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center; /* 改为居中对齐 */
 }
 
 .pet-tab {
@@ -86,19 +87,19 @@
 }
 
 .pet-tab-underline {
-  width: 40rpx;
+  width: 60rpx; /* 从40rpx拉长到60rpx */
   height: 4rpx;
   background-color: #FF8C42;
   border-radius: 2rpx;
   margin-top: 8rpx;
-  align-self: flex-start;
+  align-self: center; /* 从flex-start改为center，让下划线居中 */
 }
 
 .add-pet-tab {
   background-color: transparent;
   border: 2rpx solid #4ECDC4;
-  width: 60rpx;
-  height: 60rpx;
+  width: 38rpx; /* 调整为38rpx */
+  height: 38rpx; /* 调整为38rpx */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -118,7 +119,7 @@
 }
 
 .add-pet-icon {
-  font-size: 32rpx;
+  font-size: 36rpx; /* 调整为36rpx */
   color: #4ECDC4;
   font-weight: 600;
   line-height: 1;
@@ -149,8 +150,9 @@
 
 .pet-info-content {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 30rpx;
+  justify-content: center;
 }
 
 .pet-avatar-section {
@@ -158,8 +160,8 @@
 }
 
 .pet-avatar-large {
-  width: 120rpx;
-  height: 120rpx;
+  width: 100rpx; /* 从120rpx减少到100rpx */
+  height: 100rpx; /* 从120rpx减少到100rpx */
   border-radius: 50%;
   overflow: hidden;
   border: 4rpx solid #FFFFFF;
@@ -175,6 +177,13 @@
   font-size: 60rpx;
 }
 
+.pet-avatar-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 .pet-details {
   flex: 1;
   display: flex;
@@ -184,8 +193,9 @@
 
 .pet-basic-info {
   display: flex;
-  gap: 30rpx; /* Restored original gap */
+  gap: 50rpx; /* 增加间距从30rpx到50rpx */
   justify-content: flex-start; /* 左对齐 */
+  width: 100%; /* 确保占满整个宽度 */
 }
 
 .info-item {
@@ -193,6 +203,8 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8rpx;
+  flex: 1; /* 让每个信息项平均分配空间 */
+  min-width: 100rpx; /* 设置最小宽度 */
 }
 
 .info-label {
@@ -239,26 +251,48 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20rpx;
+  padding: 0 20rpx;
 }
 
-.calendar-title {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #2C3E50;
-  text-align: left;
+.month-arrow {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.month-arrow:active {
+  transform: scale(0.95);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+}
+
+.arrow-icon {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #FF8C42;
+  line-height: 1;
 }
 
 .current-month {
-  font-size: 28rpx;
-  color: #FF8C42;
-  font-weight: 500;
-  text-align: left;
+  font-size: 32rpx;
+  color: #2C3E50;
+  font-weight: 600;
+  text-align: center;
+  flex: 1;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 10rpx;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .calendar-day {
@@ -292,7 +326,6 @@
   border: 3rpx solid #FF6B6B;
   box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.3);
 }
-
 
 .day-number {
   font-size: 24rpx;

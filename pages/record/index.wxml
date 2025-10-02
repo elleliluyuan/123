@@ -10,24 +10,16 @@
     <view class="section-title"></view>
     <view class="pet-selector">
       <view 
-        class="pet-option {{selectedPetId === 'pet1' ? 'selected' : ''}}"
+        wx:for="{{pets}}"
+        wx:key="id"
+        class="pet-option {{selectedPetId === item.id ? 'selected' : ''}}"
         bindtap="selectPet"
-        data-pet-id="pet1"
+        data-pet-id="{{item.id}}"
       >
         <view class="pet-avatar">
-          <text class="pet-emoji">🐕</text>
+          <text class="pet-emoji">{{item.emoji}}</text>
         </view>
-        <text class="pet-name">腿腿</text>
-      </view>
-      <view 
-        class="pet-option {{selectedPetId === 'pet2' ? 'selected' : ''}}"
-        bindtap="selectPet"
-        data-pet-id="pet2"
-      >
-        <view class="pet-avatar">
-          <text class="pet-emoji">🐶</text>
-        </view>
-        <text class="pet-name">大包</text>
+        <text class="pet-name">{{item.name}}</text>
       </view>
     </view>
   </view>

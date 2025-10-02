@@ -10,20 +10,14 @@
     <scroll-view class="pet-tabs-scroll" scroll-x="true" show-scrollbar="false">
       <view class="pet-tabs-container">
         <view 
-          class="pet-tab {{currentPetId === 'pet1' ? 'active' : ''}}"
+          wx:for="{{pets}}"
+          wx:key="id"
+          class="pet-tab {{currentPetId === item.id ? 'active' : ''}}"
           catchtap="selectPet"
-          data-pet-id="pet1"
+          data-pet-id="{{item.id}}"
         >
-          <text class="pet-tab-name">腿腿</text>
-          <view class="pet-tab-underline" wx:if="{{currentPetId === 'pet1'}}"></view>
-        </view>
-        <view 
-          class="pet-tab {{currentPetId === 'pet2' ? 'active' : ''}}"
-          catchtap="selectPet"
-          data-pet-id="pet2"
-        >
-          <text class="pet-tab-name">大包</text>
-          <view class="pet-tab-underline" wx:if="{{currentPetId === 'pet2'}}"></view>
+          <text class="pet-tab-name">{{item.name}}</text>
+          <view class="pet-tab-underline" wx:if="{{currentPetId === item.id}}"></view>
         </view>
         <view class="add-pet-tab" catchtap="addPet">
           <text class="add-pet-icon">+</text>
@@ -37,7 +31,8 @@
     <view class="pet-info-content">
       <view class="pet-avatar-section">
         <view class="pet-avatar-large">
-          <text class="pet-emoji">{{currentPet.emoji}}</text>
+          <image wx:if="{{currentPet.avatar}}" src="{{currentPet.avatar}}" class="pet-avatar-image" mode="aspectFill"></image>
+          <text wx:else class="pet-emoji">{{currentPet.emoji}}</text>
         </view>
       </view>
       <view class="pet-details">
@@ -67,8 +62,13 @@
     <!-- 日历卡片 -->
     <view class="calendar-card">
       <view class="calendar-header">
-        <text class="calendar-title">📅 便便日历</text>
+        <view class="month-arrow left-arrow" catchtap="previousMonth">
+          <text class="arrow-icon">‹</text>
+        </view>
         <text class="current-month">{{currentMonth}}</text>
+        <view class="month-arrow right-arrow" catchtap="nextMonth">
+          <text class="arrow-icon">›</text>
+        </view>
       </view>
       <view class="calendar-grid">
         <view 

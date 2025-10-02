@@ -7,6 +7,7 @@ Page({
         id: 'pet1', 
         name: '腿腿', 
         emoji: '🐕',
+        avatar: '', // 添加avatar字段
         age: '2岁',
         gender: '公',
         weight: '4.5kg',
@@ -16,6 +17,7 @@ Page({
         id: 'pet2', 
         name: '大包', 
         emoji: '🐶',
+        avatar: '', // 添加avatar字段
         age: '3岁',
         gender: '母',
         weight: '6.2kg',
@@ -28,6 +30,9 @@ Page({
     // 日历相关
     calendarDays: [],
     calendarInitialized: false, // 添加标志位
+    currentYear: new Date().getFullYear(),
+    currentMonthNum: new Date().getMonth() + 1,
+    currentMonth: '', // 显示的月份文本
     
     // 周总结
     weeklySummary: '本周记录正常，继续保持！'
@@ -50,12 +55,25 @@ Page({
   onShow() {
     console.log('首页显示');
     
+    // 重新加载宠物数据（可能有新添加的宠物）
+    this.loadPetsFromStorage();
+    
     // 检查全局数据中的宠物ID
-    const globalPetId = getApp().globalData?.selectedPetId;
-    if (globalPetId && globalPetId !== this.data.currentPetId) {
+    const app = getApp();
+    const globalPetId = app.globalData?.selectedPetId;
+    const newPetAdded = app.globalData?.newPetAdded;
+    
+    console.log('全局宠物ID:', globalPetId);
+    console.log('是否有新宠物:', newPetAdded);
+    
+    if (globalPetId && (globalPetId !== this.data.currentPetId || newPetAdded)) {
+      // 重新加载宠物数据后再获取宠物信息
+      const pet = this.getPetById(globalPetId);
+      console.log('找到的宠物:', pet);
+      
       this.setData({
         currentPetId: globalPetId,
-        currentPet: this.getPetById(globalPetId)
+        currentPet: pet
       });
       this.initCalendar();
     } else if (this.data.calendarInitialized) {
@@ -68,7 +86,92 @@ Page({
     
     // 清除全局数据，避免重复使用
     if (globalPetId) {
-      getApp().globalData.selectedPetId = null;
+      app.globalData.selectedPetId = null;
+      app.globalData.newPetAdded = false;
+    }
+  },
+
+  // 从本地存储加载宠物数据
+  loadPetsFromStorage() {
+    try {
+      const storedPets = wx.getStorageSync('pets') || [];
+      if (storedPets.length > 0) {
+        // 合并默认宠物和存储的宠物
+        const defaultPets = [
+          { 
+            id: 'pet1', 
+            name: '腿腿', 
+            emoji: '🐕',
+            avatar: '', // 添加avatar字段
+            age: '2岁',
+            gender: '公',
+            weight: '4.5kg',
+            phrase: '热爱自然的拉屎大王'
+          },
+          { 
+            id: 'pet2', 
+            name: '大包', 
+            emoji: '🐶',
+            avatar: '', // 添加avatar字段
+            age: '3岁',
+            gender: '母',
+            weight: '6.2kg',
+            phrase: '优雅的便便艺术家'
+          }
+        ];
+        
+        // 过滤掉重复的宠物（基于ID）
+        const allPets = [...defaultPets];
+        storedPets.forEach(pet => {
+          if (!allPets.find(p => p.id === pet.id)) {
+            // 确保新宠物数据格式兼容首页显示
+            const homePet = {
+              id: pet.id,
+              name: pet.name,
+              emoji: pet.emoji || '🐕',
+              avatar: pet.avatar || '', // 确保有avatar字段
+              age: pet.birthDate ? this.calculateAge(pet.birthDate) : '未知',
+              gender: pet.gender || '未知',
+              weight: pet.weight || '未知',
+              phrase: pet.phrase || '可爱的小宝贝'
+            };
+            allPets.push(homePet);
+          }
+        });
+        
+        this.setData({
+          pets: allPets
+        });
+        
+        console.log('加载宠物数据:', allPets);
+      }
+    } catch (error) {
+      console.error('加载宠物数据失败:', error);
+    }
+  },
+
+  // 计算年龄
+  calculateAge(birthDate) {
+    if (!birthDate) return '未知';
+    
+    const birth = new Date(birthDate);
+    const now = new Date();
+    const diffTime = Math.abs(now - birth);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays < 30) {
+      return `${diffDays}天`;
+    } else if (diffDays < 365) {
+      const months = Math.floor(diffDays / 30);
+      return `${months}个月`;
+    } else {
+      const years = Math.floor(diffDays / 365);
+      const remainingMonths = Math.floor((diffDays % 365) / 30);
+      if (remainingMonths > 0) {
+        return `${years}岁${remainingMonths}个月`;
+      } else {
+        return `${years}岁`;
+      }
     }
   },
 
@@ -98,39 +201,66 @@ Page({
 
   // 添加宠物
   addPet() {
-    console.log('addPet 被调用');
     console.log('点击添加宠物按钮');
     
-    // 先显示一个测试提示
-    wx.showToast({
-      title: '准备跳转...',
-      icon: 'none',
-      duration: 1000
+    wx.navigateTo({
+      url: '/pages/add-pet/index',
+      success: () => {
+        console.log('跳转成功');
+      },
+      fail: (error) => {
+        console.error('跳转失败:', error);
+        wx.showToast({
+          title: '跳转失败',
+          icon: 'none'
+        });
+      }
+    });
+  },
+
+  // 切换到上一个月
+  previousMonth() {
+    let year = this.data.currentYear;
+    let month = this.data.currentMonthNum;
+    
+    month--;
+    if (month < 1) {
+      month = 12;
+      year--;
+    }
+    
+    this.setData({
+      currentYear: year,
+      currentMonthNum: month
     });
     
-    setTimeout(() => {
-      wx.navigateTo({
-        url: '/pages/add-pet/index',
-        success: () => {
-          console.log('跳转到添加宠物页面成功');
-        },
-        fail: (error) => {
-          console.error('跳转失败:', error);
-          wx.showModal({
-            title: '跳转失败',
-            content: '错误信息: ' + JSON.stringify(error),
-            showCancel: false
-          });
-        }
-      });
-    }, 1000);
+    this.initCalendar();
+  },
+
+  // 切换到下一个月
+  nextMonth() {
+    let year = this.data.currentYear;
+    let month = this.data.currentMonthNum;
+    
+    month++;
+    if (month > 12) {
+      month = 1;
+      year++;
+    }
+    
+    this.setData({
+      currentYear: year,
+      currentMonthNum: month
+    });
+    
+    this.initCalendar();
   },
 
   initCalendar() {
     const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const currentMonth = `${year}年${month + 1}月`;
+    const year = this.data.currentYear;
+    const month = this.data.currentMonthNum - 1; // JavaScript月份从0开始
+    const currentMonth = `${year}年${this.data.currentMonthNum}月`;
     
     // 生成日历数据
     const firstDay = new Date(year, month, 1);

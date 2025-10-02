@@ -4,12 +4,13 @@ Page({
     // 表单数据
     petName: '',
     petGender: '公',
-    sterilizationStatus: '未绝育',
-    petWeight: '',
     petBreed: '',
-    petCutePhrase: '',
-    petAvatar: '',
     birthDate: '',
+    petWeight: '',
+    notes: '',
+    isNeutered: false,
+    isVaccinated: false,
+    petAvatar: '',
     
     // 性别选项
     genderOptions: [
@@ -17,34 +18,38 @@ Page({
       { value: '母', label: '母' }
     ],
     
-    // 宠物品种选项
+    // 宠物品种选项（限制在6个以内）
     breedOptions: [
-      '金毛', '拉布拉多', '哈士奇', '泰迪', '比熊', '博美', '柯基', '柴犬',
-      '萨摩耶', '阿拉斯加', '德牧', '边牧', '英短', '美短', '布偶', '暹罗',
-      '波斯', '加菲', '橘猫', '三花', '其他'
+      '金毛', '泰迪', '柯基', '柴犬', '英短', '其他'
     ],
 
-    // 体重选项
-    weightOptions: [
-      '1kg以下', '1-2kg', '2-3kg', '3-4kg', '4-5kg', '5-6kg', '6-7kg', '7-8kg',
-      '8-9kg', '9-10kg', '10-15kg', '15-20kg', '20-25kg', '25-30kg', '30kg以上'
-    ],
     
-    // 可爱短语模板
-    cutePhraseTemplates: [
-      '热爱自然的拉屎大王',
-      '优雅的便便艺术家',
-      '活泼可爱的小天使',
-      '温柔体贴的小宝贝',
-      '聪明机智的小精灵',
-      '憨厚可爱的小萌宠',
-      '活力四射的小太阳',
-      '乖巧听话的小天使'
-    ]
   },
 
   onLoad() {
-    console.log('添加宠物页面加载');
+    console.log('=== 添加宠物页面开始加载 ===');
+    try {
+      console.log('页面数据初始化完成');
+      console.log('当前数据:', this.data);
+    } catch (e) {
+      console.error('页面加载异常:', e);
+    }
+    console.log('=== 添加宠物页面加载完成 ===');
+  },
+
+  onShow() {
+    console.log('添加宠物页面显示');
+  },
+
+  onReady() {
+    console.log('添加宠物页面渲染完成');
+  },
+
+  // 返回上一页
+  goBack() {
+    wx.navigateBack({
+      delta: 1
+    });
   },
 
   // 输入宠物名称
@@ -63,21 +68,27 @@ Page({
     });
   },
 
-  // 选择绝育状态
-  selectSterilization(e) {
-    const status = e.currentTarget.dataset.status;
+  // 输入体重
+  onWeightInput(e) {
     this.setData({
-      sterilizationStatus: status
+      petWeight: e.detail.value
     });
   },
 
-
-  // 输入可爱短语
-  onCutePhraseInput(e) {
+  // 切换绝育状态
+  toggleNeutered() {
     this.setData({
-      petCutePhrase: e.detail.value
+      isNeutered: !this.data.isNeutered
     });
   },
+
+  // 切换疫苗状态
+  toggleVaccinated() {
+    this.setData({
+      isVaccinated: !this.data.isVaccinated
+    });
+  },
+
 
   // 选择表情
   // 上传宠物头像
@@ -102,35 +113,12 @@ Page({
     });
   },
 
-  // 随机选择可爱短语
-  randomCutePhrase() {
-    const templates = this.data.cutePhraseTemplates;
-    const randomIndex = Math.floor(Math.random() * templates.length);
-    this.setData({
-      petCutePhrase: templates[randomIndex]
-    });
-  },
-
-  // 编辑宠物名称
-  editName() {
-    wx.showModal({
-      title: '编辑宠物名字',
-      editable: true,
-      placeholderText: '请输入宠物名字',
-      success: (res) => {
-        if (res.confirm && res.content) {
-          this.setData({
-            petName: res.content.trim()
-          });
-        }
-      }
-    });
-  },
 
   // 选择宠物品种
   selectBreed() {
     console.log('selectBreed 被调用');
     console.log('品种选项:', this.data.breedOptions);
+    
     wx.showActionSheet({
       itemList: this.data.breedOptions,
       success: (res) => {
@@ -143,29 +131,15 @@ Page({
       },
       fail: (error) => {
         console.error('选择品种失败:', error);
+        wx.showModal({
+          title: '选择失败',
+          content: '品种选择失败: ' + JSON.stringify(error),
+          showCancel: false
+        });
       }
     });
   },
 
-  // 选择宠物体重
-  selectWeight() {
-    console.log('selectWeight 被调用');
-    console.log('体重选项:', this.data.weightOptions);
-    wx.showActionSheet({
-      itemList: this.data.weightOptions,
-      success: (res) => {
-        console.log('选择的体重索引:', res.tapIndex);
-        const selectedWeight = this.data.weightOptions[res.tapIndex];
-        console.log('选择的体重:', selectedWeight);
-        this.setData({
-          petWeight: selectedWeight
-        });
-      },
-      fail: (error) => {
-        console.error('选择体重失败:', error);
-      }
-    });
-  },
 
   // 出生日期选择器改变
   onBirthDateChange(e) {
@@ -233,7 +207,7 @@ Page({
 
   // 保存宠物
   savePet() {
-    const { petName, petGender, sterilizationStatus, petWeight, petBreed, petCutePhrase, petAvatar, birthDate } = this.data;
+    const { petName, petGender, petBreed, birthDate, petWeight, notes, isNeutered, isVaccinated, petAvatar } = this.data;
 
     // 验证必填项
     if (!petName.trim()) {
@@ -244,9 +218,9 @@ Page({
       return;
     }
 
-    if (!petWeight.trim()) {
+    if (!petBreed.trim()) {
       wx.showToast({
-        title: '请选择宠物体重',
+        title: '请选择宠物品种',
         icon: 'none'
       });
       return;
@@ -255,6 +229,12 @@ Page({
     // 生成新的宠物ID
     const newPetId = 'pet' + Date.now();
 
+    // 构建备注信息
+    let notesList = [];
+    if (isNeutered) notesList.push('已绝育');
+    if (isVaccinated) notesList.push('已打疫苗');
+    const notesText = notesList.length > 0 ? notesList.join('、') : '';
+
     // 构建宠物数据
     const newPet = {
       id: newPetId,
@@ -262,11 +242,13 @@ Page({
       emoji: '🐕', // 默认表情
       avatar: petAvatar,
       gender: petGender,
-      sterilizationStatus: sterilizationStatus,
-      weight: petWeight.trim(),
       breed: petBreed.trim(),
-      birthDate: birthDate.trim(),
-      phrase: petCutePhrase.trim() || '可爱的小宝贝'
+      birthDate: birthDate,
+      weight: petWeight.trim() ? petWeight.trim() + 'kg' : '',
+      notes: notesText,
+      isNeutered: isNeutered,
+      isVaccinated: isVaccinated,
+      phrase: '可爱的小宝贝'
     };
 
     // 保存到本地存储
@@ -291,16 +273,15 @@ Page({
       pets.push(newPet);
       wx.setStorageSync('pets', pets);
 
-      // 同时更新首页的宠物数据
-      const pages = getCurrentPages();
-      const indexPage = pages.find(page => page.route === 'pages/index/index');
-      if (indexPage) {
-        indexPage.setData({
-          pets: pets
-        });
+      // 设置全局数据，让首页知道有新宠物添加
+      const app = getApp();
+      if (app.globalData) {
+        app.globalData.selectedPetId = newPet.id;
+        app.globalData.newPetAdded = true;
       }
 
       console.log('宠物保存成功:', newPet);
+      console.log('设置全局数据 selectedPetId:', newPet.id);
     } catch (error) {
       console.error('保存宠物失败:', error);
       wx.showToast({

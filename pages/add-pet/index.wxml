@@ -1,37 +1,42 @@
-<!--pages/add-pet/index.wxml-->
+<!-- pages/add-pet/index.wxml -->
 <view class="container">
-  <!-- 页面标题 -->
+  <!-- 页面头部 -->
   <view class="page-header">
-    <view class="header-left" bindtap="goBack">
-      <text class="back-arrow">←</text>
+    <view class="header-left" catchtap="goBack">
+      <text class="back-arrow">‹</text>
     </view>
     <text class="page-title">添加宠物</text>
+    <view class="header-right"></view>
   </view>
 
   <!-- 表单内容 -->
-  <view class="form-content">
-    <!-- 宠物头像选择 -->
+  <scroll-view class="form-content" scroll-y="true" enhanced="true" show-scrollbar="false">
+    
+    <!-- 宠物头像 -->
     <view class="form-card">
-      <view class="form-row">
+      <view class="form-row" catchtap="uploadAvatar">
         <text class="form-label">宠物头像</text>
-        <view class="avatar-upload" bindtap="uploadAvatar">
-          <image wx:if="{{petAvatar}}" class="avatar-image" src="{{petAvatar}}" mode="aspectFill"></image>
+        <view class="avatar-upload">
+          <image wx:if="{{petAvatar}}" src="{{petAvatar}}" class="avatar-image"></image>
           <view wx:else class="avatar-placeholder">
-            <text class="upload-icon">📷</text>
-            <text class="upload-text">点击上传</text>
+            <text class="camera-icon">📷</text>
           </view>
         </view>
       </view>
     </view>
 
-    <!-- 宠物名称 -->
+    <!-- 宠物姓名 -->
     <view class="form-card">
-      <view class="form-row" bindtap="editName">
-        <text class="form-label">宠物名字</text>
+      <view class="form-row">
+        <text class="form-label">宠物姓名</text>
         <view class="form-value">
-          <text class="value-text" wx:if="{{petName}}">{{petName}}</text>
-          <text class="placeholder-text" wx:else>请输入宠物名字</text>
-          <text class="arrow">></text>
+          <input 
+            class="input-field" 
+            placeholder="输入宠物姓名" 
+            value="{{petName}}" 
+            bindinput="onNameInput"
+            maxlength="20"
+          />
         </view>
       </view>
     </view>
@@ -42,7 +47,7 @@
         <text class="form-label">宠物品种</text>
         <view class="form-value">
           <text class="value-text" wx:if="{{petBreed}}">{{petBreed}}</text>
-          <text class="placeholder-text" wx:else>如：金毛、泰迪、英短</text>
+          <text class="placeholder-text" wx:else>选择品种</text>
           <text class="arrow">></text>
         </view>
       </view>
@@ -55,112 +60,76 @@
         <view class="gender-selector">
           <view 
             class="gender-option {{petGender === '公' ? 'selected' : ''}}"
-            bindtap="selectGender"
+            catchtap="selectGender"
             data-gender="公"
           >
-            男生
+            <text class="gender-icon">♂</text>
           </view>
           <view 
-            class="gender-option {{petGender === '母' ? 'selected' : ''}}"
-            bindtap="selectGender"
+            class="gender-option {{petGender === '母' ? 'selected female' : ''}}"
+            catchtap="selectGender"
             data-gender="母"
           >
-            女生
+            <text class="gender-icon">♀</text>
           </view>
         </view>
       </view>
     </view>
 
-    <!-- 绝育状态 -->
+    <!-- 宠物生日 -->
     <view class="form-card">
       <view class="form-row">
-        <text class="form-label">绝育状态</text>
-        <view class="gender-selector">
-          <view 
-            class="gender-option {{sterilizationStatus === '未绝育' ? 'selected' : ''}}"
-            bindtap="selectSterilization"
-            data-status="未绝育"
-          >
-            未绝育
-          </view>
-          <view 
-            class="gender-option {{sterilizationStatus === '已绝育' ? 'selected' : ''}}"
-            bindtap="selectSterilization"
-            data-status="已绝育"
-          >
-            已绝育
-          </view>
+        <text class="form-label">宠物生日</text>
+        <view class="form-value">
+          <picker mode="date" value="{{birthDate}}" bindchange="onBirthDateChange">
+            <text class="value-text" wx:if="{{birthDate}}">{{birthDate}}</text>
+            <text class="placeholder-text" wx:else>选择宠物生日</text>
+          </picker>
         </view>
       </view>
     </view>
 
     <!-- 宠物体重 -->
     <view class="form-card">
-      <view class="form-row" catchtap="selectWeight">
+      <view class="form-row">
         <text class="form-label">宠物体重</text>
         <view class="form-value">
-          <text class="value-text" wx:if="{{petWeight}}">{{petWeight}}</text>
-          <text class="placeholder-text" wx:else>选择宠物体重</text>
-          <text class="arrow">></text>
+          <input 
+            class="input-field" 
+            placeholder="填写宠物体重" 
+            value="{{petWeight}}" 
+            bindinput="onWeightInput"
+            type="digit"
+            maxlength="5"
+          />
+          <text class="unit-text">kg</text>
         </view>
       </view>
     </view>
 
-    <!-- 出生日期 -->
+    <!-- 备注 -->
     <view class="form-card">
       <view class="form-row">
-        <text class="form-label">出生日期</text>
-        <picker mode="date" value="{{birthDate}}" bindchange="onBirthDateChange">
-          <view class="form-value">
-            <text class="value-text" wx:if="{{birthDate}}">{{birthDate}}</text>
-            <text class="placeholder-text" wx:else>选择出生日期</text>
-            <text class="arrow">></text>
+        <text class="form-label">备注</text>
+        <view class="checkbox-group">
+          <view 
+            class="checkbox-item {{isNeutered ? 'checked' : ''}}"
+            catchtap="toggleNeutered"
+          >
+            已绝育
           </view>
-        </picker>
-      </view>
-    </view>
-
-    <!-- 可爱短语 -->
-    <view class="form-card">
-      <view class="form-row" bindtap="editCutePhrase">
-        <text class="form-label">一句话介绍</text>
-        <view class="form-value">
-          <text class="value-text" wx:if="{{petCutePhrase}}">{{petCutePhrase}}</text>
-          <text class="placeholder-text" wx:else>在你眼里,Ta的样子</text>
-          <text class="arrow">></text>
+          <view 
+            class="checkbox-item {{isVaccinated ? 'checked' : ''}}"
+            catchtap="toggleVaccinated"
+          >
+            已打疫苗
+          </view>
         </view>
       </view>
     </view>
-  </view>
 
-  <!-- 提示信息 -->
-  <view class="tip-text">
-    出生日期/到家日期不记得可估算一个值,后续可以修改哦~
-  </view>
+  </scroll-view>
 
   <!-- 保存按钮 -->
-  <view class="save-button-section">
-    <button class="save-button" bindtap="savePet">保存编辑</button>
-  </view>
-
-  <!-- 底部三频道入口 -->
-  <view class="bottom-channels">
-    <!-- 左频道：首页 -->
-    <view class="channel-entry" bindtap="switchChannel" data-channel="home">
-      <view class="channel-icon">🏠</view>
-      <text class="channel-text">首页</text>
-    </view>
-
-    <!-- 中频道：记录 -->
-    <view class="channel-entry" bindtap="switchChannel" data-channel="record">
-      <view class="channel-icon">📝</view>
-      <text class="channel-text">记录</text>
-    </view>
-
-    <!-- 右频道：AI -->
-    <view class="channel-entry" bindtap="switchChannel" data-channel="ai">
-      <view class="channel-icon">🤖</view>
-      <text class="channel-text">问AI</text>
-    </view>
-  </view>
+  <button class="save-button" catchtap="savePet">保存</button>
 </view>

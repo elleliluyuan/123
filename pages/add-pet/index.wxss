@@ -1,24 +1,23 @@
 /* pages/add-pet/index.wxss */
+
+/* 页面容器 */
 .container {
-  min-height: 100vh;
-  background-color: #FFF8F3;
-  padding: 20rpx;
-  /* 精确计算底部间距，消除多余空白 */
-  padding-bottom: calc(100rpx + max(env(safe-area-inset-bottom), 0rpx));
-  /* 调整顶部间距，让标题与小程序按钮居中对齐 */
-  padding-top: 80rpx;
-  /* 确保页面可以滚动 */
-  overflow-y: auto;
-  /* 确保内容区域充分利用屏幕空间 */
-  box-sizing: border-box;
+  height: 100vh;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
 }
 
 /* 页面头部 */
 .page-header {
-  padding: 20rpx 30rpx 20rpx;
   display: flex;
   align-items: center;
-  gap: 20rpx;
+  justify-content: space-between;
+  padding: 44rpx 30rpx 10rpx 30rpx;
+  background-color: transparent;
+  position: relative;
+  height: 88rpx;
+  transform: translateY(-140rpx);
 }
 
 .header-left {
@@ -27,30 +26,49 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
   transition: all 0.3s ease;
+  z-index: 10;
+  flex-shrink: 0;
+  margin-left: -360rpx;
 }
 
 .header-left:active {
   background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  transform: scale(0.95);
 }
 
 .back-arrow {
   font-size: 40rpx;
   color: #2C3E50;
-  font-weight: 600;
+  font-weight: bold;
+  line-height: 1;
 }
 
 .page-title {
-  font-size: 36rpx;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32rpx;
   font-weight: 600;
   color: #2C3E50;
-  text-align: left;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.header-right {
+  width: 60rpx;
+  height: 60rpx;
+  flex-shrink: 0;
 }
 
 /* 表单内容 */
 .form-content {
-  padding: 0 30rpx;
+  flex: 1;
+  padding: 10rpx 30rpx 20rpx 30rpx;
+  overflow-y: auto;
+  transform: translateY(-140rpx);
 }
 
 /* 表单卡片 */
@@ -68,11 +86,11 @@
   align-items: center;
   justify-content: space-between;
   min-height: 60rpx;
-  transition: all 0.3s ease;
 }
 
 .form-row:active {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 8rpx;
 }
 
 .form-label {
@@ -80,72 +98,88 @@
   color: #2C3E50;
   font-weight: 500;
   text-align: left;
+  position: relative;
 }
 
-/* 头像上传 */
-.avatar-upload {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2rpx solid #E8E8E8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #F8F8F8;
-  transition: all 0.3s ease;
-}
 
-.avatar-upload:active {
-  background-color: #E8E8E8;
-  transform: scale(0.95);
-}
-
-.avatar-image {
-  width: 100%;
-  height: 100%;
-}
-
-.avatar-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4rpx;
-}
-
-.upload-icon {
-  font-size: 24rpx;
-  color: #999999;
-}
-
-.upload-text {
-  font-size: 20rpx;
-  color: #999999;
-}
-
-/* 表单值 */
 .form-value {
   display: flex;
   align-items: center;
-  gap: 10rpx;
+  flex: 1;
+  justify-content: flex-end;
+  margin-left: 40rpx;
 }
 
 .value-text {
-  font-size: 32rpx;
+  font-size: 30rpx;
   color: #2C3E50;
-  font-weight: 500;
+  text-align: right;
 }
 
 .placeholder-text {
-  font-size: 32rpx;
-  color: #999999;
+  font-size: 28rpx;
+  color: #CCCCCC;
+  text-align: right;
 }
 
 .arrow {
   font-size: 24rpx;
   color: #CCCCCC;
-  font-weight: bold;
+  margin-left: 16rpx;
+}
+
+/* 输入框 */
+.input-field {
+  font-size: 30rpx;
+  color: #2C3E50;
+  text-align: right;
+  width: 100%;
+}
+
+.input-field::placeholder {
+  color: #CCCCCC;
+  font-size: 28rpx;
+}
+
+/* 单位文本 */
+.unit-text {
+  font-size: 30rpx;
+  color: #666666;
+  margin-left: 16rpx;
+}
+
+/* 头像上传 */
+.avatar-upload {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background-color: #F0F0F0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.avatar-upload:active {
+  transform: scale(0.95);
+  background-color: #E8E8E8;
+}
+
+.avatar-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+}
+
+.avatar-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-icon {
+  font-size: 48rpx;
+  color: #CCCCCC;
 }
 
 /* 性别选择器 */
@@ -155,16 +189,14 @@
 }
 
 .gender-option {
-  padding: 16rpx 32rpx;
-  border-radius: 25rpx;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
   background-color: #F0F0F0;
-  color: #999999;
-  font-size: 28rpx;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s ease;
-  text-align: center;
-  min-width: 120rpx;
-  cursor: pointer;
 }
 
 .gender-option:active {
@@ -172,111 +204,73 @@
 }
 
 .gender-option.selected {
-  background-color: #FFD700;
+  background-color: #4A90E2;
+}
+
+.gender-option.selected.female {
+  background-color: #FF69B4;
+}
+
+.gender-icon {
+  font-size: 32rpx;
+  color: #CCCCCC;
+}
+
+.gender-option.selected .gender-icon {
+  color: #FFFFFF;
+}
+
+
+/* 复选框组 */
+.checkbox-group {
+  display: flex;
+  gap: 20rpx;
+}
+
+.checkbox-item {
+  padding: 16rpx 24rpx;
+  border-radius: 20rpx;
+  background-color: #F0F0F0;
+  color: #666666;
+  font-size: 26rpx;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-width: 100rpx;
+}
+
+.checkbox-item:active {
+  transform: scale(0.95);
+}
+
+.checkbox-item.checked {
+  background-color: #E8E8E8;
   color: #2C3E50;
   font-weight: 600;
-}
-
-/* 提示文本 */
-.tip-text {
-  font-size: 24rpx;
-  color: #999999;
-  text-align: center;
-  margin: 40rpx 30rpx;
-  line-height: 1.5;
-}
-
-/* 保存按钮区域 */
-.save-button-section {
-  padding: 0 30rpx 40rpx;
 }
 
 .save-button {
-  width: 100%;
-  height: 100rpx;
-  background-color: #FFD700;
-  color: #2C3E50;
-  border-radius: 50rpx;
-  font-size: 36rpx;
+  margin: -80rpx 30rpx 30rpx 30rpx;
+  width: calc(100% - 60rpx);
+  height: 96rpx;
+  background: linear-gradient(135deg,rgb(234, 132, 6), #FF8E8E);
+  color: #FFFFFF;
+  font-size: 32rpx;
   font-weight: 600;
-  text-align: center;
-  line-height: 100rpx;
+  border-radius: 48rpx;
   border: none;
-  box-shadow: 0 4rpx 16rpx rgba(255, 215, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s ease;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.3);
 }
 
 .save-button:active {
-  background-color: #FFC107;
-  transform: scale(0.98);
+  transform: translateY(2rpx);
+  box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.3);
 }
 
-/* 底部三频道导航 */
-.bottom-channels {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100rpx;
-  background-color: #FFFFFF;
-  border-top: 1rpx solid #E8E8E8;
-  display: flex;
-  z-index: 9999;
-  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
-  /* 精确控制底部间距，消除多余空白 */
-  padding-bottom: max(env(safe-area-inset-bottom), 0rpx);
-  /* 确保内容不被隐藏，但不增加额外高度 */
-  min-height: 100rpx;
-}
-
-.channel-entry {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 8rpx 10rpx;
-  transition: all 0.3s ease;
-  position: relative;
-  /* 精确控制底部边距，消除多余空白 */
-  margin-bottom: max(env(safe-area-inset-bottom), 0rpx);
-  /* 确保内容垂直居中 */
-  height: 100%;
-}
-
-.channel-entry.active {
-  background-color: #FFF8F3;
-}
-
-.channel-entry.active::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60rpx;
-  height: 4rpx;
-  background-color: #FF8C42;
-  border-radius: 2rpx;
-}
-
-.channel-icon {
-  font-size: 32rpx;
-  margin-bottom: 2rpx;
-  transition: all 0.3s ease;
-  line-height: 1;
-}
-
-.channel-text {
-  font-size: 20rpx;
-  color: #999999;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  line-height: 1;
-  transform: translateY(10rpx);
-}
-
-.channel-entry.active .channel-text {
-  color: #FF8C42;
-  font-weight: 600;
+.save-button::after {
+  border: none;
 }
