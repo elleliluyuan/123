@@ -1,0 +1,128 @@
+<!--pages/ai/index.wxml-->
+<view class="container">
+  <!-- 顶部标题栏 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <text class="back-arrow">‹</text>
+    </view>
+    <view class="header-center">
+      <text class="header-title">AI 健康助手</text>
+    </view>
+    <view class="header-right"></view>
+  </view>
+
+  <!-- 对话容器 -->
+  <scroll-view class="chat-container" scroll-y="true" scroll-top="{{scrollTop}}" enhanced="true" show-scrollbar="false">
+    <view class="chat-messages">
+      <!-- 欢迎消息 -->
+      <view class="message ai-message">
+        <view class="message-avatar">
+          <text class="avatar-icon">🤖</text>
+        </view>
+        <view class="message-content">
+          <view class="message-bubble ai-bubble">
+            <text class="message-text">Hi我是您的专属养宠健康助手~</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 问题推荐区域 -->
+      <view class="message ai-message">
+        <view class="message-avatar">
+          <text class="avatar-icon">🤖</text>
+        </view>
+        <view class="message-content">
+          <view class="message-bubble ai-bubble">
+            <text class="message-text">我们发现您的宝贝可能有以下健康困扰？您可以点击下方快速得到对应解决方案：</text>
+            
+            <!-- 健康问题按钮 -->
+            <view class="health-options">
+              <view class="health-option" bindtap="selectHealthIssue" data-issue="hair-tangles">
+                <text class="option-text">毛发打结</text>
+              </view>
+              <view class="health-option" bindtap="selectHealthIssue" data-issue="hair-dry">
+                <text class="option-text">毛发干枯/无光泽</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 快捷功能区域 -->
+      <view class="message ai-message">
+        <view class="message-avatar">
+          <text class="avatar-icon">🤖</text>
+        </view>
+        <view class="message-content">
+          <view class="message-bubble ai-bubble">
+            <text class="message-text">您也可以选择以下快捷功能：</text>
+            
+            <!-- 功能按钮 -->
+            <view class="function-options">
+              <view class="function-option" bindtap="switchPet">
+                <text class="option-text">切换咨询宠物</text>
+              </view>
+              <view class="function-option" bindtap="askQuestion" data-question="bad-breath">
+                <text class="option-text">宠物口臭怎么办</text>
+              </view>
+              <view class="function-option" bindtap="askQuestion" data-question="dental-calculus">
+                <text class="option-text">解决牙结石的方法</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 用户消息列表 -->
+      <view class="message {{item.type === 'user' ? 'user-message' : 'ai-message'}}" wx:for="{{messages}}" wx:key="id">
+        <view class="message-avatar" wx:if="{{item.type === 'ai'}}">
+          <text class="avatar-icon">🤖</text>
+        </view>
+        <view class="message-content">
+          <view class="message-bubble {{item.type === 'user' ? 'user-bubble' : 'ai-bubble'}}">
+            <text class="message-text">{{item.content}}</text>
+          </view>
+        </view>
+        <view class="message-avatar" wx:if="{{item.type === 'user'}}">
+          <text class="avatar-icon">👤</text>
+        </view>
+      </view>
+
+      <!-- 加载状态 -->
+      <view class="message ai-message" wx:if="{{isLoading}}">
+        <view class="message-avatar">
+          <text class="avatar-icon">🤖</text>
+        </view>
+        <view class="message-content">
+          <view class="message-bubble ai-bubble">
+            <view class="typing-indicator">
+              <view class="typing-dot"></view>
+              <view class="typing-dot"></view>
+              <view class="typing-dot"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部输入区域 -->
+  <view class="input-section">
+    <view class="input-container">
+      <view class="input-wrapper">
+        <input 
+          class="message-input" 
+          placeholder="请描述您遇到的养宠问题..." 
+          value="{{inputText}}"
+          bindinput="onInputChange"
+          bindconfirm="sendMessage"
+          confirm-type="send"
+          maxlength="500"
+        />
+        <view class="send-btn {{inputText.trim() ? 'active' : ''}}" bindtap="sendMessage">
+          <text class="send-icon">发送</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

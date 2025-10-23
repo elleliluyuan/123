@@ -168,19 +168,16 @@
     <!-- 左频道：首页 -->
     <view class="channel-entry" bindtap="switchChannel" data-channel="home">
       <view class="channel-icon">🏠</view>
-      <text class="channel-text">首页</text>
     </view>
     
-    <!-- 中频道：记录 -->
-    <view class="channel-entry active" bindtap="switchChannel" data-channel="record">
-      <view class="channel-icon">📝</view>
-      <text class="channel-text">记录</text>
+    <!-- 中间加号按钮 -->
+    <view class="add-button" bindtap="addRecord">
+      <text class="add-icon">+</text>
     </view>
     
     <!-- 右频道：AI -->
     <view class="channel-entry" bindtap="switchChannel" data-channel="ai">
       <view class="channel-icon">🤖</view>
-      <text class="channel-text">问AI</text>
     </view>
   </view>
 </scroll-view>

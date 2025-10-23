@@ -357,17 +357,20 @@ Page({
       getApp().globalData = getApp().globalData || {};
       getApp().globalData.selectedPetId = selectedPetId;
       
-      wx.switchTab({
+      wx.reLaunch({
         url: `/pages/index/index?selectedPetId=${selectedPetId}`
       });
     } else if (channel === 'record') {
       // 记录频道，已经在当前页面
       console.log('已在记录页面');
     } else if (channel === 'ai') {
-      // AI频道，跳转到AI对话页面
-      wx.showToast({
-        title: 'AI功能开发中',
-        icon: 'none'
+      // AI频道，跳转到AI对话页面（已无系统tabBar）
+      wx.navigateTo({
+        url: '/pages/ai/index',
+        fail: (err) => {
+          console.error('记录页跳转问AI失败，改用 reLaunch：', err);
+          wx.reLaunch({ url: '/pages/ai/index' });
+        }
       });
     }
   },
@@ -378,8 +381,8 @@ Page({
     getApp().globalData = getApp().globalData || {};
     getApp().globalData.selectedPetId = this.data.selectedPetId;
     
-    // 使用 switchTab 跳转到首页
-    wx.switchTab({
+    // 非 tabBar，改为 reLaunch 返回首页
+    wx.reLaunch({
       url: '/pages/index/index'
     });
   },
@@ -394,6 +397,30 @@ Page({
           this.goToHome();
         }
       }
+    });
+  },
+
+  // 添加记录（加号按钮）
+  addRecord() {
+    console.log('加号按钮被点击，刷新当前页面');
+    // 刷新当前页面，重置表单
+    this.setData({
+      selectedShape: '',
+      selectedColor: '',
+      selectedEnvironment: '',
+      amountValue: 3,
+      amountLabel: '中等',
+      selectedSymptom: '',
+      selectedFactor: '',
+      notes: '',
+      recordDate: this.getCurrentDate(),
+      recordTime: this.getCurrentTime()
+    });
+    
+    wx.showToast({
+      title: '开始新记录',
+      icon: 'success',
+      duration: 1000
     });
   },
 
@@ -521,13 +548,11 @@ Page({
       cancelText: '知道了',
       success: (res) => {
         if (res.confirm) {
-          wx.showToast({
-            title: 'AI功能开发中',
-            icon: 'none'
+          // 直接进入问AI页面继续对话
+          wx.navigateTo({
+            url: '/pages/ai/index',
+            fail: () => wx.reLaunch({ url: '/pages/ai/index' })
           });
-          setTimeout(() => {
-            this.goToHome();
-          }, 1500);
         } else {
           this.goToHome();
         }

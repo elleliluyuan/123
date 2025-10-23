@@ -1,4 +1,219 @@
 /**app.wxss**/
+/* Vibrant Comic Sticker UI Design System */
+:root {
+  /* 背景色彩 */
+  --bg-clean-white: #FFFFFF;
+  --bg-light-off-white: #FAFAFA;
+  
+  /* 边框色彩 - 纯黑色粗边框 */
+  --border-black: #000000;
+  --border-thick: 4rpx;
+  --border-medium: 3rpx;
+  --border-thin: 2rpx;
+  
+  /* 功能强调色 */
+  --accent-primary: #FFC107; /* Vibrant Yellow/Orange */
+  --accent-secondary: #00BCD4; /* Deep Teal/Blue */
+  
+  /* 组件填充色 - 高饱和度 */
+  --fill-pop-red: #FF6E40; /* Pop Red/Coral */
+  --fill-grass-green: #8BC34A; /* Grass Green */
+  --fill-bright-pink: #FF4081; /* Bright Pink */
+  --fill-light-lavender: #B39DDB; /* Light Lavender */
+  
+  /* 文字颜色 */
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --text-muted: #666666;
+  
+  /* 圆角设置 */
+  --radius-large: 32rpx; /* 16px - 大圆角 */
+  --radius-medium: 24rpx; /* 12px */
+  --radius-pill: 9999rpx; /* 药丸形状 */
+  
+  /* 间距 */
+  --spacing-xs: 8rpx;
+  --spacing-sm: 16rpx;
+  --spacing-md: 24rpx;
+  --spacing-lg: 32rpx;
+  --spacing-xl: 40rpx;
+  
+  /* 漫画风格阴影 - 硬边偏移阴影 */
+  --shadow-comic: 6rpx 6rpx 0rpx rgba(0, 0, 0, 0.8);
+  --shadow-sticker: 4rpx 4rpx 0rpx rgba(0, 0, 0, 0.6);
+}
+
+/* 全局样式 */
+page {
+  background: var(--bg-clean-white);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.4;
+}
+
+/* 漫画风格卡片 - 纯黑色粗边框 */
+.card {
+  background: var(--bg-clean-white);
+  border: var(--border-thick) solid var(--border-black);
+  border-radius: var(--radius-large);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-sticker);
+}
+
+.card-colored {
+  background: var(--fill-pop-red);
+  border: var(--border-thick) solid var(--border-black);
+  border-radius: var(--radius-large);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-sticker);
+}
+
+.card-green {
+  background: var(--fill-grass-green);
+}
+
+.card-pink {
+  background: var(--fill-bright-pink);
+}
+
+.card-lavender {
+  background: var(--fill-light-lavender);
+}
+
+/* 漫画风格按钮 */
+.btn-primary {
+  background: var(--accent-primary);
+  color: var(--text-primary);
+  border: var(--border-thick) solid var(--border-black);
+  border-radius: var(--radius-medium);
+  padding: 20rpx 32rpx;
+  font-size: 28rpx;
+  font-weight: 800;
+  box-shadow: var(--shadow-comic);
+  transition: all 0.1s ease;
+}
+
+.btn-primary:active {
+  transform: translate(2rpx, 2rpx);
+  box-shadow: 2rpx 2rpx 0rpx rgba(0, 0, 0, 0.8);
+}
+
+.btn-secondary {
+  background: var(--accent-secondary);
+  color: var(--bg-clean-white);
+  border: var(--border-thick) solid var(--border-black);
+  border-radius: var(--radius-medium);
+  padding: 20rpx 32rpx;
+  font-size: 28rpx;
+  font-weight: 800;
+  box-shadow: var(--shadow-comic);
+  transition: all 0.1s ease;
+}
+
+.btn-secondary:active {
+  transform: translate(2rpx, 2rpx);
+  box-shadow: 2rpx 2rpx 0rpx rgba(0, 0, 0, 0.8);
+}
+
+/* 药丸形状标签 */
+.pill-tab {
+  background: var(--fill-grass-green);
+  color: var(--text-primary);
+  border: var(--border-medium) solid var(--border-black);
+  border-radius: var(--radius-pill);
+  padding: 12rpx 24rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+  box-shadow: var(--shadow-sticker);
+  transition: all 0.1s ease;
+}
+
+.pill-tab.active {
+  background: var(--accent-primary);
+  transform: translate(2rpx, 2rpx);
+  box-shadow: 2rpx 2rpx 0rpx rgba(0, 0, 0, 0.6);
+}
+
+/* 漫画风格图标容器 */
+.icon-container {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  border: var(--border-thick) solid var(--border-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sticker);
+}
+
+.icon-primary {
+  background: var(--accent-primary);
+}
+
+.icon-secondary {
+  background: var(--accent-secondary);
+}
+
+.icon-red {
+  background: var(--fill-pop-red);
+}
+
+.icon-green {
+  background: var(--fill-grass-green);
+}
+
+.icon-pink {
+  background: var(--fill-bright-pink);
+}
+
+.icon-lavender {
+  background: var(--fill-light-lavender);
+}
+
+/* 漫画风格徽章 */
+.badge {
+  background: var(--fill-bright-pink);
+  color: var(--bg-clean-white);
+  border: var(--border-thin) solid var(--border-black);
+  border-radius: var(--radius-pill);
+  padding: 6rpx 12rpx;
+  font-size: 20rpx;
+  font-weight: 700;
+  display: inline-block;
+  box-shadow: var(--shadow-sticker);
+}
+
+.badge-green {
+  background: var(--fill-grass-green);
+}
+
+.badge-red {
+  background: var(--fill-pop-red);
+}
+
+/* 工具类 */
+.section {
+  margin: 0 var(--spacing-md);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .container {
   height: 100%;
   display: flex;
@@ -7,4 +222,4 @@
   justify-content: space-between;
   padding: 200rpx 0;
   box-sizing: border-box;
-} 
+}

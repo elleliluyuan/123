@@ -1,7 +1,7 @@
 /* pages/index/index.wxss */
 .container {
   min-height: 100vh;
-  background-color: #FFF8F3;
+  background: #FFFFFF;
   /* 精确计算底部间距，消除多余空白 */
   padding-bottom: calc(100rpx + max(env(safe-area-inset-bottom), 0rpx));
   padding-top: 80rpx; /* Adjusted for title alignment */
@@ -18,7 +18,7 @@
 
 /* 页面标题 */
 .page-header {
-  padding: 20rpx 30rpx 0;
+  padding: 20rpx 24rpx 0;
   text-align: center !important;
   display: flex;
   justify-content: center;
@@ -26,17 +26,19 @@
 }
 
 .page-title {
-  font-size: 36rpx;
-  font-weight: 600;
-  color: #2C3E50;
+  font-size: 48rpx;
+  font-weight: 800;
+  color: #000000;
   text-align: center !important;
   display: block;
   width: auto;
+  line-height: 1.2;
+  letter-spacing: -0.3rpx;
 }
 
 /* 宠物切换标签 */
 .pet-tabs {
-  padding: 0 30rpx 20rpx;
+  padding: 0 24rpx 20rpx;
   transform: translateY(10rpx); /* 整体下移5rpx */
 }
 
@@ -127,32 +129,36 @@
 
 /* 宠物信息卡片 */
 .pet-info-card {
-  margin: 0 30rpx 30rpx;
-  background: linear-gradient(135deg, #FFF8F3, #FFF0E6);
-  border-radius: 24rpx;
-  padding: 30rpx;
-  box-shadow: 0 8rpx 32rpx rgba(255, 140, 66, 0.15);
+  margin: 0 24rpx 32rpx;
+  background: #FFFFFF;
+  border: 4rpx solid #000000;
+  border-radius: 32rpx;
+  padding: 32rpx;
   position: relative;
   overflow: hidden;
+  width: calc(100% - 48rpx);
+  box-sizing: border-box;
 }
 
 .pet-info-card::before {
   content: '';
   position: absolute;
-  top: -30rpx;
-  right: -30rpx;
-  width: 120rpx;
-  height: 120rpx;
-  background: linear-gradient(45deg, #FF8C42, #FF6B6B);
+  top: -20rpx;
+  right: -20rpx;
+  width: 60rpx;
+  height: 60rpx;
+  background: #FFC107;
+  border: 3rpx solid #000000;
   border-radius: 50%;
-  opacity: 0.1;
+  opacity: 1;
 }
 
 .pet-info-content {
   display: flex;
   align-items: center;
   gap: 30rpx;
-  justify-content: center;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .pet-avatar-section {
@@ -238,12 +244,41 @@
 
 /* 首页内容 */
 .home-content {
-  padding: 0 30rpx 20rpx;
+  padding: 0 24rpx 20rpx;
 }
 
 /* 日历卡片 */
 .calendar-card {
-  margin-bottom: 30rpx;
+  margin: 0 24rpx 30rpx;
+  background: #FFFFFF;
+  border: 4rpx solid #000000;
+  border-radius: 32rpx;
+  padding: 24rpx;
+  width: calc(100% - 48rpx);
+  box-sizing: border-box;
+}
+
+/* 星期标题 */
+.weekday-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10rpx;
+  margin-bottom: 20rpx;
+  padding: 0 10rpx;
+}
+
+.weekday-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40rpx;
+}
+
+.weekday-text {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #000000;
+  text-align: center;
 }
 
 .calendar-header {
@@ -302,29 +337,29 @@
   justify-content: center;
   width: 80rpx;
   height: 80rpx;
-  border-radius: 16rpx;
-  background-color: #FDFDFD;
-  border: 1rpx solid #E8E8E8;
+  border-radius: 20rpx;
+  background: #FFFFFF;
+  border: 3rpx solid #000000;
   font-size: 24rpx;
-  color: #2C3E50;
+  color: #000000;
   position: relative;
+  transition: all 0.1s ease;
 }
 
 .calendar-day.today {
-  background-color: #FFF0E6;
-  border: 3rpx solid #FF8C42;
-  box-shadow: 0 2rpx 8rpx rgba(255, 140, 66, 0.3);
+  background: #FFC107;
+  border: 4rpx solid #000000;
+  transform: translate(-2rpx, -2rpx);
 }
 
 .calendar-day.has-record {
-  background-color: #E6F7FF;
-  border: 2rpx solid #4ECDC4;
+  background: #FFFFFF;
+  border: 3rpx solid #00BCD4;
 }
 
 .calendar-day.abnormal {
-  background-color: #FFEBEE;
-  border: 3rpx solid #FF6B6B;
-  box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.3);
+  background: #FFFFFF;
+  border: 3rpx solid #FF4081;
 }
 
 .day-number {
@@ -338,11 +373,13 @@
 
 /* 周总结卡片 */
 .weekly-summary {
-  background-color: #E0F7FA;
-  border-left: 8rpx solid #00BCD4;
+  background-color: #FFFFFF;
+  border: 4rpx solid #000000;
   padding: 30rpx;
-  border-radius: 24rpx;
-  box-shadow: 0 8rpx 32rpx rgba(0, 188, 212, 0.15);
+  border-radius: 32rpx;
+  margin: 0 24rpx 30rpx;
+  width: calc(100% - 48rpx);
+  box-sizing: border-box;
 }
 
 .summary-header {
@@ -353,15 +390,15 @@
 
 .summary-title {
   font-size: 32rpx;
-  font-weight: 600;
-  color: #00BCD4;
+  font-weight: 700;
+  color: #000000;
   margin-right: 16rpx;
   text-align: left;
 }
 
 .summary-text {
   font-size: 28rpx;
-  color: #3F51B5;
+  color: #333333;
   line-height: 1.6;
   text-align: left;
 }
@@ -369,69 +406,77 @@
 /* 底部三频道导航 */
 .bottom-channels {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 16rpx;
+  left: 24rpx;
+  right: 24rpx;
   height: 100rpx;
-  background-color: #FFFFFF;
-  border-top: 1rpx solid #E8E8E8;
+  background-color: #2C2C2C;
+  border: 4rpx solid #000000;
+  border-radius: 32rpx;
   display: flex;
   z-index: 9999;
-  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
-  /* 精确控制底部间距，消除多余空白 */
-  padding-bottom: max(env(safe-area-inset-bottom), 0rpx);
-  /* 确保内容不被隐藏，但不增加额外高度 */
-  min-height: 100rpx;
+  padding: 0 40rpx;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .channel-entry {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 8rpx 10rpx;
-  transition: all 0.3s ease;
+  width: 60rpx;
+  height: 80rpx;
+  transition: all 0.1s ease;
   position: relative;
-  /* 精确控制底部边距，消除多余空白 */
-  margin-bottom: max(env(safe-area-inset-bottom), 0rpx);
-  /* 确保内容垂直居中 */
-  height: 100%;
 }
 
 .channel-entry.active {
-  background-color: #FFF8F3;
+  /* 移除背景和边框，改为底部指示线 */
 }
 
-.channel-entry.active::before {
+.channel-entry.active::after {
   content: '';
   position: absolute;
-  top: 0;
+  bottom: 8rpx;
   left: 50%;
   transform: translateX(-50%);
-  width: 60rpx;
+  width: 30rpx;
   height: 4rpx;
-  background-color: #FF8C42;
+  background-color: #FFFFFF;
   border-radius: 2rpx;
 }
 
+.channel-entry.active .channel-icon {
+  color: #FFFFFF;
+}
+
 .channel-icon {
-  font-size: 32rpx;
-  margin-bottom: 2rpx;
-  transition: all 0.3s ease;
+  font-size: 40rpx;
+  transition: all 0.1s ease;
   line-height: 1;
+  color: #FFFFFF;
 }
 
-.channel-text {
-  font-size: 20rpx;
-  color: #999999;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  line-height: 1;
-  transform: translateY(10rpx);
+/* 中间加号按钮 */
+.add-button {
+  width: 80rpx;
+  height: 80rpx;
+  background-color: #FF4081;
+  border: 4rpx solid #000000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  transform: translateY(-30rpx);
+  box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.3);
 }
 
-.channel-entry.active .channel-text {
-  color: #FF8C42;
-  font-weight: 600;
+.add-icon {
+  font-size: 36rpx;
+  color: #FFFFFF;
+  font-weight: 700;
+  line-height: 1;
 }

@@ -3,7 +3,7 @@
 /* 页面容器 */
 .container {
   height: 100vh;
-  background-color: transparent;
+  background: #FFFFFF;
   display: flex;
   flex-direction: column;
 }
@@ -14,10 +14,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 44rpx 30rpx 10rpx 30rpx;
-  background-color: transparent;
+  background: #FFFFFF;
   position: relative;
   height: 88rpx;
   transform: translateY(-140rpx);
+  box-shadow: var(--shadow-card);
 }
 
 .header-left {
@@ -30,17 +31,17 @@
   z-index: 10;
   flex-shrink: 0;
   margin-left: -360rpx;
+  border-radius: 50%;
 }
 
 .header-left:active {
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
+  background: var(--bg-surface);
   transform: scale(0.95);
 }
 
 .back-arrow {
   font-size: 40rpx;
-  color: #2C3E50;
+  color: var(--text-primary);
   font-weight: bold;
   line-height: 1;
 }
@@ -50,11 +51,12 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #2C3E50;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: var(--text-primary);
   text-align: center;
   white-space: nowrap;
+  line-height: 1.2;
 }
 
 .header-right {
@@ -73,11 +75,11 @@
 
 /* 表单卡片 */
 .form-card {
-  background-color: #FFFFFF;
-  border-radius: 16rpx;
-  margin-bottom: 20rpx;
-  padding: 30rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  background: #FFFFFF;
+  border-radius: var(--radius-large);
+  margin-bottom: var(--spacing-base);
+  padding: var(--spacing-large);
+  box-shadow: var(--shadow-card);
 }
 
 /* 表单行 */
@@ -86,21 +88,22 @@
   align-items: center;
   justify-content: space-between;
   min-height: 60rpx;
+  padding: 16rpx 0;
+  border-radius: var(--radius-small);
+  transition: all 0.2s ease;
 }
 
 .form-row:active {
-  background-color: rgba(0, 0, 0, 0.02);
-  border-radius: 8rpx;
+  background: var(--bg-surface);
 }
 
 .form-label {
   font-size: 32rpx;
-  color: #2C3E50;
-  font-weight: 500;
+  color: var(--text-primary);
+  font-weight: 600;
   text-align: left;
   position: relative;
 }
-
 
 .form-value {
   display: flex;
@@ -112,40 +115,43 @@
 
 .value-text {
   font-size: 30rpx;
-  color: #2C3E50;
+  color: var(--text-primary);
   text-align: right;
+  font-weight: 500;
 }
 
 .placeholder-text {
   font-size: 28rpx;
-  color: #CCCCCC;
+  color: var(--text-secondary);
   text-align: right;
 }
 
 .arrow {
   font-size: 24rpx;
-  color: #CCCCCC;
+  color: var(--text-secondary);
   margin-left: 16rpx;
 }
 
 /* 输入框 */
 .input-field {
   font-size: 30rpx;
-  color: #2C3E50;
+  color: var(--text-primary);
   text-align: right;
   width: 100%;
+  font-weight: 500;
 }
 
 .input-field::placeholder {
-  color: #CCCCCC;
+  color: var(--text-secondary);
   font-size: 28rpx;
 }
 
 /* 单位文本 */
 .unit-text {
   font-size: 30rpx;
-  color: #666666;
+  color: var(--text-secondary);
   margin-left: 16rpx;
+  font-weight: 500;
 }
 
 /* 头像上传 */
@@ -153,16 +159,17 @@
   width: 120rpx;
   height: 120rpx;
   border-radius: 50%;
-  background-color: #F0F0F0;
+  background: var(--bg-surface);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  box-shadow: var(--shadow-card);
 }
 
 .avatar-upload:active {
   transform: scale(0.95);
-  background-color: #E8E8E8;
+  background: var(--accent-purple);
 }
 
 .avatar-image {
@@ -179,7 +186,7 @@
 
 .camera-icon {
   font-size: 48rpx;
-  color: #CCCCCC;
+  color: var(--text-secondary);
 }
 
 /* 性别选择器 */
@@ -192,11 +199,12 @@
   width: 60rpx;
   height: 60rpx;
   border-radius: 50%;
-  background-color: #F0F0F0;
+  background: var(--bg-surface);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  box-shadow: var(--shadow-card);
 }
 
 .gender-option:active {
@@ -204,22 +212,22 @@
 }
 
 .gender-option.selected {
-  background-color: #4A90E2;
+  background: var(--accent-blue);
+  box-shadow: var(--shadow-soft);
 }
 
 .gender-option.selected.female {
-  background-color: #FF69B4;
+  background: var(--accent-purple);
 }
 
 .gender-icon {
   font-size: 32rpx;
-  color: #CCCCCC;
+  color: var(--text-secondary);
 }
 
 .gender-option.selected .gender-icon {
-  color: #FFFFFF;
+  color: var(--bg-canvas-white);
 }
-
 
 /* 复选框组 */
 .checkbox-group {
@@ -229,14 +237,15 @@
 
 .checkbox-item {
   padding: 16rpx 24rpx;
-  border-radius: 20rpx;
-  background-color: #F0F0F0;
-  color: #666666;
+  border-radius: var(--radius-medium);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
   font-size: 26rpx;
   font-weight: 500;
   transition: all 0.3s ease;
   text-align: center;
   min-width: 100rpx;
+  box-shadow: var(--shadow-card);
 }
 
 .checkbox-item:active {
@@ -244,31 +253,32 @@
 }
 
 .checkbox-item.checked {
-  background-color: #E8E8E8;
-  color: #2C3E50;
+  background: var(--accent-yellow);
+  color: var(--text-primary);
   font-weight: 600;
+  box-shadow: var(--shadow-soft);
 }
 
 .save-button {
   margin: -80rpx 30rpx 30rpx 30rpx;
   width: calc(100% - 60rpx);
   height: 96rpx;
-  background: linear-gradient(135deg,rgb(234, 132, 6), #FF8E8E);
-  color: #FFFFFF;
+  background: var(--accent-yellow);
+  color: var(--text-primary);
   font-size: 32rpx;
-  font-weight: 600;
-  border-radius: 48rpx;
+  font-weight: 700;
+  border-radius: var(--radius-large);
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.3);
+  box-shadow: var(--shadow-soft);
 }
 
 .save-button:active {
   transform: translateY(2rpx);
-  box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.3);
+  box-shadow: var(--shadow-button);
 }
 
 .save-button::after {

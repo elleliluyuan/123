@@ -33,6 +33,7 @@ Page({
     currentYear: new Date().getFullYear(),
     currentMonthNum: new Date().getMonth() + 1,
     currentMonth: '', // 显示的月份文本
+    weekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'], // 星期英文简写
     
     // 周总结
     weeklySummary: '本周记录正常，继续保持！'
@@ -499,6 +500,21 @@ Page({
     return colorMap[color] || color;
   },
 
+  // 添加记录
+  addRecord() {
+    console.log('中间加号按钮被点击，跳转到记录页面');
+    wx.navigateTo({
+      url: '/pages/record/index',
+      success: () => {
+        console.log('已跳转到记录页面');
+      },
+      fail: (err) => {
+        console.error('navigateTo 记录页面失败，改用 reLaunch：', err);
+        wx.reLaunch({ url: '/pages/record/index' });
+      }
+    });
+  },
+
   // 切换频道
   switchChannel(e) {
     console.log('switchChannel 被调用', e);
@@ -515,9 +531,15 @@ Page({
       this.goToRecord();
     } else if (channel === 'ai') {
       // AI频道，跳转到AI对话页面
-      wx.showToast({
-        title: 'AI功能开发中',
-        icon: 'none'
+      wx.navigateTo({
+        url: '/pages/ai/index',
+        success: () => {
+          console.log('已跳转到问AI页面');
+        },
+        fail: (err) => {
+          console.error('navigateTo 问AI失败，改用 reLaunch：', err);
+          wx.reLaunch({ url: '/pages/ai/index' });
+        }
       });
     }
   },
@@ -527,8 +549,8 @@ Page({
     getApp().globalData = getApp().globalData || {};
     getApp().globalData.selectedPetId = this.data.currentPetId;
     
-    // 使用 switchTab 跳转到 tabBar 页面
-    wx.switchTab({
+    // 使用 navigateTo 跳转（已移除系统 tabBar）
+    wx.navigateTo({
       url: '/pages/record/index'
     });
   }

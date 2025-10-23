@@ -70,6 +70,13 @@
           <text class="arrow-icon">›</text>
         </view>
       </view>
+      <!-- 星期标题 -->
+      <view class="weekday-header">
+        <view class="weekday-item" wx:for="{{weekdays}}" wx:key="*this">
+          <text class="weekday-text">{{item}}</text>
+        </view>
+      </view>
+      
       <view class="calendar-grid">
         <view 
           class="calendar-day {{item.isToday ? 'today' : ''}} {{item.hasRecord ? 'has-record' : ''}} {{item.isAbnormal ? 'abnormal' : ''}}"
@@ -92,25 +99,22 @@
       <text class="summary-text">{{weeklySummary}}</text>
     </view>
   </view>
-
-  <!-- 底部三频道入口 -->
+  <!-- 自定义底部三频道入口 -->
   <view class="bottom-channels">
     <!-- 左频道：首页 -->
     <view class="channel-entry active" catchtap="switchChannel" data-channel="home">
       <view class="channel-icon">🏠</view>
-      <text class="channel-text">首页</text>
     </view>
     
-    <!-- 中频道：记录 -->
-    <view class="channel-entry" catchtap="switchChannel" data-channel="record">
-      <view class="channel-icon">📝</view>
-      <text class="channel-text">记录</text>
+    <!-- 中间加号按钮 -->
+    <view class="add-button" catchtap="addRecord">
+      <text class="add-icon">+</text>
     </view>
     
     <!-- 右频道：AI -->
     <view class="channel-entry" catchtap="switchChannel" data-channel="ai">
       <view class="channel-icon">🤖</view>
-      <text class="channel-text">问AI</text>
     </view>
   </view>
+
 </view>

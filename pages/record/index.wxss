@@ -1,7 +1,7 @@
 /* pages/record/index.wxss */
 .container {
   height: 100vh;
-  background-color: #FFF8F3;
+  background: #FFFFFF;
   padding: 20rpx;
   /* 精确计算底部间距，消除多余空白 */
   padding-bottom: calc(100rpx + max(env(safe-area-inset-bottom), 0rpx));
@@ -18,9 +18,10 @@
 }
 
 .page-title {
-  font-size: 36rpx;
-  font-weight: 600;
-  color: #2C3E50;
+  font-size: 48rpx;
+  font-weight: 800;
+  color: #000000;
+  line-height: 1.2;
 }
 
 /* 表单区域 */
@@ -45,17 +46,16 @@
   flex-direction: column;
   align-items: center;
   padding: 30rpx 20rpx;
-  border: 2rpx solid #E8E8E8;
-  border-radius: 16rpx;
-  background-color: #FFFFFF;
-  transition: all 0.3s ease;
+  border: 4rpx solid #000000;
+  border-radius: 24rpx;
+  background: #FFFFFF;
+  transition: all 0.1s ease;
 }
 
 .pet-option.selected {
-  border-color: #FF8C42;
-  background-color: #FFF8F3;
-  box-shadow: 0 4rpx 16rpx rgba(255, 140, 66, 0.2);
-  transform: translateY(-4rpx);
+  border-color: #000000;
+  background: #FFC107;
+  transform: translate(-2rpx, -2rpx);
 }
 
 .pet-avatar {
@@ -101,22 +101,22 @@
   justify-content: center;
   padding: 24rpx;
   background-color: #FFFFFF;
-  border: 2rpx solid #E8E8E8;
-  border-radius: 16rpx;
+  border: 4rpx solid #000000;
+  border-radius: 24rpx;
   width: 100%;
   box-sizing: border-box;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
 }
 
 .picker-label {
   font-size: 28rpx;
-  color: #2C3E50;
+  color: #000000;
+  font-weight: 700;
 }
 
 .picker-value {
   font-size: 28rpx;
-  color: #FF8C42; /* 橙色，与图片中的颜色一致 */
-  font-weight: 600; /* 稍微加粗，更突出 */
+  color: #FFC107;
+  font-weight: 700;
 }
 
 /* 便便形态选择器 */
@@ -133,16 +133,16 @@
   justify-content: center;
   padding: 24rpx 16rpx;
   background-color: #FFFFFF;
-  border: 2rpx solid #E8E8E8;
-  border-radius: 16rpx;
-  transition: all 0.3s ease;
+  border: 4rpx solid #000000;
+  border-radius: 24rpx;
+  transition: all 0.1s ease;
   text-align: center;
 }
 
 .poop-item.selected {
-  border-color: #FF8C42;
-  background-color: #FFF8F3;
-  box-shadow: 0 4rpx 16rpx rgba(255, 140, 66, 0.2);
+  border-color: #000000;
+  background: #FFC107;
+  transform: translate(-2rpx, -2rpx);
 }
 
 .shape-icon {
@@ -183,7 +183,7 @@
 
 .color-item.selected {
   border-color: #FF8C42;
-  background-color: #FFF8F3;
+  background: #FFFFFF;
   box-shadow: 0 4rpx 16rpx rgba(255, 140, 66, 0.2);
 }
 
@@ -197,17 +197,16 @@
 
 .color-label {
   font-size: 24rpx;
-  color: #2C3E50;
-  font-weight: 500;
+  color: #000000;
+  font-weight: 700;
 }
 
 /* 便便量选择器 */
 .amount-selector {
   padding: 24rpx;
   background-color: #FFFFFF;
-  border-radius: 16rpx;
-  border: 2rpx solid #E8E8E8;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  border-radius: 24rpx;
+  border: 4rpx solid #000000;
 }
 
 .amount-display {
@@ -217,8 +216,8 @@
 
 .amount-label {
   font-size: 32rpx;
-  color: #FF8C42;
-  font-weight: 600;
+  color: #FFC107;
+  font-weight: 700;
 }
 
 .amount-slider {
@@ -252,15 +251,15 @@
   justify-content: center;
   padding: 24rpx 16rpx;
   background-color: #FFFFFF;
-  border: 2rpx solid #E8E8E8;
-  border-radius: 16rpx;
-  transition: all 0.3s ease;
+  border: 4rpx solid #000000;
+  border-radius: 24rpx;
+  transition: all 0.1s ease;
 }
 
 .environment-item.selected {
-  border-color: #4ECDC4;
-  background-color: #E6F7FF;
-  box-shadow: 0 4rpx 16rpx rgba(78, 205, 196, 0.2);
+  border-color: #000000;
+  background-color: #00BCD4;
+  transform: translate(-2rpx, -2rpx);
 }
 
 .environment-icon {
@@ -270,8 +269,8 @@
 
 .environment-text {
   font-size: 28rpx;
-  font-weight: 600;
-  color: #2C3E50;
+  font-weight: 700;
+  color: #000000;
 }
 
 /* 异常症状 */
@@ -283,13 +282,13 @@
 
 .symptom-tag {
   padding: 12rpx 8rpx;
-  border: 2rpx solid #E8E8E8;
-  border-radius: 16rpx;
+  border: 4rpx solid #000000;
+  border-radius: 20rpx;
   background-color: #FFFFFF;
-  color: #2C3E50;
+  color: #000000;
   font-size: 24rpx;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  font-weight: 700;
+  transition: all 0.1s ease;
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -297,8 +296,9 @@
 }
 
 .symptom-tag.selected {
-  border-color: #FF6B6B;
-  background-color: #FFF5F5;
+  border-color: #000000;
+  background-color: #FF4081;
+  transform: translate(-2rpx, -2rpx);
 }
 
 /* 影响因素 */
@@ -310,13 +310,13 @@
 
 .factor-tag {
   padding: 12rpx 8rpx;
-  border: 2rpx solid #E8E8E8;
-  border-radius: 16rpx;
+  border: 4rpx solid #000000;
+  border-radius: 20rpx;
   background-color: #FFFFFF;
-  color: #2C3E50;
+  color: #000000;
   font-size: 24rpx;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  font-weight: 700;
+  transition: all 0.1s ease;
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -324,8 +324,9 @@
 }
 
 .factor-tag.selected {
-  border-color: #4ECDC4;
-  background-color: #F0F8FF;
+  border-color: #000000;
+  background-color: #8BC34A;
+  transform: translate(-2rpx, -2rpx);
 }
 
 /* 备注输入 */
@@ -333,11 +334,11 @@
   width: 100%;
   min-height: 120rpx;
   padding: 24rpx;
-  border: 2rpx solid #E8E8E8;
-  border-radius: 16rpx;
+  border: 4rpx solid #000000;
+  border-radius: 24rpx;
   background-color: #FFFFFF;
   font-size: 28rpx;
-  color: #2C3E50;
+  color: #000000;
   line-height: 1.5;
   box-sizing: border-box; /* 确保padding不会增加总宽度 */
 }
@@ -357,11 +358,12 @@
 .cancel-btn {
   flex: 1;
   padding: 24rpx;
-  background-color: #E8E8E8;
-  color: #2C3E50;
+  background-color: #FFFFFF;
+  color: #000000;
+  border: 4rpx solid #000000;
   border-radius: 24rpx;
   font-size: 32rpx;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
   line-height: 1;
 }
@@ -369,11 +371,12 @@
 .save-btn {
   flex: 1;
   padding: 24rpx;
-  background-color: #FF8C42;
-  color: #FFFFFF;
+  background-color: #FFC107;
+  color: #000000;
+  border: 4rpx solid #000000;
   border-radius: 24rpx;
   font-size: 32rpx;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
   line-height: 1;
 }
@@ -381,69 +384,79 @@
 /* 底部三频道导航 */
 .bottom-channels {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 16rpx;
+  left: 24rpx;
+  right: 24rpx;
   height: 100rpx;
-  background-color: #FFFFFF;
-  border-top: 1rpx solid #E8E8E8;
+  background-color: #2C2C2C;
+  border: 4rpx solid #000000;
+  border-radius: 32rpx;
   display: flex;
   z-index: 9999;
-  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
-  /* 精确控制底部间距，消除多余空白 */
-  padding-bottom: max(env(safe-area-inset-bottom), 0rpx);
-  /* 确保内容不被隐藏，但不增加额外高度 */
-  min-height: 100rpx;
+  padding: 0 40rpx;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .channel-entry {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 8rpx 10rpx;
-  transition: all 0.3s ease;
+  width: 60rpx;
+  height: 80rpx;
+  transition: all 0.1s ease;
   position: relative;
-  /* 精确控制底部边距，消除多余空白 */
-  margin-bottom: max(env(safe-area-inset-bottom), 0rpx);
-  /* 确保内容垂直居中 */
-  height: 100%;
 }
 
 .channel-entry.active {
-  background-color: #FFF8F3;
+  /* 移除背景和边框，改为底部指示线 */
 }
 
-.channel-entry.active::before {
+.channel-entry.active::after {
   content: '';
   position: absolute;
-  top: 0;
+  bottom: 8rpx;
   left: 50%;
   transform: translateX(-50%);
-  width: 60rpx;
+  width: 30rpx;
   height: 4rpx;
-  background-color: #FF8C42;
+  background-color: #FFFFFF;
   border-radius: 2rpx;
 }
 
+.channel-entry.active .channel-icon {
+  color: #FFFFFF;
+}
+
 .channel-icon {
-  font-size: 32rpx;
-  margin-bottom: 2rpx;
-  transition: all 0.3s ease;
+  font-size: 40rpx;
+  transition: all 0.1s ease;
+  line-height: 1;
+  color: #FFFFFF;
+}
+
+/* 中间加号按钮 */
+.add-button {
+  width: 80rpx;
+  height: 80rpx;
+  background-color: #FF4081;
+  border: 4rpx solid #000000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  transform: translateY(-30rpx);
+  box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.3);
+}
+
+.add-icon {
+  font-size: 36rpx;
+  color: #FFFFFF;
+  font-weight: 700;
   line-height: 1;
 }
 
-.channel-text {
-  font-size: 20rpx;
-  color: #999999;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  line-height: 1;
-  transform: translateY(10rpx);
-}
-
-.channel-entry.active .channel-text {
-  color: #FF8C42;
-  font-weight: 600;
-}
+/* 移除文字样式，只保留图标 */
