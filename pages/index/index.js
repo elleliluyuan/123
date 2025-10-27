@@ -36,6 +36,7 @@ Page({
     currentMonthNum: new Date().getMonth() + 1,
     currentMonth: '', // 显示的月份文本
     weekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'], // 星期英文简写
+    showWeekView: true, // 显示周视图还是月视图
     
     // 周总结
     weeklySummary: '本周记录正常，继续保持！'
@@ -516,6 +517,79 @@ Page({
     // 使用 navigateTo 跳转（已移除系统 tabBar）
     wx.navigateTo({
       url: '/pages/record/index'
+    });
+  },
+
+  // 显示完整日历视图
+  showFullCalendar() {
+    // 计算当月的完整日历数据
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const currentMonth = `${year}年${month + 1}月`;
+    
+    // 获取当月第一天和最后一天
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startDay = firstDay.getDay();
+    
+    const calendarDays = [];
+    
+    // 添加上个月的日期
+    const prevMonthDays = new Date(year, month, 0).getDate();
+    for (let i = startDay - 1; i >= 0; i--) {
+      const day = prevMonthDays - i;
+      const dateStr = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+      
+      calendarDays.push({
+        day: day.toString(),
+        date: dateStr,
+        isToday: false,
+        hasRecord: this.hasRecordForDate(dateStr),
+        isAbnormal: this.isAbnormalDate(dateStr),
+        poopIcon: this.getPoopIcon(dateStr),
+      });
+    }
+    
+    // 添加当月日期
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+      const todayStr = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
+      const isToday = dateStr === todayStr;
+      
+      calendarDays.push({
+        day: day.toString(),
+        date: dateStr,
+        isToday,
+        hasRecord: this.hasRecordForDate(dateStr),
+        isAbnormal: this.isAbnormalDate(dateStr),
+        poopIcon: this.getPoopIcon(dateStr),
+      });
+    }
+    
+    // 添加下个月的日期来填满6行
+    const totalCells = calendarDays.length;
+    const remainingCells = 42 - totalCells; // 6行 × 7列 = 42个格子
+    
+    for (let day = 1; day <= remainingCells; day++) {
+      const dateStr = `${year}-${(month + 2).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+      
+      calendarDays.push({
+        day: day.toString(),
+        date: dateStr,
+        isToday: false,
+        hasRecord: this.hasRecordForDate(dateStr),
+        isAbnormal: this.isAbnormalDate(dateStr),
+        poopIcon: this.getPoopIcon(dateStr),
+      });
+    }
+    
+    this.setData({
+      calendarDays,
+      currentMonth,
+      showWeekView: false, // 标记显示完整月视图
+      calendarInitialized: true
     });
   }
 });

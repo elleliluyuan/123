@@ -72,7 +72,10 @@
     <!-- 日历卡片 -->
     <view class="calendar-card">
       <view class="calendar-header">
-        <text class="current-month">本周</text>
+        <text class="current-month">{{currentMonth}}</text>
+        <view class="calendar-expand-btn" catchtap="showFullCalendar">
+          <text class="expand-icon">🔍</text>
+        </view>
       </view>
       <!-- 星期标题 -->
       <view class="weekday-header">
