@@ -11,6 +11,7 @@ Page({
         age: '2岁',
         gender: '公',
         weight: '4.5kg',
+        breed: '金毛',
         phrase: '热爱自然的拉屎大王'
       },
       { 
@@ -21,6 +22,7 @@ Page({
         age: '3岁',
         gender: '母',
         weight: '6.2kg',
+        breed: '泰迪',
         phrase: '优雅的便便艺术家'
       }
     ],
@@ -107,6 +109,7 @@ Page({
             age: '2岁',
             gender: '公',
             weight: '4.5kg',
+            breed: '金毛',
             phrase: '热爱自然的拉屎大王'
           },
           { 
@@ -117,6 +120,7 @@ Page({
             age: '3岁',
             gender: '母',
             weight: '6.2kg',
+            breed: '泰迪',
             phrase: '优雅的便便艺术家'
           }
         ];
@@ -134,6 +138,7 @@ Page({
               age: pet.birthDate ? this.calculateAge(pet.birthDate) : '未知',
               gender: pet.gender || '未知',
               weight: pet.weight || '未知',
+              breed: pet.breed || '未知品种',
               phrase: pet.phrase || '可爱的小宝贝'
             };
             allPets.push(homePet);

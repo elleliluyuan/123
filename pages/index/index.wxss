@@ -229,6 +229,11 @@
   background-color: #F6D665;
 }
 
+/* 品种标签 - 水蓝色 */
+.tag-breed {
+  background-color: #B9F0FF;
+}
+
 /* 判语标签 - 淡紫色 */
 .tag-phrase {
   background-color: #C9B7FF;

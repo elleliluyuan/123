@@ -46,6 +46,9 @@
           <view class="info-tag tag-weight">
             <text class="tag-text">{{currentPet.weight}}</text>
           </view>
+          <view class="info-tag tag-breed">
+            <text class="tag-text">{{currentPet.breed}}</text>
+          </view>
         </view>
         <view class="pet-cute-phrase">
           <view class="info-tag tag-phrase">
