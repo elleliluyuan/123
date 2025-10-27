@@ -207,12 +207,31 @@
 
 .info-tag {
   padding: 8rpx 16rpx;
-  border: 2rpx solid #F6D665;
-  background-color: #F6D665;
+  border: 2rpx solid #000000;
   border-radius: 16rpx;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+/* 年龄标签 - 粉色 */
+.tag-age {
+  background-color: #F6BDDD;
+}
+
+/* 性别标签 - 绿色 */
+.tag-gender {
+  background-color: #9FE5D3;
+}
+
+/* 体重标签 - 黄色 */
+.tag-weight {
+  background-color: #F6D665;
+}
+
+/* 判语标签 - 淡紫色 */
+.tag-phrase {
+  background-color: #C9B7FF;
 }
 
 .tag-text {

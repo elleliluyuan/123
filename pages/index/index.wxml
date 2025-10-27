@@ -37,18 +37,20 @@
       </view>
       <view class="pet-details">
         <view class="pet-basic-info">
-          <view class="info-tag">
+          <view class="info-tag tag-age">
             <text class="tag-text">{{currentPet.age}}</text>
           </view>
-          <view class="info-tag">
+          <view class="info-tag tag-gender">
             <text class="tag-text">{{currentPet.gender}}</text>
           </view>
-          <view class="info-tag">
+          <view class="info-tag tag-weight">
             <text class="tag-text">{{currentPet.weight}}</text>
           </view>
         </view>
         <view class="pet-cute-phrase">
-          <text class="phrase-text">{{currentPet.phrase}}</text>
+          <view class="info-tag tag-phrase">
+            <text class="tag-text">{{currentPet.phrase}}</text>
+          </view>
         </view>
       </view>
     </view>
