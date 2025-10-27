@@ -37,13 +37,13 @@ Page({
     currentMonth: '', // 显示的月份文本
     weekdays: ['M', 'T', 'W', 'T', 'F', 'S', 'S'], // 星期英文简写
     weekdayLabels: [
-      { label: 'M', key: 'mon' },
-      { label: 'T', key: 'tue' },
-      { label: 'W', key: 'wed' },
-      { label: 'T', key: 'thu' },
-      { label: 'F', key: 'fri' },
-      { label: 'S', key: 'sun' },
-      { label: 'S', key: 'sat' }
+      { label: 'M', key: 'mon' },  // 周一
+      { label: 'T', key: 'tue' },  // 周二
+      { label: 'W', key: 'wed' },  // 周三
+      { label: 'T', key: 'thu' },  // 周四
+      { label: 'F', key: 'fri' },  // 周五
+      { label: 'S', key: 'sat' },  // 周六
+      { label: 'S', key: 'sun' }   // 周日
     ], // 星期标签对象数组，避免重复key，按周一到周日顺序
     showWeekView: true, // 显示周视图还是月视图
     currentWeekStart: null, // 当前周的开始日期
@@ -277,16 +277,29 @@ Page({
     // 只显示本周的日历
     const now = new Date();
     
-    // 确定本周的开始日期
+    // 确定本周的开始日期（周一为一周开始）
     let weekStart;
     if (this.data.currentWeekStart) {
       weekStart = new Date(this.data.currentWeekStart);
     } else {
       // 获取本周的开始日期（周一）
+      // getDay(): 0=周日, 1=周一, 2=周二, ..., 6=周六
       const dayOfWeek = now.getDay();
-      const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // 周一是0，周日是6
+      // 计算距离周一的偏移
+      let diff;
+      if (dayOfWeek === 0) {
+        // 如果今天是周日，往前推6天
+        diff = 6;
+      } else {
+        // 其他情况往前推 dayOfWeek - 1 天
+        diff = dayOfWeek - 1;
+      }
+      
+      console.log('今天是星期', dayOfWeek === 0 ? 7 : dayOfWeek, '，往前推', diff, '天');
+      
       weekStart = new Date(now);
       weekStart.setDate(now.getDate() - diff);
+      weekStart.setHours(0, 0, 0, 0); // 设置为当天的00:00:00
     }
     
     const calendarDays = [];
