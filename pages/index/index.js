@@ -36,6 +36,15 @@ Page({
     currentMonthNum: new Date().getMonth() + 1,
     currentMonth: '', // 显示的月份文本
     weekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'], // 星期英文简写
+    weekdayLabels: [
+      { label: 'S', key: 'sun' },
+      { label: 'M', key: 'mon' },
+      { label: 'T', key: 'tue' },
+      { label: 'W', key: 'wed' },
+      { label: 'T', key: 'thu' },
+      { label: 'F', key: 'fri' },
+      { label: 'S', key: 'sat' }
+    ], // 星期标签对象数组，避免重复key
     showWeekView: true, // 显示周视图还是月视图
     currentWeekStart: null, // 当前周的开始日期
     

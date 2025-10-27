@@ -85,8 +85,8 @@
       </view>
       <!-- 星期标题 -->
       <view class="weekday-header">
-        <view class="weekday-item" wx:for="{{weekdays}}" wx:key="*this">
-          <text class="weekday-text">{{item}}</text>
+        <view class="weekday-item" wx:for="{{weekdayLabels}}" wx:key="key">
+          <text class="weekday-text">{{item.label}}</text>
         </view>
       </view>
       
