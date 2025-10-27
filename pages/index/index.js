@@ -63,6 +63,12 @@ Page({
       currentPet: this.getPetById(selectedPetId)
     });
     
+    // 在控制台输出所有记录以便调试
+    const records = wx.getStorageSync('poopRecords') || [];
+    console.log('===== 所有记录 =====');
+    console.log(JSON.stringify(records, null, 2));
+    console.log('===== 结束 =====');
+    
     this.initCalendar();
   },
 
@@ -72,29 +78,76 @@ Page({
     // 重新加载宠物数据（可能有新添加的宠物）
     this.loadPetsFromStorage();
     
-    // 检查全局数据中的宠物ID
+    // 检查全局数据中的宠物ID和新记录标记
     const app = getApp();
     const globalPetId = app.globalData?.selectedPetId;
     const newPetAdded = app.globalData?.newPetAdded;
+    const recordAdded = app.globalData?.recordAdded;
     
     console.log('全局宠物ID:', globalPetId);
     console.log('是否有新宠物:', newPetAdded);
+    console.log('是否有新记录:', recordAdded);
+    console.log('日历是否已初始化:', this.data.calendarInitialized);
     
-    if (globalPetId && (globalPetId !== this.data.currentPetId || newPetAdded)) {
-      // 重新加载宠物数据后再获取宠物信息
+    // 如果有新记录，无论如何都重新初始化日历
+    if (recordAdded) {
+      console.log('检测到新记录，强制重新初始化日历');
+      
+      // 直接计算要跳转到的周
+      const records = wx.getStorageSync('poopRecords') || [];
+      const currentPetRecords = records.filter(r => r.petId === this.data.currentPetId);
+      
+      if (currentPetRecords.length > 0) {
+        const recordDates = currentPetRecords.map(r => r.date).filter(d => d);
+        if (recordDates.length > 0) {
+          const sortedDates = recordDates.sort().reverse();
+          const latestRecordDate = new Date(sortedDates[0]);
+          latestRecordDate.setHours(0, 0, 0, 0);
+          
+          // 计算记录日期所在周的开始日期（周一）
+          const recordDayOfWeek = latestRecordDate.getDay();
+          let recordDiff = recordDayOfWeek === 0 ? 6 : recordDayOfWeek - 1;
+          
+          const targetWeekStart = new Date(latestRecordDate);
+          targetWeekStart.setDate(latestRecordDate.getDate() - recordDiff);
+          targetWeekStart.setHours(0, 0, 0, 0);
+          
+          console.log('计算出的目标周:', targetWeekStart.toISOString().split('T')[0]);
+          
+          this.setData({
+            currentWeekStart: targetWeekStart,
+            calendarInitialized: false
+          }, () => {
+            this.initCalendar(false);
+          });
+        }
+      } else {
+        this.setData({
+          currentWeekStart: null,
+          calendarInitialized: false
+        }, () => {
+          this.initCalendar(true);
+        });
+      }
+    } else if (globalPetId && (globalPetId !== this.data.currentPetId || newPetAdded)) {
+      // 切换宠物
       const pet = this.getPetById(globalPetId);
-      console.log('找到的宠物:', pet);
+      console.log('切换宠物到:', globalPetId);
       
       this.setData({
         currentPetId: globalPetId,
-        currentPet: pet
+        currentPet: pet,
+        currentWeekStart: null
       });
-      this.initCalendar();
+      
+      this.initCalendar(true);
     } else if (this.data.calendarInitialized) {
       // 如果日历已经初始化且没有切换宠物，只更新记录数据
+      console.log('更新日历记录');
       this.updateCalendarRecords();
     } else {
       // 如果日历还没有初始化，先初始化
+      console.log('初始化日历');
       this.initCalendar();
     }
     
@@ -102,6 +155,9 @@ Page({
     if (globalPetId) {
       app.globalData.selectedPetId = null;
       app.globalData.newPetAdded = false;
+    }
+    if (recordAdded) {
+      app.globalData.recordAdded = false;
     }
   },
 
@@ -273,14 +329,15 @@ Page({
     this.initCalendar();
   },
 
-  initCalendar() {
+  initCalendar(forceAutoJump = false) {
     // 只显示本周的日历
     const now = new Date();
     
     // 确定本周的开始日期（周一为一周开始）
     let weekStart;
-    if (this.data.currentWeekStart) {
+    if (this.data.currentWeekStart && !forceAutoJump) {
       weekStart = new Date(this.data.currentWeekStart);
+      console.log('使用已设置的周:', weekStart.toISOString().split('T')[0]);
     } else {
       // 获取本周的开始日期（周一）
       // getDay(): 0=周日, 1=周一, 2=周二, ..., 6=周六
@@ -300,6 +357,48 @@ Page({
       weekStart = new Date(now);
       weekStart.setDate(now.getDate() - diff);
       weekStart.setHours(0, 0, 0, 0); // 设置为当天的00:00:00
+      
+      // 如果有记录且不在当前周，自动跳转到最近有记录的那一周
+      const records = wx.getStorageSync('poopRecords') || [];
+      const currentPetRecords = records.filter(r => r.petId === this.data.currentPetId);
+      
+      console.log('当前宠物记录数:', currentPetRecords.length);
+      
+      if (currentPetRecords.length > 0) {
+        // 找到最近的记录日期
+        const recordDates = currentPetRecords.map(r => r.date).filter(d => d);
+        if (recordDates.length > 0) {
+          // 获取最新的记录日期（按日期排序）
+          const sortedDates = recordDates.sort().reverse();
+          const latestRecordDate = new Date(sortedDates[0]);
+          latestRecordDate.setHours(0, 0, 0, 0);
+          
+          console.log('最新记录日期:', sortedDates[0]);
+          
+          // 计算记录日期所在周的开始日期（周一）
+          const recordDayOfWeek = latestRecordDate.getDay();
+          let recordDiff;
+          if (recordDayOfWeek === 0) {
+            recordDiff = 6;
+          } else {
+            recordDiff = recordDayOfWeek - 1;
+          }
+          
+          const recordWeekStart = new Date(latestRecordDate);
+          recordWeekStart.setDate(latestRecordDate.getDate() - recordDiff);
+          recordWeekStart.setHours(0, 0, 0, 0);
+          
+          console.log('记录所在周的开始日期:', recordWeekStart.toISOString().split('T')[0]);
+          console.log('当前周的开始日期:', weekStart.toISOString().split('T')[0]);
+          console.log('是否需要跳转:', recordWeekStart.getTime() !== weekStart.getTime());
+          
+          // 直接跳转到记录所在周（不管是否在当前周）
+          if (recordWeekStart.getTime() !== weekStart.getTime()) {
+            console.log('跳转到记录所在周:', recordWeekStart.toISOString().split('T')[0]);
+            weekStart = recordWeekStart;
+          }
+        }
+      }
     }
     
     const calendarDays = [];
@@ -342,13 +441,21 @@ Page({
       const todayStr = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
       const isToday = dateStr === todayStr;
       
+      const hasRecord = this.hasRecordForDate(dateStr);
+      const poopIconData = this.getPoopIcon(dateStr);
+      
+      // 如果有记录，打印详细信息
+      if (hasRecord) {
+        console.log(`✓ 日期 ${dateStr}: hasRecord=true, poopIcon=`, JSON.stringify(poopIconData));
+      }
+      
       calendarDays.push({
         day: day.toString(),
         date: dateStr,
         isToday,
-        hasRecord: this.hasRecordForDate(dateStr),
+        hasRecord,
         isAbnormal: this.isAbnormalDate(dateStr),
-        poopIcon: this.getPoopIcon(dateStr),
+        poopIcon: poopIconData,
         index: i // 添加索引用于匹配weekdayLabels
       });
     }
@@ -363,24 +470,35 @@ Page({
 
   // 更新日历记录数据（不重新生成日历结构）
   updateCalendarRecords() {
-    const calendarDays = this.data.calendarDays.map(day => ({
-      ...day,
-      hasRecord: this.hasRecordForDate(day.date),
-      isAbnormal: this.isAbnormalDate(day.date),
-      poopIcon: this.getPoopIcon(day.date)
-    }));
+    console.log('开始更新日历记录');
+    console.log('当前宠物ID:', this.data.currentPetId);
+    
+    const calendarDays = this.data.calendarDays.map(day => {
+      const hasRecord = this.hasRecordForDate(day.date);
+      const poopIcon = this.getPoopIcon(day.date);
+      console.log(`日期 ${day.date}: hasRecord=${hasRecord}, poopIcon=${poopIcon}`);
+      
+      return {
+        ...day,
+        hasRecord,
+        isAbnormal: this.isAbnormalDate(day.date),
+        poopIcon
+      };
+    });
     
     this.setData({
       calendarDays
     });
+    
+    console.log('更新后的calendarDays:', calendarDays);
   },
 
   // 检查某天是否有记录
   hasRecordForDate(dateStr) {
     try {
       const records = wx.getStorageSync('poopRecords') || [];
+      
       const hasRecord = records.some(record => {
-        // 优先使用date字段，如果没有date字段才使用timestamp
         let recordDate;
         if (record.date) {
           recordDate = record.date;
@@ -390,9 +508,12 @@ Page({
           recordDate = '';
         }
         
-        // 检查日期和宠物ID是否匹配
         return recordDate === dateStr && record.petId === this.data.currentPetId;
       });
+      
+      if (hasRecord) {
+        console.log(`✓ 日期 ${dateStr} 有记录`);
+      }
       
       return hasRecord;
     } catch (error) {
@@ -444,7 +565,7 @@ Page({
         return recordDate === dateStr && record.petId === this.data.currentPetId;
       });
 
-      // 如果有记录，显示💩图标和次数
+      // 如果有记录，返回字符串格式
       if (dayRecords.length > 0) {
         return dayRecords.length === 1 ? '💩' : `💩×${dayRecords.length}`;
       }
@@ -581,8 +702,11 @@ Page({
 
   // 上一周
   prevWeek() {
+    console.log('点击上一周');
     const currentWeekStart = new Date(this.data.currentWeekStart || new Date());
     currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+    
+    console.log('切换到周:', currentWeekStart.toISOString().split('T')[0]);
     
     this.setData({
       currentWeekStart: currentWeekStart

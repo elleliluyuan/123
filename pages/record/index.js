@@ -380,6 +380,7 @@ Page({
     // 保存当前选中的宠物ID到全局数据
     getApp().globalData = getApp().globalData || {};
     getApp().globalData.selectedPetId = this.data.selectedPetId;
+    getApp().globalData.recordAdded = true; // 标记有新记录添加
     
     // 非 tabBar，改为 reLaunch 返回首页
     wx.reLaunch({

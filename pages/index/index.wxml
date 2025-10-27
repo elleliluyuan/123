@@ -90,6 +90,7 @@
         <view class="calendar-day-cell {{item.isToday ? 'today' : ''}}" wx:for="{{calendarDays}}" wx:key="date" bindtap="viewDayRecord" data-date="{{item.date}}">
           <text class="weekday-abbr">{{weekdayLabels[item.index].label}}</text>
           <text class="day-number">{{item.day}}</text>
+          <text class="poop-icon" wx:if="{{item.poopIcon}}">{{item.poopIcon}}</text>
         </view>
         
         <!-- 右箭头 -->
