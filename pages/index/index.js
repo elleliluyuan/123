@@ -37,6 +37,7 @@ Page({
     currentMonth: '', // 显示的月份文本
     weekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'], // 星期英文简写
     showWeekView: true, // 显示周视图还是月视图
+    currentWeekStart: null, // 当前周的开始日期
     
     // 周总结
     weeklySummary: '本周记录正常，继续保持！'
@@ -266,18 +267,44 @@ Page({
   initCalendar() {
     // 只显示本周的日历
     const now = new Date();
-    const currentYear = now.getFullYear();
-    const currentMonthNum = now.getMonth() + 1;
-    const currentDay = now.getDate();
     
-    // 获取本周的开始日期（周一）
-    const dayOfWeek = now.getDay();
-    const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // 周一是0，周日是6
-    const weekStart = new Date(now);
-    weekStart.setDate(now.getDate() - diff);
+    // 确定本周的开始日期
+    let weekStart;
+    if (this.data.currentWeekStart) {
+      weekStart = new Date(this.data.currentWeekStart);
+    } else {
+      // 获取本周的开始日期（周一）
+      const dayOfWeek = now.getDay();
+      const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // 周一是0，周日是6
+      weekStart = new Date(now);
+      weekStart.setDate(now.getDate() - diff);
+    }
     
     const calendarDays = [];
-    const weekStartStr = `${currentYear}-${currentMonthNum.toString().padStart(2, '0')}-${weekStart.getDate().toString().padStart(2, '0')}`;
+    
+    // 计算本周主要月份（取本周中天数最多的月份）
+    let currentYear, currentMonthNum;
+    const monthCounts = {};
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(weekStart);
+      date.setDate(weekStart.getDate() + i);
+      const monthKey = `${date.getFullYear()}-${date.getMonth() + 1}`;
+      monthCounts[monthKey] = (monthCounts[monthKey] || 0) + 1;
+    }
+    
+    // 找出天数最多的月份
+    let maxCount = 0;
+    let maxMonth = '';
+    for (const key in monthCounts) {
+      if (monthCounts[key] > maxCount) {
+        maxCount = monthCounts[key];
+        maxMonth = key;
+      }
+    }
+    
+    const [year, month] = maxMonth.split('-').map(Number);
+    currentYear = year;
+    currentMonthNum = month;
     const currentMonth = `${currentYear}年${currentMonthNum}月`;
     
     // 生成本周7天的日期
@@ -306,6 +333,7 @@ Page({
     this.setData({
       calendarDays,
       currentMonth,
+      currentWeekStart: weekStart,
       calendarInitialized: true
     });
   },
@@ -522,74 +550,33 @@ Page({
 
   // 显示完整日历视图
   showFullCalendar() {
-    // 计算当月的完整日历数据
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const currentMonth = `${year}年${month + 1}月`;
-    
-    // 获取当月第一天和最后一天
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startDay = firstDay.getDay();
-    
-    const calendarDays = [];
-    
-    // 添加上个月的日期
-    const prevMonthDays = new Date(year, month, 0).getDate();
-    for (let i = startDay - 1; i >= 0; i--) {
-      const day = prevMonthDays - i;
-      const dateStr = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-      
-      calendarDays.push({
-        day: day.toString(),
-        date: dateStr,
-        isToday: false,
-        hasRecord: this.hasRecordForDate(dateStr),
-        isAbnormal: this.isAbnormalDate(dateStr),
-        poopIcon: this.getPoopIcon(dateStr),
-      });
-    }
-    
-    // 添加当月日期
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-      const todayStr = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
-      const isToday = dateStr === todayStr;
-      
-      calendarDays.push({
-        day: day.toString(),
-        date: dateStr,
-        isToday,
-        hasRecord: this.hasRecordForDate(dateStr),
-        isAbnormal: this.isAbnormalDate(dateStr),
-        poopIcon: this.getPoopIcon(dateStr),
-      });
-    }
-    
-    // 添加下个月的日期来填满6行
-    const totalCells = calendarDays.length;
-    const remainingCells = 42 - totalCells; // 6行 × 7列 = 42个格子
-    
-    for (let day = 1; day <= remainingCells; day++) {
-      const dateStr = `${year}-${(month + 2).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-      
-      calendarDays.push({
-        day: day.toString(),
-        date: dateStr,
-        isToday: false,
-        hasRecord: this.hasRecordForDate(dateStr),
-        isAbnormal: this.isAbnormalDate(dateStr),
-        poopIcon: this.getPoopIcon(dateStr),
-      });
-    }
+    // 跳转到完整日历页面
+    wx.navigateTo({
+      url: '/pages/calendar/index?petId=' + this.data.currentPetId
+    });
+  },
+
+  // 上一周
+  prevWeek() {
+    const currentWeekStart = new Date(this.data.currentWeekStart || new Date());
+    currentWeekStart.setDate(currentWeekStart.getDate() - 7);
     
     this.setData({
-      calendarDays,
-      currentMonth,
-      showWeekView: false, // 标记显示完整月视图
-      calendarInitialized: true
+      currentWeekStart: currentWeekStart
     });
+    
+    this.initCalendar();
+  },
+
+  // 下一周
+  nextWeek() {
+    const currentWeekStart = new Date(this.data.currentWeekStart || new Date());
+    currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+    
+    this.setData({
+      currentWeekStart: currentWeekStart
+    });
+    
+    this.initCalendar();
   }
 });

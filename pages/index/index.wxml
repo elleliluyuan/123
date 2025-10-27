@@ -72,7 +72,13 @@
     <!-- 日历卡片 -->
     <view class="calendar-card">
       <view class="calendar-header">
+        <view class="calendar-nav-btn" catchtap="prevWeek">
+          <text class="nav-icon">‹</text>
+        </view>
         <text class="current-month">{{currentMonth}}</text>
+        <view class="calendar-nav-btn" catchtap="nextWeek">
+          <text class="nav-icon">›</text>
+        </view>
         <view class="calendar-expand-btn" catchtap="showFullCalendar">
           <text class="expand-icon">🔍</text>
         </view>
@@ -84,18 +90,20 @@
         </view>
       </view>
       
-      <view class="calendar-grid">
-        <view 
-          class="calendar-day {{item.isToday ? 'today' : ''}} {{item.hasRecord ? 'has-record' : ''}} {{item.isAbnormal ? 'abnormal' : ''}}"
-          wx:for="{{calendarDays}}" 
-          wx:key="date"
-          bindtap="viewDayRecord"
-          data-date="{{item.date}}"
-        >
-          <text class="day-number">{{item.day}}</text>
-          <text class="poop-icon" wx:if="{{item.poopIcon}}">{{item.poopIcon}}</text>
+      <scroll-view class="calendar-scroll" scroll-x="true" enhanced="{{true}}" show-scrollbar="false" bounces="false">
+        <view class="calendar-grid">
+          <view 
+            class="calendar-day {{item.isToday ? 'today' : ''}} {{item.hasRecord ? 'has-record' : ''}} {{item.isAbnormal ? 'abnormal' : ''}}"
+            wx:for="{{calendarDays}}" 
+            wx:key="date"
+            bindtap="viewDayRecord"
+            data-date="{{item.date}}"
+          >
+            <text class="day-number">{{item.day}}</text>
+            <text class="poop-icon" wx:if="{{item.poopIcon}}">{{item.poopIcon}}</text>
+          </view>
         </view>
-      </view>
+      </scroll-view>
     </view>
   </view>
   <!-- 自定义底部三频道入口 -->
