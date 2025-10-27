@@ -349,6 +349,7 @@ Page({
         hasRecord: this.hasRecordForDate(dateStr),
         isAbnormal: this.isAbnormalDate(dateStr),
         poopIcon: this.getPoopIcon(dateStr),
+        index: i // 添加索引用于匹配weekdayLabels
       });
     }
     

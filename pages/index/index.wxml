@@ -71,33 +71,30 @@
   <view class="home-content">
     <!-- 日历卡片 -->
     <view class="calendar-card">
-      <view class="calendar-header">
-        <view class="month-arrow left-arrow" catchtap="prevWeek">
+      <!-- 顶部：月份 + 日历图标 -->
+      <view class="calendar-top-bar">
+        <text class="current-month">{{currentMonth}}</text>
+        <view class="calendar-icon">
+          <text class="icon-text">📅</text>
+        </view>
+      </view>
+      
+      <!-- 统一的星期+日期行 -->
+      <view class="calendar-week-row">
+        <!-- 左箭头 -->
+        <view class="week-arrow-left" catchtap="prevWeek">
           <text class="arrow-icon">‹</text>
         </view>
-        <text class="current-month">{{currentMonth}}</text>
-        <view class="month-arrow right-arrow" catchtap="nextWeek">
-          <text class="arrow-icon">›</text>
-        </view>
-      </view>
-      
-      <!-- 星期标题 -->
-      <view class="weekday-header">
-        <view class="weekday-item" wx:for="{{weekdayLabels}}" wx:key="key">
-          <text class="weekday-text">{{item.label}}</text>
-        </view>
-      </view>
-      
-      <!-- 日期 -->
-      <view class="calendar-days">
-        <view 
-          class="calendar-day {{item.isToday ? 'today' : ''}}"
-          wx:for="{{calendarDays}}" 
-          wx:key="date"
-          bindtap="viewDayRecord"
-          data-date="{{item.date}}"
-        >
+        
+        <!-- 7个日期单元格 -->
+        <view class="calendar-day-cell {{item.isToday ? 'today' : ''}}" wx:for="{{calendarDays}}" wx:key="date" bindtap="viewDayRecord" data-date="{{item.date}}">
+          <text class="weekday-abbr">{{weekdayLabels[item.index].label}}</text>
           <text class="day-number">{{item.day}}</text>
+        </view>
+        
+        <!-- 右箭头 -->
+        <view class="week-arrow-right" catchtap="nextWeek">
+          <text class="arrow-icon">›</text>
         </view>
       </view>
     </view>
