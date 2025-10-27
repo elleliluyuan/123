@@ -258,80 +258,39 @@ Page({
   },
 
   initCalendar() {
+    // 只显示本周的日历
     const now = new Date();
-    const year = this.data.currentYear;
-    const month = this.data.currentMonthNum - 1; // JavaScript月份从0开始
-    const currentMonth = `${year}年${this.data.currentMonthNum}月`;
+    const currentYear = now.getFullYear();
+    const currentMonthNum = now.getMonth() + 1;
+    const currentDay = now.getDate();
     
-    // 生成日历数据
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startDay = firstDay.getDay();
+    // 获取本周的开始日期（周一）
+    const dayOfWeek = now.getDay();
+    const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // 周一是0，周日是6
+    const weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - diff);
     
     const calendarDays = [];
+    const weekStartStr = `${currentYear}-${currentMonthNum.toString().padStart(2, '0')}-${weekStart.getDate().toString().padStart(2, '0')}`;
+    const currentMonth = `${currentYear}年${currentMonthNum}月`;
     
-    // 添加上个月的日期
-    const prevYear = month === 0 ? year - 1 : year;
-    const prevMonthNum = month === 0 ? 12 : month;
-    const prevMonthDays = new Date(prevYear, prevMonthNum, 0).getDate(); // 上个月的实际天数
-    
-    for (let i = startDay - 1; i >= 0; i--) {
-      const day = prevMonthDays - i;
-      const dateStr = `${prevYear}-${prevMonthNum.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+    // 生成本周7天的日期
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(weekStart);
+      date.setDate(weekStart.getDate() + i);
       
-      calendarDays.push({
-        day: day.toString(),
-        date: dateStr,
-        isToday: false,
-        hasRecord: this.hasRecordForDate(dateStr),
-        isAbnormal: this.isAbnormalDate(dateStr),
-        poopIcon: this.getPoopIcon(dateStr),
-      });
-    }
-    
-    // 添加当月日期
-    for (let day = 1; day <= daysInMonth; day++) {
-      // 修复时区问题：使用本地日期字符串
-      const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const dateStr = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+      
       const todayStr = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
       const isToday = dateStr === todayStr;
       
-      const dayData = {
+      calendarDays.push({
         day: day.toString(),
         date: dateStr,
         isToday,
-        hasRecord: this.hasRecordForDate(dateStr),
-        isAbnormal: this.isAbnormalDate(dateStr),
-        poopIcon: this.getPoopIcon(dateStr),
-      };
-      
-      calendarDays.push(dayData);
-    }
-    
-    // 添加下个月的日期来填满5行
-    const totalCells = calendarDays.length;
-    const remainingCells = 35 - totalCells; // 5行 × 7列 = 35个格子
-    
-    // 计算下个月的信息
-    const nextYear = month === 11 ? year + 1 : year;
-    const nextMonthNum = month === 11 ? 1 : month + 2;
-    const nextMonthDate = new Date(nextYear, nextMonthNum - 1, 1);
-    const nextMonthDays = new Date(nextYear, nextMonthNum, 0).getDate(); // 下个月的实际天数
-    
-    for (let day = 1; day <= remainingCells; day++) {
-      // 确保不超过下个月的实际天数
-      const actualDay = day <= nextMonthDays ? day : day - nextMonthDays;
-      const actualMonth = day <= nextMonthDays ? nextMonthNum : nextMonthNum + 1;
-      const actualYear = actualMonth > 12 ? nextYear + 1 : nextYear;
-      const finalMonth = actualMonth > 12 ? 1 : actualMonth;
-      
-      const dateStr = `${actualYear}-${finalMonth.toString().padStart(2, '0')}-${actualDay.toString().padStart(2, '0')}`;
-      
-      calendarDays.push({
-        day: actualDay.toString(),
-        date: dateStr,
-        isToday: false,
         hasRecord: this.hasRecordForDate(dateStr),
         isAbnormal: this.isAbnormalDate(dateStr),
         poopIcon: this.getPoopIcon(dateStr),
@@ -341,7 +300,7 @@ Page({
     this.setData({
       calendarDays,
       currentMonth,
-      calendarInitialized: true // 标记日历已初始化
+      calendarInitialized: true
     });
   },
 

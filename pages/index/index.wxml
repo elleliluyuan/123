@@ -37,17 +37,14 @@
       </view>
       <view class="pet-details">
         <view class="pet-basic-info">
-          <view class="info-item">
-            <text class="info-label">年龄</text>
-            <text class="info-value">{{currentPet.age}}</text>
+          <view class="info-tag">
+            <text class="tag-text">{{currentPet.age}}</text>
           </view>
-          <view class="info-item">
-            <text class="info-label">性别</text>
-            <text class="info-value">{{currentPet.gender}}</text>
+          <view class="info-tag">
+            <text class="tag-text">{{currentPet.gender}}</text>
           </view>
-          <view class="info-item">
-            <text class="info-label">体重</text>
-            <text class="info-value">{{currentPet.weight}}</text>
+          <view class="info-tag">
+            <text class="tag-text">{{currentPet.weight}}</text>
           </view>
         </view>
         <view class="pet-cute-phrase">
@@ -57,18 +54,20 @@
     </view>
   </view>
 
+  <!-- 周总结卡片 -->
+  <view class="weekly-summary">
+    <view class="summary-header">
+      <text class="summary-title">📊 本周总结</text>
+    </view>
+    <text class="summary-text">{{weeklySummary}}</text>
+  </view>
+
   <!-- 首页内容 -->
   <view class="home-content">
     <!-- 日历卡片 -->
     <view class="calendar-card">
       <view class="calendar-header">
-        <view class="month-arrow left-arrow" catchtap="previousMonth">
-          <text class="arrow-icon">‹</text>
-        </view>
-        <text class="current-month">{{currentMonth}}</text>
-        <view class="month-arrow right-arrow" catchtap="nextMonth">
-          <text class="arrow-icon">›</text>
-        </view>
+        <text class="current-month">本周</text>
       </view>
       <!-- 星期标题 -->
       <view class="weekday-header">
@@ -89,14 +88,6 @@
           <text class="poop-icon" wx:if="{{item.poopIcon}}">{{item.poopIcon}}</text>
         </view>
       </view>
-    </view>
-
-    <!-- 周总结卡片 -->
-    <view class="weekly-summary">
-      <view class="summary-header">
-        <text class="summary-title">📊 本周总结</text>
-      </view>
-      <text class="summary-text">{{weeklySummary}}</text>
     </view>
   </view>
   <!-- 自定义底部三频道入口 -->
