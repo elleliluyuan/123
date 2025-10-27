@@ -72,17 +72,15 @@
     <!-- 日历卡片 -->
     <view class="calendar-card">
       <view class="calendar-header">
-        <view class="calendar-nav-btn" catchtap="prevWeek">
-          <text class="nav-icon">‹</text>
+        <view class="month-arrow left-arrow" catchtap="prevWeek">
+          <text class="arrow-icon">‹</text>
         </view>
         <text class="current-month">{{currentMonth}}</text>
-        <view class="calendar-nav-btn" catchtap="nextWeek">
-          <text class="nav-icon">›</text>
-        </view>
-        <view class="calendar-expand-btn" catchtap="showFullCalendar">
-          <text class="expand-icon">🔍</text>
+        <view class="month-arrow right-arrow" catchtap="nextWeek">
+          <text class="arrow-icon">›</text>
         </view>
       </view>
+      
       <!-- 星期标题 -->
       <view class="weekday-header">
         <view class="weekday-item" wx:for="{{weekdayLabels}}" wx:key="key">
@@ -90,20 +88,18 @@
         </view>
       </view>
       
-      <scroll-view class="calendar-scroll" scroll-x="true" enhanced="{{true}}" show-scrollbar="false" bounces="false">
-        <view class="calendar-grid">
-          <view 
-            class="calendar-day {{item.isToday ? 'today' : ''}} {{item.hasRecord ? 'has-record' : ''}} {{item.isAbnormal ? 'abnormal' : ''}}"
-            wx:for="{{calendarDays}}" 
-            wx:key="date"
-            bindtap="viewDayRecord"
-            data-date="{{item.date}}"
-          >
-            <text class="day-number">{{item.day}}</text>
-            <text class="poop-icon" wx:if="{{item.poopIcon}}">{{item.poopIcon}}</text>
-          </view>
+      <!-- 日期 -->
+      <view class="calendar-days">
+        <view 
+          class="calendar-day {{item.isToday ? 'today' : ''}}"
+          wx:for="{{calendarDays}}" 
+          wx:key="date"
+          bindtap="viewDayRecord"
+          data-date="{{item.date}}"
+        >
+          <text class="day-number">{{item.day}}</text>
         </view>
-      </scroll-view>
+      </view>
     </view>
   </view>
   <!-- 自定义底部三频道入口 -->
