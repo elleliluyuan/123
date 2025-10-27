@@ -35,16 +35,16 @@ Page({
     currentYear: new Date().getFullYear(),
     currentMonthNum: new Date().getMonth() + 1,
     currentMonth: '', // 显示的月份文本
-    weekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'], // 星期英文简写
+    weekdays: ['M', 'T', 'W', 'T', 'F', 'S', 'S'], // 星期英文简写
     weekdayLabels: [
-      { label: 'S', key: 'sun' },
       { label: 'M', key: 'mon' },
       { label: 'T', key: 'tue' },
       { label: 'W', key: 'wed' },
       { label: 'T', key: 'thu' },
       { label: 'F', key: 'fri' },
+      { label: 'S', key: 'sun' },
       { label: 'S', key: 'sat' }
-    ], // 星期标签对象数组，避免重复key
+    ], // 星期标签对象数组，避免重复key，按周一到周日顺序
     showWeekView: true, // 显示周视图还是月视图
     currentWeekStart: null, // 当前周的开始日期
     
