@@ -14,7 +14,7 @@
     "useCompilerPlugins": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.14.0",
+  "libVersion": "2.33.0",
   "simulatorPluginLibVersion": {},
   "packOptions": {
     "ignore": [],

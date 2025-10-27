@@ -3,10 +3,7 @@
     "pages/index/index",
     "pages/record/index",
     "pages/add-pet/index",
-    "pages/ai/index",
-    "pages/history/index",
-    "pages/profile/index",
-    "pages/statistics/index"
+    "pages/ai/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",
